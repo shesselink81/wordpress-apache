@@ -8,9 +8,11 @@ Docker Compose example:
 curl -sSL https://raw.githubusercontent.com/shesselink81/wordpress-apache/main/docker-compose.yml > docker-compose.yml
 docker-compose up -d
 ```
+Helm Chart:
+<https://artifacthub.io/packages/helm/slybase-wordpress/wordpress>
 
 Docker images:
-<>
+<https://github.com/shesselink81/wordpress-apache/pkgs/container/wordpress-apache>
 
 Version info:
 
@@ -22,4 +24,3 @@ Installed php extensions:
 
 * memcached v3.2
 * imagick v3.8
-
