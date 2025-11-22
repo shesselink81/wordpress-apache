@@ -1,16 +1,9 @@
-name: Docker
-
-# This workflow uses actions that are not certified by GitHub.
-# They are provided by a third-party and are governed by
-# separate terms of service, privacy policy, and support
-# documentation.
+name: Release on Tag
 
 on:
   push:
-    # Publish semver tags as releases.
-    tags: [ 'v*.*.*' ]
-  pull_request:
-    branches: [ "main" ]
+    tags:
+      - 'v*'   # Trigger op tags zoals v1.0.0, v2.3.1 etc.
 
 env:
   # Use docker.io for Docker Hub if empty
@@ -18,20 +11,15 @@ env:
   # github.repository as <account>/<repo>
   IMAGE_NAME: ${{ github.repository }}
 
-
 jobs:
   build:
+    name: Build Release
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
-      # This is used to complete the identity challenge
-      # with sigstore/fulcio when running outside of PRs.
-      id-token: write
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v4
+
       -
         name: Docker meta
         id: meta
@@ -67,3 +55,38 @@ jobs:
             ./docker-bake.hcl
             ${{ steps.meta.outputs.bake-file }}
           targets: build
+
+      - name: Create artifact (example)
+        run: |
+          mkdir output
+          echo "build completed for $GITHUB_REF_NAME" > output/info.txt
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-output
+          path: output/
+
+  release:
+      name: Create GitHub Release
+      needs: build
+      runs-on: ubuntu-latest
+
+      steps:
+        - name: Download build artifacts
+          uses: actions/download-artifact@v4
+          with:
+            name: build-output
+            path: release/
+
+        - name: Create GitHub Release
+          uses: softprops/action-gh-release@v2
+          with:
+            tag_name: ${{ github.ref_name }}
+            name: Release ${{ github.ref_name }}
+            body: |
+              🚀 **Automatische release gebouwd met GitHub Actions**
+              - Commit: ${{ github.sha }}
+              - Tag: ${{ github.ref_name }}
+            files: |
+              release/**
