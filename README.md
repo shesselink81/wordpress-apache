@@ -22,3 +22,4 @@ Installed php extensions:
 
 * memcached v3.2
 * imagick v3.8
+
