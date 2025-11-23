@@ -46,7 +46,7 @@ services:
       - ./init.sh:/tmp/init.sh:ro
 
   wordpress:
-    image: ghcr.io/shesselink81/wordpress-apache:v6.8.3.10
+    image: ghcr.io/shesselink81/wordpress-apache:v6.8.3.11
     #build: .
     restart: always
     user: www-data
