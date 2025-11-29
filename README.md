@@ -1,6 +1,6 @@
-# wordpress-apache
+# wordpress-images
 
-Custom wordpress Docker image
+Custom wordpress Docker images
 
 Docker Compose example:
 
@@ -12,15 +12,13 @@ Helm Chart:
 <https://artifacthub.io/packages/helm/slybase-wordpress/wordpress>
 
 Docker images:
-<https://github.com/shesselink81/wordpress-apache/pkgs/container/wordpress-apache>
+<https://github.com/shesselink81?tab=packages&repo_name=wordpress-apache>
 
 Version info:
 
 * Wordpress version:  6.8
-* Apache version:     2.4
 * PHP version:        8.4
 
 Installed php extensions:
 
-* memcached v3.2
-* imagick v3.8
+* memcached: v3.2

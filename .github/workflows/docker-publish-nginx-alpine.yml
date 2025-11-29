@@ -1,4 +1,4 @@
-name: Release on Tag Alpine
+name: Release on Tag Nginx Alpine
 
 on:
   push:
@@ -9,7 +9,7 @@ env:
   # Use docker.io for Docker Hub if empty
   REGISTRY: ghcr.io
   # github.repository as <account>/<repo>
-  IMAGE_NAME: ${{ github.actor }}/wordpress-alpine
+  IMAGE_NAME: ${{ github.actor }}/nginx-alpine
 
 jobs:
   build:
@@ -52,9 +52,11 @@ jobs:
         with:
           push: true
           files: |
-            ./wordpress-alpine/docker-bake-alpine.hcl
+            ./wordpress-alpine/docker-bake-nginx-alpine.hcl
             ${{ steps.meta.outputs.bake-file }}
           targets: build
+          set: |
+            build.args.WP_DOMAINNAME=wp.internal
 
       - name: Create artifact (example)
         run: |

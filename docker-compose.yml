@@ -1,21 +1,14 @@
 services:
   db:
     image: mariadb
-    ports:
-      - "3306:3306"
     restart: always
     environment:
-      MARIADB_USER: user
-      MARIADB_DATABASE: test
-      MARIADB_PASSWORD: x3RnucrxGSCRj0mU
-      MARIADB_ROOT_PASSWORD: x3RnucrxGSCRj0mU
+      MARIADB_USER: wp_user
+      MARIADB_DATABASE: wp_db
+      MARIADB_PASSWORD: wp_pass
+      MARIADB_ROOT_PASSWORD: rootpass
     volumes:
       - db:/var/lib/mysql
-    healthcheck:
-      test: ["CMD-SHELL", "mariadb-admin ping -h localhost -u root -p$MARIADB_ROOT_PASSWORD"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
 
   memcached:
     image: memcached:1.6.39
@@ -25,47 +18,54 @@ services:
     image: wordpress:cli-php8.4
     depends_on:
       db:
-        condition: service_healthy
+        condition: service_started
     restart: "no"
     user: root
     command: ["/bin/bash", "/tmp/init.sh"]
     environment:
       WORDPRESS_DB_HOST: db
-      WORDPRESS_DB_USER: user
-      WORDPRESS_DB_PASSWORD: x3RnucrxGSCRj0mU
-      WORDPRESS_DB_NAME: test
-      WP_ADMIN_USER: user
-      WP_ADMIN_PASSWORD: admin
-      MEMCACHED_HOST: memcached
+      WORDPRESS_DB_USER: wp_user
+      WORDPRESS_DB_PASSWORD: wp_pass
+      WORDPRESS_DB_NAME: wp_db
+      WP_ADMIN_USER: ${WP_USERNAME}
+      WP_ADMIN_PASSWORD: ${WP_PASSWORD}
       WP_TITLE: "New wordpress blog"
       WP_ADMIN_EMAIL: admin@example.com
-      WP_LOCALE: nl_NL
+      WP_LOCALE: ${WP_LOCALE}
       WP_INIT: "true"
+      WP_URL: "https://${WP_DOMAINNAME}"
+      WORDPRESS_VERSION: ${WORDPRESS_VERSION}
     volumes:
-      - wordpress:/var/www/html
+      - wordpress:/var/www/html:rw
       - ./init.sh:/tmp/init.sh:ro
+      - ./wordpress-alpine/cache-config.json:/tmp/cache-config.json:ro
 
   wordpress:
-    image: ghcr.io/shesselink81/wordpress-apache:v6.8.3.11
-    #build: .
+    #image: ghcr.io/shesselink81/wordpress-apache:v6.8.3.11
+    build:
+      context: .
+      args:
+        - WP_DOMAINNAME=${WP_DOMAINNAME}
     restart: always
     user: www-data
     depends_on:
       db:
-        condition: service_healthy
+        condition: service_started
       wordpress-init:
         condition: service_completed_successfully
       memcached:
         condition: service_started
     ports:
-      - "8090:80"
+      - "80:80"
+      - "443:443"
     environment:
       WORDPRESS_DB_HOST: db
-      WORDPRESS_DB_USER: user
-      WORDPRESS_DB_PASSWORD: x3RnucrxGSCRj0mU
-      WORDPRESS_DB_NAME: test
+      WORDPRESS_DB_USER: wp_user
+      WORDPRESS_DB_PASSWORD: wp_pass
+      WORDPRESS_DB_NAME: wp_db
+      WP_DOMAINNAME: ${WP_DOMAINNAME}
     volumes:
-      - wordpress:/var/www/html
+      - wordpress:/var/www/html:rw
 
 volumes:
   wordpress:

@@ -5,8 +5,6 @@ echo "=== WordPress init script started ==="
 
 # Zet veilige defaults
 export WP_PATH="/var/www/html"
-#export WP_CLI_PHP_ARGS="-d memory_limit=512M"
-#export WP_URL="${WP_URL:-http://wp.internal}"
 
 # Controleer database connectie voordat we verdergaan
 echo "⏳ Wachten op database (${WORDPRESS_DB_HOST})..."
@@ -24,7 +22,7 @@ else
   # Download core (indien nog niet aanwezig)
   if [ ! -f "${WP_PATH}/wp-settings.php" ]; then
     echo "⬇️  Downloaden van WordPress (${WP_LOCALE})..."
-    php -d memory_limit=512M /usr/local/bin/wp core download --path="${WP_PATH}" --locale="${WP_LOCALE}" --allow-root
+    php -d memory_limit=512M /usr/local/bin/wp core download --path="${WP_PATH}" --allow-root --version="${WORDPRESS_VERSION}" --force --locale="${WP_LOCALE}"
   fi
 
   # Config aanmaken als hij nog niet bestaat
