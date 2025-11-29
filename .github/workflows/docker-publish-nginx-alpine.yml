@@ -51,12 +51,12 @@ jobs:
         uses: docker/bake-action@v2
         with:
           push: true
+          set: |
+            build.args.WP_DOMAINNAME=wp.internal
           files: |
             ./wordpress-alpine/nginx/docker-bake-nginx-alpine.hcl
             ${{ steps.meta.outputs.bake-file }}
           targets: build
-          set: |
-            build.args.WP_DOMAINNAME=wp.internal
 
       - name: Create artifact (example)
         run: |
