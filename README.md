@@ -3,10 +3,10 @@
 Custom wordpress Docker images
 
 Docker Compose example:
-
 ```console
-curl -sSL https://raw.githubusercontent.com/shesselink81/wordpress-apache/main/docker-compose.yml > docker-compose.yml
-docker-compose up -d
+git clone https://github.com/shesselink81/wordpress-apache.git
+cd wordpress-apache
+docker compose up -d
 ```
 Helm Chart:
 <https://artifacthub.io/packages/helm/slybase-wordpress/wordpress>
@@ -16,7 +16,7 @@ Docker images:
 
 Version info:
 
-* Wordpress version:  6.8
+* Wordpress version:  6.9
 * PHP version:        8.4
 
 Installed php extensions:

@@ -14,6 +14,25 @@ services:
     image: memcached:1.6.39
     restart: always
 
+  wordpress-cli:
+    image: wordpress:cli-php8.4
+    depends_on:
+      db:
+        condition: service_started
+    restart: "always"
+    user: www-data
+    command: ["/bin/bash", "-c", "sleep infinity"]
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_USER: wp_user
+      WORDPRESS_DB_PASSWORD: wp_pass
+      WORDPRESS_DB_NAME: wp_db
+      WP_URL: "https://${WP_DOMAINNAME}"
+      WORDPRESS_VERSION: ${WORDPRESS_VERSION}
+    volumes:
+      - wordpress:/var/www/html:rw
+      #- ./init.sh:/tmp/init.sh:ro
+      #- ./wordpress-alpine/cache-config.json:/tmp/cache-config.json:ro
   wordpress-init:
     image: wordpress:cli-php8.4
     depends_on:

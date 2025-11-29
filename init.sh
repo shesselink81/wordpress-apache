@@ -79,6 +79,15 @@ fi
 cp /tmp/cache-config.json "${WP_PATH}/wp-content/w3tc-config/master.php"
 echo "✅ W3 Total Cache configuratie toegepast."
 
+echo "🧾 Cleanup plugins and enable autoupdate"
+php -d memory_limit=512M /usr/local/bin/wp plugin auto-updates enable --all --disabled-only --path="${WP_PATH}" --allow-root
+if php -d memory_limit=512M /usr/local/bin/wp plugin is-installed hello --path="${WP_PATH}" --allow-root; then
+     php -d memory_limit=512M /usr/local/bin/wp plugin delete hello --allow-root --path="${WP_PATH}"
+fi
+if php -d memory_limit=512M /usr/local/bin/wp plugin is-installed akismet --path="${WP_PATH}" --allow-root; then
+     php -d memory_limit=512M /usr/local/bin/wp plugin delete akismet --allow-root --path="${WP_PATH}"
+fi
+
 # File permissies herstellen
 echo "🧾 Herstellen van permissies..."
 chown -R 33:33 "${WP_PATH}"
