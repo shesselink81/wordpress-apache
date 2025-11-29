@@ -6,7 +6,7 @@ target "build" {
   context = "./"
   dockerfile = "Dockerfile"
   args = {
-    WP_DOMAINNAME=${WP_DOMAINNAME}
+    WP_DOMAINNAME = "${WP_DOMAINNAME}"
   }
   platforms = [
     "linux/amd64",

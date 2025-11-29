@@ -52,7 +52,7 @@ jobs:
         with:
           push: true
           files: |
-            ./wordpress-alpine/docker-bake-nginx-alpine.hcl
+            ./wordpress-alpine/nginx/docker-bake-nginx-alpine.hcl
             ${{ steps.meta.outputs.bake-file }}
           targets: build
           set: |
