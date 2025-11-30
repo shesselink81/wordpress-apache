@@ -75,8 +75,8 @@ services:
       memcached:
         condition: service_started
     ports:
-      - "80:80"
-      - "443:443"
+      - "9080:80"
+      - "9443:443"
     environment:
       WORDPRESS_DB_HOST: db
       WORDPRESS_DB_USER: wp_user
