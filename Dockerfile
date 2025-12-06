@@ -1,5 +1,5 @@
-#FROM wordpress:6-php8.4-apache
-FROM wordpress:beta-6.9-RC3-php8.4-apache
+FROM wordpress:6-php8.4-apache
+#FROM wordpress:beta-6.9-RC3-php8.4-apache
 RUN apt-get update && apt-get install -y libmemcached-dev libssl-dev zlib1g-dev \
 	&& pecl install memcached-3.2.0 \
 	&& docker-php-ext-enable memcached
