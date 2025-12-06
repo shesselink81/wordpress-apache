@@ -3,10 +3,10 @@ services:
     image: mariadb
     restart: always
     environment:
-      MARIADB_USER: wp_user
+      MARIADB_USER: ${WP_DB_USER}
       MARIADB_DATABASE: wp_db
-      MARIADB_PASSWORD: wp_pass
-      MARIADB_ROOT_PASSWORD: rootpass
+      MARIADB_PASSWORD: ${WP_DB_PASSWORD}
+      MARIADB_ROOT_PASSWORD: ${WP_DB_ROOT_PASSWORD}
     volumes:
       - db:/var/lib/mysql
 
@@ -23,11 +23,11 @@ services:
     user: www-data
     command: ["/bin/bash", "-c", "sleep infinity"]
     environment:
-      WORDPRESS_DB_HOST: db
-      WORDPRESS_DB_USER: wp_user
-      WORDPRESS_DB_PASSWORD: wp_pass
-      WORDPRESS_DB_NAME: wp_db
-      WP_URL: "https://${WP_DOMAINNAME}"
+      WP_DB_HOST: db
+      WP_DB_USER: ${WP_DB_USER}
+      WP_DB_PASSWORD: ${WP_DB_PASSWORD}
+      WP_DB_NAME: wp_db
+      WP_URL: "${WP_SCHEME}://${WP_DOMAINNAME}"
       WORDPRESS_VERSION: ${WORDPRESS_VERSION}
     volumes:
       - wordpress:/var/www/html:rw
@@ -42,17 +42,17 @@ services:
     user: root
     command: ["/bin/bash", "/tmp/init.sh"]
     environment:
-      WORDPRESS_DB_HOST: db
-      WORDPRESS_DB_USER: wp_user
-      WORDPRESS_DB_PASSWORD: wp_pass
-      WORDPRESS_DB_NAME: wp_db
+      WP_DB_HOST: db
+      WP_DB_USER: ${WP_DB_USER}
+      WP_DB_PASSWORD: ${WP_DB_PASSWORD}
+      WP_DB_NAME: wp_db
       WP_ADMIN_USER: ${WP_USERNAME}
       WP_ADMIN_PASSWORD: ${WP_PASSWORD}
       WP_TITLE: "New wordpress blog"
       WP_ADMIN_EMAIL: admin@example.com
       WP_LOCALE: ${WP_LOCALE}
       WP_INIT: "true"
-      WP_URL: "https://${WP_DOMAINNAME}"
+      WP_URL: "${WP_SCHEME}://${WP_DOMAINNAME}"
       WORDPRESS_VERSION: ${WORDPRESS_VERSION}
     volumes:
       - wordpress:/var/www/html:rw
@@ -64,7 +64,7 @@ services:
     build:
       context: .
       args:
-        - WP_DOMAINNAME=${WP_DOMAINNAME}
+         - WP_DOMAINNAME=${WP_DOMAINNAME}
     restart: always
     user: www-data
     depends_on:
@@ -76,12 +76,12 @@ services:
         condition: service_started
     ports:
       - "9080:80"
-      - "9443:443"
+      #- "9443:443"
     environment:
-      WORDPRESS_DB_HOST: db
-      WORDPRESS_DB_USER: wp_user
-      WORDPRESS_DB_PASSWORD: wp_pass
-      WORDPRESS_DB_NAME: wp_db
+      WP_DB_HOST: db
+      WP_DB_USER: ${WP_DB_USER}
+      WP_DB_PASSWORD: ${WP_DB_PASSWORD}
+      WP_DB_NAME: wp_db
       WP_DOMAINNAME: ${WP_DOMAINNAME}
     volumes:
       - wordpress:/var/www/html:rw

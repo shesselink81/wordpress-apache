@@ -7,8 +7,8 @@ echo "=== WordPress init script started ==="
 export WP_PATH="/var/www/html"
 
 # Controleer database connectie voordat we verdergaan
-echo "⏳ Wachten op database (${WORDPRESS_DB_HOST})..."
-until mariadb-admin ping -h"${WORDPRESS_DB_HOST}" -u"${WORDPRESS_DB_USER}" -p"${WORDPRESS_DB_PASSWORD}" --silent; do
+echo "⏳ Wachten op database (${WP_DB_HOST})..."
+until mariadb-admin ping -h"${WP_DB_HOST}" -u"${WP_DB_USER}" -p"${WP_DB_PASSWORD}" --silent; do
   sleep 2
 done
 echo "✅ Database bereikbaar!"
@@ -30,10 +30,10 @@ else
     echo "⚙️  Aanmaken wp-config.php..."
     php -d memory_limit=512M /usr/local/bin/wp config create \
       --path="${WP_PATH}" \
-      --dbname="${WORDPRESS_DB_NAME}" \
-      --dbuser="${WORDPRESS_DB_USER}" \
-      --dbpass="${WORDPRESS_DB_PASSWORD}" \
-      --dbhost="${WORDPRESS_DB_HOST}" \
+      --dbname="${WP_DB_NAME}" \
+      --dbuser="${WP_DB_USER}" \
+      --dbpass="${WP_DB_PASSWORD}" \
+      --dbhost="${WP_DB_HOST}" \
       --locale="${WP_LOCALE}" \
       --allow-root
   fi
