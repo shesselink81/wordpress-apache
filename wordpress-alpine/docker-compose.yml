@@ -33,7 +33,7 @@ services:
     restart: always
 
    wordpress:
-    #image: wordpress-alpine:v1.0.0
+    #image: ghcr.io/shesselink81/wordpress-alpine:v6.9.0.3
     build: .
     #container_name: wp-fpm
     restart: unless-stopped
@@ -73,7 +73,7 @@ services:
       - db_data:/var/lib/mysql
 
    nginx:
-    #image: nginx:alpine
+    #image: ghcr.io/shesselink81/nginx-alpine:v6.9.0.3
     build:
       context: ./nginx/
     #container_name: wp-nginx
