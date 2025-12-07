@@ -51,41 +51,49 @@ else
     --allow-root
 
   echo "✅ WordPress installatie voltooid!"
-fi
+  # Memcached ondersteuning inschakelen
+  if ping -c 1 memcached &>/dev/null; then
+    echo "💾 Memcached server gevonden, plugin installeren..."
+    if ! php -d memory_limit=512M /usr/local/bin/wp plugin is-installed w3-total-cache --path="${WP_PATH}" --allow-root; then
+      php -d memory_limit=512M /usr/local/bin/wp plugin install w3-total-cache --activate --allow-root --path="${WP_PATH}"
+    else
+      php -d memory_limit=512M /usr/local/bin/wp plugin activate w3-total-cache --allow-root --path="${WP_PATH}" || true
+    fi
 
-# Memcached ondersteuning inschakelen
-if ping -c 1 memcached &>/dev/null; then
-  echo "💾 Memcached server gevonden, plugin installeren..."
-  if ! php -d memory_limit=512M /usr/local/bin/wp plugin is-installed w3-total-cache --path="${WP_PATH}" --allow-root; then
-    php -d memory_limit=512M /usr/local/bin/wp plugin install w3-total-cache --activate --allow-root --path="${WP_PATH}"
+    # Voeg caching aan wp-config toe (indien nog niet aanwezig)
+    if ! grep -q "WP_CACHE" "${WP_PATH}/wp-config.php"; then
+      echo "define('WP_CACHE', true);" >> "${WP_PATH}/wp-config.php"
+    fi
+
+    if ! grep -q "memcached_servers" "${WP_PATH}/wp-config.php"; then
+      echo "\$memcached_servers = array( 'default' => array('memcached:11211') );" >> "${WP_PATH}/wp-config.php"
+    fi
+
+    echo "✅ Memcached caching geconfigureerd."
   else
-    php -d memory_limit=512M /usr/local/bin/wp plugin activate w3-total-cache --allow-root --path="${WP_PATH}" || true
+    echo "⚠️  Geen memcached service bereikbaar — overslaan caching setup."
   fi
 
-  # Voeg caching aan wp-config toe (indien nog niet aanwezig)
-  if ! grep -q "WP_CACHE" "${WP_PATH}/wp-config.php"; then
-    echo "define('WP_CACHE', true);" >> "${WP_PATH}/wp-config.php"
+  cp /tmp/cache-config.json "${WP_PATH}/wp-content/w3tc-config/master.php"
+  echo "✅ W3 Total Cache configuratie toegepast."
+
+  # Cleanup ongebruikte thema's en plugins
+  echo "🧾 Cleanup unused themes"
+  wp theme delete $(wp theme list --status=inactive --field=name --path="${WP_PATH}" --allow-root) --path="${WP_PATH}" --allow-root
+  echo "✅ Verwijderen van ongebruikte thema's voltooid."
+  
+  echo "🧾 Enable theme autoupdate"
+  wp theme auto-updates enable --all --disabled-only --path="${WP_PATH}" --allow-root
+
+  echo "🧾 Cleanup plugins and enable autoupdate"
+  php -d memory_limit=512M /usr/local/bin/wp plugin auto-updates enable --all --disabled-only --path="${WP_PATH}" --allow-root
+  if php -d memory_limit=512M /usr/local/bin/wp plugin is-installed hello --path="${WP_PATH}" --allow-root; then
+      php -d memory_limit=512M /usr/local/bin/wp plugin delete hello --allow-root --path="${WP_PATH}"
+  fi
+  if php -d memory_limit=512M /usr/local/bin/wp plugin is-installed akismet --path="${WP_PATH}" --allow-root; then
+      php -d memory_limit=512M /usr/local/bin/wp plugin delete akismet --allow-root --path="${WP_PATH}"
   fi
 
-  if ! grep -q "memcached_servers" "${WP_PATH}/wp-config.php"; then
-    echo "\$memcached_servers = array( 'default' => array('memcached:11211') );" >> "${WP_PATH}/wp-config.php"
-  fi
-
-  echo "✅ Memcached caching geconfigureerd."
-else
-  echo "⚠️  Geen memcached service bereikbaar — overslaan caching setup."
-fi
-
-cp /tmp/cache-config.json "${WP_PATH}/wp-content/w3tc-config/master.php"
-echo "✅ W3 Total Cache configuratie toegepast."
-
-echo "🧾 Cleanup plugins and enable autoupdate"
-php -d memory_limit=512M /usr/local/bin/wp plugin auto-updates enable --all --disabled-only --path="${WP_PATH}" --allow-root
-if php -d memory_limit=512M /usr/local/bin/wp plugin is-installed hello --path="${WP_PATH}" --allow-root; then
-     php -d memory_limit=512M /usr/local/bin/wp plugin delete hello --allow-root --path="${WP_PATH}"
-fi
-if php -d memory_limit=512M /usr/local/bin/wp plugin is-installed akismet --path="${WP_PATH}" --allow-root; then
-     php -d memory_limit=512M /usr/local/bin/wp plugin delete akismet --allow-root --path="${WP_PATH}"
 fi
 
 # File permissies herstellen

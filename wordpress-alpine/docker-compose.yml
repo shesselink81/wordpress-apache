@@ -11,16 +11,16 @@ services:
     command: ["/bin/bash", "/tmp/init.sh"]
     environment:
       WORDPRESS_DB_HOST: db
-      WORDPRESS_DB_USER: wp_user
-      WORDPRESS_DB_PASSWORD: wp_pass
-      WORDPRESS_DB_NAME: wp_db
+      WORDPRESS_DB_USER: ${MYSQL_USER}
+      WORDPRESS_DB_PASSWORD: ${MYSQL_PASSWORD}
+      WORDPRESS_DB_NAME: ${MYSQL_DATABASE}
       WP_ADMIN_USER: ${WP_USERNAME}
       WP_ADMIN_PASSWORD: ${WP_PASSWORD}
       WP_TITLE: "New wordpress blog"
       WP_ADMIN_EMAIL: admin@example.com
       WP_LOCALE: ${WP_LOCALE}
       WP_INIT: "true"
-      WP_URL: "https://${WP_DOMAINNAME}"
+      WP_URL: "${WP_SCHEME}://${WP_DOMAINNAME}"
       WORDPRESS_VERSION: ${WORDPRESS_VERSION}
 
     volumes:
@@ -46,28 +46,9 @@ services:
         condition: service_started
     environment:
       WORDPRESS_DB_HOST: db
-      WORDPRESS_DB_USER: wp_user
-      WORDPRESS_DB_PASSWORD: wp_pass
-      WORDPRESS_DB_NAME: wp_db
-      WORDPRESS_CONFIG_EXTRA: |
-        define('FORCE_SSL_ADMIN', true);
-
-        if (array_key_exists('HTTP_X_FORWARDED_PROTO', $_SERVER)) {
-            if ($_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https') {
-                $_SERVER['HTTPS'] = 'on';
-            }
-        }
-
-        if (array_key_exists('HTTPS', $_SERVER)) {
-            if ($_SERVER['HTTPS'] === 'on') {
-                $_SERVER['HTTPS'] = 'on';
-            }
-        }
-
-        define('FS_METHOD', 'direct');
-        define('WP_CACHE', true);
-        define('WP_HOME', 'https://${WP_DOMAINNAME}');
-        define('WP_SITEURL', 'https://${WP_DOMAINNAME}');
+      WORDPRESS_DB_USER: ${MYSQL_USER}
+      WORDPRESS_DB_PASSWORD: ${MYSQL_PASSWORD}
+      WORDPRESS_DB_NAME: ${MYSQL_DATABASE}
 
     volumes:
       - wordpress:/var/www/html:rw
@@ -84,10 +65,10 @@ services:
       timeout: 5s
       retries: 5
     environment:
-      MYSQL_ROOT_PASSWORD: rootpass
-      MYSQL_DATABASE: wp_db
-      MYSQL_USER: wp_user
-      MYSQL_PASSWORD: wp_pass
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     volumes:
       - db_data:/var/lib/mysql
 
@@ -95,20 +76,35 @@ services:
     #image: nginx:alpine
     build:
       context: ./nginx/
-      args:
-        - WP_DOMAINNAME=${WP_DOMAINNAME}
     #container_name: wp-nginx
     restart: unless-stopped
     depends_on:
       - wordpress
     ports:
-      - "9080:80"
-      - "9443:443"
+      - "80:80"
+      - "443:443"
     volumes:
       - wordpress:/var/www/html:rw
       - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:rw
       #- ./nginx/ssl:/etc/nginx/ssl:ro
-
+  
+  #  wordpress-cli:
+  #   image: wordpress:cli-php8.4
+  #   depends_on:
+  #     db:
+  #       condition: service_started
+  #   restart: "always"
+  #   user: www-data
+  #   command: ["/bin/bash", "-c", "sleep infinity"]
+  #   environment:
+  #     WP_DB_HOST: db
+  #     WP_DB_USER: ${MYSQL_USER}
+  #     WP_DB_PASSWORD: ${MYSQL_PASSWORD}
+  #     WP_DB_NAME: ${MYSQL_DATABASE}
+  #     WP_URL: "${WP_SCHEME}://${WP_DOMAINNAME}"
+  #     WORDPRESS_VERSION: ${WORDPRESS_VERSION}
+  #   volumes:
+  #     - wordpress:/var/www/html:rw
 volumes:
   wordpress:
   db_data:
