@@ -1,0 +1,34 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ include "wordpress-alpine.fullname" . }}-init
+spec:
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: init
+          image: {{ .Values.image.init }}
+          command: ["/bin/bash", "/tmp/init.sh"]
+          env:
+            - name: WORDPRESS_DB_HOST
+              value: "db"
+            - name: WORDPRESS_DB_USER
+              value: {{ .Values.env.mysql.user | quote }}
+            - name: WORDPRESS_DB_PASSWORD
+              value: {{ .Values.env.mysql.password | quote }}
+            - name: WORDPRESS_DB_NAME
+              value: {{ .Values.env.mysql.database | quote }}
+          volumeMounts:
+            - name: wordpress
+              mountPath: /var/www/html
+            - name: init-script
+              mountPath: /tmp/init.sh
+              subPath: init.sh
+      volumes:
+        - name: wordpress
+          persistentVolumeClaim:
+            claimName: {{ include "wordpress-alpine.fullname" . }}-wp-pvc
+        - name: init-script
+          configMap:
+            name: {{ include "wordpress-alpine.fullname" . }}-init-config

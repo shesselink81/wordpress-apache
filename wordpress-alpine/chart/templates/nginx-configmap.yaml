@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "wordpress-alpine.fullname" . }}-nginx-config
+data:
+  default.conf: |-
+{{ (.Files.Get "../../nginx/default.conf") | indent 4 }}

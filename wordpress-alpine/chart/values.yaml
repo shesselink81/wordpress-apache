@@ -1,0 +1,28 @@
+image:
+  fpm: ghcr.io/shesselink81/wordpress-alpine:latest
+  nginx: ghcr.io/shesselink81/nginx-alpine:latest
+  init: wordpress:cli-php8.4
+  db: mariadb:10.11
+
+env:
+  mysql:
+    user: wordpress
+    password: wordpress
+    database: wordpress
+
+  wp:
+    scheme: https
+    domainname: wordpress.local
+    version: "6.9.0"
+
+persistence:
+  wordpress:
+    enabled: true
+    size: 5Gi
+  db:
+    enabled: true
+    size: 5Gi
+
+service:
+  nginx:
+    port: 80

@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "wordpress-alpine.fullname" . }}-nginx
+spec:
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+        - name: nginx
+          image: {{ .Values.image.nginx }}
+          ports:
+            - containerPort: {{ .Values.service.nginx.port }}
+          volumeMounts:
+            - mountPath: /var/www/html
+              name: wordpress
+            - mountPath: /etc/nginx/conf.d/default.conf
+              name: nginxconf
+              subPath: default.conf
+      volumes:
+        - name: wordpress
+          persistentVolumeClaim:
+            claimName: {{ include "wordpress-alpine.fullname" . }}-wp-pvc
+        - name: nginxconf
+          configMap:
+            name: {{ include "wordpress-alpine.fullname" . }}-nginx-config

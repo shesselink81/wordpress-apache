@@ -1,0 +1,5 @@
+apiVersion: v2
+name: wordpress-alpine
+version: 0.1.0
+description: WordPress FPM + Nginx + Init + MariaDB (alpine)
+type: application

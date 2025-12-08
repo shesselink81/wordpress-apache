@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "wordpress-alpine.fullname" . }}-fpm
+spec:
+  selector:
+    matchLabels:
+      app: wordpress-fpm
+  template:
+    metadata:
+      labels:
+        app: wordpress-fpm
+    spec:
+      containers:
+        - name: fpm
+          image: {{ .Values.image.fpm }}
+          env:
+            - name: WP_DB_HOST
+              value: "db"
+            - name: WP_DB_USER
+              value: {{ .Values.env.mysql.user | quote }}
+            - name: WP_DB_PASSWORD
+              value: {{ .Values.env.mysql.password | quote }}
+            - name: WP_DB_NAME
+              value: {{ .Values.env.mysql.database | quote }}
+            - name: WP_URL
+              value: "{{ .Values.env.wp.scheme }}://{{ .Values.env.wp.domainname }}"
+            - name: WORDPRESS_VERSION
+              value: {{ .Values.env.wp.version | quote }}
+          volumeMounts:
+            - mountPath: /var/www/html
+              name: wordpress
+      volumes:
+        - name: wordpress
+          persistentVolumeClaim:
+            claimName: {{ include "wordpress-alpine.fullname" . }}-wp-pvc
