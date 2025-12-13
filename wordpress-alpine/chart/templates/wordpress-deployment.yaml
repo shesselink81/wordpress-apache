@@ -11,22 +11,69 @@ spec:
       labels:
         app: wordpress-fpm
     spec:
-      containers:
-        - name: fpm
-          image: {{ .Values.image.fpm }}
+      initContainers:
+        - name: init
+          image: {{ .Values.image.init }}
+          command: ["/bin/bash", "/tmp/init.sh"]
           env:
-            - name: WP_DB_HOST
-              value: "db"
-            - name: WP_DB_USER
+            - name: WORDPRESS_DB_HOST
+              value: {{ include "wordpress-alpine.fullname" . }}-db
+            - name: MEMCACHED_HOST
+              value: {{ include "wordpress-alpine.memcached.fullname" . }}
+            - name: WORDPRESS_DB_USER
               value: {{ .Values.env.mysql.user | quote }}
-            - name: WP_DB_PASSWORD
+            - name: WORDPRESS_DB_PASSWORD
               value: {{ .Values.env.mysql.password | quote }}
-            - name: WP_DB_NAME
+            - name: WORDPRESS_DB_NAME
               value: {{ .Values.env.mysql.database | quote }}
             - name: WP_URL
               value: "{{ .Values.env.wp.scheme }}://{{ .Values.env.wp.domainname }}"
             - name: WORDPRESS_VERSION
               value: {{ .Values.env.wp.version | quote }}
+            - name: WP_LOCALE
+              value: {{ .Values.env.wp.locale | quote }}
+            - name: WP_TITLE
+              value: {{ .Values.env.wp.title | quote }}
+            - name: WP_ADMIN_USER
+              value: {{ .Values.env.wp.admin_user | quote }}
+            - name: WP_ADMIN_PASSWORD
+              value: {{ .Values.env.wp.admin_password | quote }}
+            - name: WP_ADMIN_EMAIL
+              value: admin@{{ .Values.env.wp.domainname }}
+          volumeMounts:
+            - name: wordpress
+              mountPath: /var/www/html
+            - name: init-script
+              mountPath: /tmp/init.sh
+              subPath: init.sh
+      containers:
+        - name: fpm
+          image: {{ .Values.image.fpm }}
+          env:
+            - name: WORDPRESS_DB_HOST
+              value: {{ include "wordpress-alpine.fullname" . }}-db
+            - name: MEMCACHED_HOST
+              value: {{ include "wordpress-alpine.memcached.fullname" . }}
+            - name: WORDPRESS_DB_USER
+              value: {{ .Values.env.mysql.user | quote }}
+            - name: WORDPRESS_DB_PASSWORD
+              value: {{ .Values.env.mysql.password | quote }}
+            - name: WORDPRESS_DB_NAME
+              value: {{ .Values.env.mysql.database | quote }}
+            - name: WP_URL
+              value: "{{ .Values.env.wp.scheme }}://{{ .Values.env.wp.domainname }}"
+            - name: WORDPRESS_VERSION
+              value: {{ .Values.env.wp.version | quote }}
+            - name: WP_LOCALE
+              value: {{ .Values.env.wp.locale | quote }}
+            - name: WP_TITLE
+              value: {{ .Values.env.wp.title | quote }}
+            - name: WP_ADMIN_USER
+              value: {{ .Values.env.wp.admin_user | quote }}
+            - name: WP_ADMIN_PASSWORD
+              value: {{ .Values.env.wp.admin_password | quote }}
+            - name: WP_ADMIN_EMAIL
+              value: admin@{{ .Values.env.wp.domainname }}
           volumeMounts:
             - mountPath: /var/www/html
               name: wordpress
@@ -34,3 +81,6 @@ spec:
         - name: wordpress
           persistentVolumeClaim:
             claimName: {{ include "wordpress-alpine.fullname" . }}-wp-pvc
+        - name: init-script
+          configMap:
+            name: {{ include "wordpress-alpine.fullname" . }}-init-config

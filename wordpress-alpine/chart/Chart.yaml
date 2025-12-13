@@ -1,5 +1,17 @@
 apiVersion: v2
 name: wordpress-alpine
-version: 0.1.0
+version: 0.1.1
+appVersion: "6.9.0" # renovate: image=docker.io/wordpress
+icon: https://raw.githubusercontent.com/slydlake/helm-charts/refs/heads/main/charts/wordpress/app.png
+home: https://github.com/shesselink81/wordpress-apache/tree/main/wordpress-alpine/chart
+maintainers:
+  - name: shesselink81
+sources:
+  - https://github.com/shesselink81/wordpress-apache/tree/main/wordpress-alpine/chart
 description: WordPress FPM + Nginx + Init + MariaDB (alpine)
 type: application
+dependencies:
+  - condition: memcached.enabled
+    name: memcached
+    repository: oci://registry-1.docker.io/cloudpirates
+    version: 0.7.1

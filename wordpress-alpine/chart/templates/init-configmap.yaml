@@ -4,4 +4,4 @@ metadata:
   name: {{ include "wordpress-alpine.fullname" . }}-init-config
 data:
   init.sh: |-
-{{ (.Files.Get "../../init-alpine.sh") | indent 4 }}
+{{ (.Files.Get "init-alpine.sh") | indent 4 }}

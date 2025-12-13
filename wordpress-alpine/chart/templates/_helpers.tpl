@@ -33,9 +33,9 @@ Create chart name and version as used by the chart label.
 {{/*
 Common labels
 */}}
-{{- define "wordpress.labels" -}}
-helm.sh/chart: "{{ include "wordpress.chart" . }}"
-{{ include "wordpress.selectorLabels" . }}
+{{- define "wordpress-alpine.labels" -}}
+helm.sh/chart: "{{ include "wordpress-alpine.chart" . }}"
+{{ include "wordpress-alpine.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: "{{ .Chart.AppVersion }}"
 {{- end }}
@@ -45,17 +45,17 @@ app.kubernetes.io/managed-by: "{{ .Release.Service }}"
 {{/*
 Selector labels
 */}}
-{{- define "wordpress.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "wordpress.name" . }}
+{{- define "wordpress-alpine.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "wordpress-alpine.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
 Create the name of the service account to use
 */}}
-{{- define "wordpress.serviceAccountName" -}}
+{{- define "wordpress-alpine.serviceAccountName" -}}
 {{- if .Values.serviceAccount.create }}
-{{- default (include "wordpress.fullname" .) .Values.serviceAccount.name }}
+{{- default (include "wordpress-alpine.fullname" .) .Values.serviceAccount.name }}
 {{- else }}
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
@@ -64,11 +64,11 @@ Create the name of the service account to use
 {{/*
 MariaDB fullname
 */}}
-{{- define "wordpress.mariadb.fullname" -}}
-{{- if .Values.mariadb.fullnameOverride }}
-{{- .Values.mariadb.fullnameOverride | trunc 63 | trimSuffix "-" }}
+{{- define "wordpress-alpine.mariadb.fullname" -}}
+{{- if .Values.env.mysql.fullnameOverride }}
+{{- .Values.env.mysql.fullnameOverride | trunc 63 | trimSuffix "-" }}
 {{- else }}
-{{- $name := default "mariadb" .Values.mariadb.nameOverride }}
+{{- $name := default "mysql" .Values.env.mysql.nameOverride }}
 {{- if contains $name .Release.Name }}
 {{- .Release.Name | trunc 63 | trimSuffix "-" }}
 {{- else }}
@@ -80,7 +80,7 @@ MariaDB fullname
 {{/*
 memcached fullname
 */}}
-{{- define "wordpress.memcached.fullname" -}}
+{{- define "wordpress-alpine.memcached.fullname" -}}
 {{- if .Values.memcached.fullnameOverride }}
 {{- .Values.memcached.fullnameOverride | trunc 63 | trimSuffix "-" }}
 {{- else }}
@@ -96,7 +96,7 @@ memcached fullname
 {{/*
 Wordpress metrics plugin
 */}}
-{{- define "metrics.wordpress.pluginname" -}}
+{{- define "metrics.wordpress-alpine.pluginname" -}}
 {{- if and (default false .Values.metrics.wordpress.enabled) (default false .Values.metrics.wordpress.installPlugin) }}
 {{- default "slymetrics" .Values.metrics.wordpress.pluginNameOverride | quote }}
 {{- else }}
@@ -109,7 +109,7 @@ Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 If release name contains chart name it will be used as a full name.
 */}}
-{{- define "metrics.wordpress.fullname" -}}
+{{- define "metrics.wordpress-alpine.fullname" -}}
 {{- if .Values.metrics.wordpress.fullnameOverride }}
 {{- .Values.metrics.wordpress.fullnameOverride | trunc 63 | trimSuffix "-" }}
 {{- else }}
