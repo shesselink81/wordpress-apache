@@ -78,6 +78,14 @@ else
   cp /tmp/cache-config.json "${WP_PATH}/wp-content/w3tc-config/master.php"
   echo "✅ W3 Total Cache configuratie toegepast."
 
+  # Cleanup ongebruikte thema's en plugins
+  echo "🧾 Cleanup unused themes"
+  wp theme delete $(wp theme list --status=inactive --field=name --path="${WP_PATH}" --allow-root) --path="${WP_PATH}" --allow-root
+  echo "✅ Verwijderen van ongebruikte thema's voltooid."
+  
+  echo "🧾 Enable theme autoupdate"
+  wp theme auto-updates enable --all --disabled-only --path="${WP_PATH}" --allow-root
+
   echo "🧾 Cleanup plugins and enable autoupdate"
   php -d memory_limit=512M /usr/local/bin/wp plugin auto-updates enable --all --disabled-only --path="${WP_PATH}" --allow-root
   if php -d memory_limit=512M /usr/local/bin/wp plugin is-installed hello --path="${WP_PATH}" --allow-root; then

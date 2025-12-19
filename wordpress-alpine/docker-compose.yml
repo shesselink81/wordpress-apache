@@ -35,7 +35,7 @@ services:
    wordpress:
     #image: ghcr.io/shesselink81/wordpress-alpine:v6.9.0.5
     build: .
-    #container_name: wp-fpm
+    container_name: wp-fpm
     restart: unless-stopped
     depends_on:
       db:
@@ -56,8 +56,8 @@ services:
       - ./php.ini:/usr/local/etc/php/conf.d/zz-custom.ini:ro
 
    db:
-    image: mariadb
-    #container_name: wp-db
+    image: mariadb:12.1.2
+    container_name: wp-db
     restart: unless-stopped
     healthcheck:
       test: ["CMD-SHELL", "mariadb-admin ping -h localhost -u root -p$MYSQL_ROOT_PASSWORD"]
@@ -73,16 +73,16 @@ services:
       - db_data:/var/lib/mysql
 
    nginx:
-    image: ghcr.io/shesselink81/nginx-alpine:v6.9.0.4
-    #build:
-    #  context: ./nginx/
-    #container_name: wp-nginx
+    #image: ghcr.io/shesselink81/nginx-alpine:v6.9.0.4
+    build:
+      context: ./nginx/
+    container_name: wp-nginx
     restart: unless-stopped
     depends_on:
       - wordpress
     ports:
-      - "80:80"
-      - "443:443"
+      - "8088:80"
+      - "9443:443"
     volumes:
       - wordpress:/var/www/html:rw
       - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:rw

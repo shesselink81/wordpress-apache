@@ -76,7 +76,7 @@ services:
         condition: service_started
     ports:
       - "9080:80"
-      #- "9443:443"
+      - "9443:443"
     environment:
       WP_DB_HOST: db
       WP_DB_USER: ${WP_DB_USER}

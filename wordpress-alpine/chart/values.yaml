@@ -1,7 +1,7 @@
 image:
-  fpm: ghcr.io/shesselink81/wordpress-alpine:v6.9.0.7
-  nginx: ghcr.io/shesselink81/nginx-alpine:v6.9.0.5
-  init: wordpress:cli-php8.4
+  fpm: ghcr.io/shesselink81/wordpress-alpine:v6.9.0.8
+  nginx: ghcr.io/shesselink81/nginx-alpine:v6.9.0.8
+  init: wordpress:cli-php8.3
   db: mariadb:12.1.2
 
 env:
@@ -15,8 +15,8 @@ env:
     domainname: wordpress.local
     url: "${scheme}://${domainname}"
     version: "6.9.0"
-    locale: nl_NL
-    title: "Mijn WordPress Site"
+    locale: en_US
+    title: "My WordPress Site"
     admin_user: admin
     admin_password: admin
     debug: "false"
