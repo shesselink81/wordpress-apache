@@ -1,6 +1,6 @@
 image:
-  fpm: ghcr.io/shesselink81/wordpress-alpine:v6.9.0.8
-  nginx: ghcr.io/shesselink81/nginx-alpine:v6.9.0.8
+  fpm: ghcr.io/shesselink81/wordpress-alpine:v6.9.0.9
+  nginx: ghcr.io/shesselink81/nginx-alpine:v6.9.0.9
   init: wordpress:cli-php8.3
   db: mariadb:12.1.2
 
