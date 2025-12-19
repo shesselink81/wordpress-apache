@@ -7,3 +7,5 @@ spec:
   resources:
     requests:
       storage: {{ .Values.persistence.db.size }}
+    reclaimPolicy: Retain
+    
