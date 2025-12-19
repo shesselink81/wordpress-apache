@@ -77,6 +77,12 @@ spec:
           volumeMounts:
             - mountPath: /var/www/html
               name: wordpress
+            - mountPath: /usr/local/etc/php/php.ini
+              name: php-config
+              subPath: php.ini
+            - mountPath: /usr/local/etc/php/conf.d/php-fpm.conf
+              name: php-config
+              subPath: php-fpm.conf
       volumes:
         - name: wordpress
           persistentVolumeClaim:
@@ -84,3 +90,6 @@ spec:
         - name: init-script
           configMap:
             name: {{ include "wordpress-alpine.fullname" . }}-init-config
+        - name: php-config
+          configMap:
+            name: {{ include "wordpress-alpine.fullname" . }}-php-config

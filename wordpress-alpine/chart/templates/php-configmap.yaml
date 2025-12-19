@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "wordpress-alpine.fullname" . }}-php-config
+data:
+  php.ini: |-
+{{ (.Files.Get "php.ini") | indent 4 }}
+  php-fpm.conf: |-
+{{ (.Files.Get "php-fpm.conf") | indent 4 }}
