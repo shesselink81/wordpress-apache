@@ -5,10 +5,10 @@ entries:
       artifacthub.io/category: database
       artifacthub.io/changes: |2
             - kind: changed
-              description: "add serviceMonitor joblabel attribute to values (#610)"
+              description: "Update charts/memcached/values.yaml memcached (#710)"
               links:
-                - name: "Commit 098caf4"
-                  url: "https://github.com/CloudPirates-io/helm-charts/commit/098caf4"
+                - name: "Commit 9a0f0bc"
+                  url: "https://github.com/CloudPirates-io/helm-charts/commit/9a0f0bc"
       artifacthub.io/containsSecurityUpdates: "false"
       artifacthub.io/links: |
         - name: Memcached
@@ -23,14 +23,14 @@ entries:
       license: Apache-2.0
     apiVersion: v2
     appVersion: 1.6.39
-    created: "2025-12-19T18:04:19.526584+01:00"
+    created: "2025-12-19T18:54:41.5184457+01:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/cloudpirates
       version: 2.x.x
     description: Memcached is an in-memory key-value store for small chunks of arbitrary
       data (strings, objects) from results of database calls, API calls, or page rendering.
-    digest: 145dac31998dd4a5db99a1c3885babfb9f238319729cc526bd805a112c865414
+    digest: a2582827fe32fa968e8ed0694d80466d7997b6fd1457476d8eeda5cf2958aec0
     home: https://memcached.org
     icon: https://a.storyblok.com/f/143071/512x512/0faa83eb34/memcached-logo.svg
     keywords:
@@ -49,19 +49,40 @@ entries:
     - https://github.com/memcached/memcached
     type: application
     urls:
-    - charts/memcached-0.7.1.tgz
-    version: 0.7.1
+    - charts/memcached-0.8.0.tgz
+    version: 0.8.0
   wordpress-alpine:
   - apiVersion: v2
     appVersion: 6.9.0
-    created: "2025-12-19T18:04:19.5238298+01:00"
+    created: "2025-12-19T18:54:41.5168992+01:00"
     dependencies:
     - condition: memcached.enabled
       name: memcached
       repository: oci://registry-1.docker.io/cloudpirates
-      version: 0.7.1
+      version: 0.8.0
     description: WordPress FPM + Nginx + Init + MariaDB (alpine)
-    digest: bba809255a6e016b89dc2a391b0a35489f06712edbf66c76c70c2cbd06918300
+    digest: dfe2d3dbda75a8302136546636c13cf53100a6dc1cf95a3e1e7e1612d7f7763b
+    home: https://github.com/shesselink81/wordpress-apache/tree/main/wordpress-alpine/chart
+    icon: https://raw.githubusercontent.com/slydlake/helm-charts/refs/heads/main/charts/wordpress/app.png
+    maintainers:
+    - name: shesselink81
+    name: wordpress-alpine
+    sources:
+    - https://github.com/shesselink81/wordpress-apache/tree/main/wordpress-alpine/chart
+    type: application
+    urls:
+    - wordpress-alpine-0.1.3.tgz
+    version: 0.1.3
+  - apiVersion: v2
+    appVersion: 6.9.0
+    created: "2025-12-19T18:54:41.5136764+01:00"
+    dependencies:
+    - condition: memcached.enabled
+      name: memcached
+      repository: oci://registry-1.docker.io/cloudpirates
+      version: 0.8.0
+    description: WordPress FPM + Nginx + Init + MariaDB (alpine)
+    digest: 759e9740c8de466e509f2056f9aa4bb27faaad82f0d103010207682693beab8a
     home: https://github.com/shesselink81/wordpress-apache/tree/main/wordpress-alpine/chart
     icon: https://raw.githubusercontent.com/slydlake/helm-charts/refs/heads/main/charts/wordpress/app.png
     maintainers:
@@ -75,7 +96,7 @@ entries:
     version: 0.1.2
   - apiVersion: v2
     appVersion: 6.9.0
-    created: "2025-12-19T18:04:19.518325+01:00"
+    created: "2025-12-19T18:54:41.510598+01:00"
     dependencies:
     - condition: memcached.enabled
       name: memcached
@@ -94,4 +115,4 @@ entries:
     urls:
     - wordpress-alpine-0.1.1.tgz
     version: 0.1.1
-generated: "2025-12-19T18:04:19.5139554+01:00"
+generated: "2025-12-19T18:54:41.5057913+01:00"
