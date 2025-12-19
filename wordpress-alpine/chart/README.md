@@ -34,3 +34,57 @@ This chart deploys:
 - Persistent volumes for:
 - - WordPress files
 - - Database data
+
+🐳 Container Images
+| Component     | Image                                            |
+| ------------- | ------------------------------------------------ |
+| WordPress FPM | `ghcr.io/shesselink81/wordpress-alpine:v6.9.0.9` |
+| Nginx         | `ghcr.io/shesselink81/nginx-alpine:v6.9.0.9`     |
+| Init (WP-CLI) | `wordpress:cli-php8.3`                           |
+| Database      | `mariadb:12.1.2`                                 |
+
+
+⚙️ Configuration
+All configuration is done via values.yaml.
+WordPress Settings
+```yaml
+env:
+  wp:
+    scheme: https
+    domainname: wordpress.local
+    version: "6.9.0"
+    locale: en_US
+    title: "My WordPress Site"
+    admin_user: admin
+    admin_password: admin
+    debug: "false"
+    url: "${scheme}://${domainname}"
+  mysql:
+    user: wordpress
+    password: wordpress
+    database: wordpress
+persistence:
+  wordpress:
+    enabled: true
+    size: 5Gi
+  db:
+    enabled: true
+    size: 5Gi
+ingress:
+  enabled: true
+  className: "traefik"
+  hosts:
+    - host: wordpress.local
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls:
+    - secretName: wordpress-tls
+      hosts:
+        - wordpress.local
+memcached:
+  enabled: true
+  replicaCount: 1
+  service:
+    port: 11211
+```

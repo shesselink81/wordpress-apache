@@ -23,7 +23,7 @@ entries:
       license: Apache-2.0
     apiVersion: v2
     appVersion: 1.6.39
-    created: "2025-12-19T18:54:41.5184457+01:00"
+    created: "2025-12-19T19:23:02.4958781+01:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/cloudpirates
@@ -54,7 +54,28 @@ entries:
   wordpress-alpine:
   - apiVersion: v2
     appVersion: 6.9.0
-    created: "2025-12-19T18:54:41.5168992+01:00"
+    created: "2025-12-19T19:23:02.493778+01:00"
+    dependencies:
+    - condition: memcached.enabled
+      name: memcached
+      repository: oci://registry-1.docker.io/cloudpirates
+      version: 0.8.0
+    description: WordPress FPM + Nginx + Init + MariaDB (alpine)
+    digest: e8cb057684beeee0cf120f8e22a8e62e98a287d0d6698cc11eb7bb1d4abb6dc6
+    home: https://github.com/shesselink81/wordpress-apache/tree/main/wordpress-alpine/chart
+    icon: https://raw.githubusercontent.com/slydlake/helm-charts/refs/heads/main/charts/wordpress/app.png
+    maintainers:
+    - name: shesselink81
+    name: wordpress-alpine
+    sources:
+    - https://github.com/shesselink81/wordpress-apache/tree/main/wordpress-alpine/chart
+    type: application
+    urls:
+    - wordpress-alpine-0.1.4.tgz
+    version: 0.1.4
+  - apiVersion: v2
+    appVersion: 6.9.0
+    created: "2025-12-19T19:23:02.4900826+01:00"
     dependencies:
     - condition: memcached.enabled
       name: memcached
@@ -75,7 +96,7 @@ entries:
     version: 0.1.3
   - apiVersion: v2
     appVersion: 6.9.0
-    created: "2025-12-19T18:54:41.5136764+01:00"
+    created: "2025-12-19T19:23:02.486163+01:00"
     dependencies:
     - condition: memcached.enabled
       name: memcached
@@ -96,7 +117,7 @@ entries:
     version: 0.1.2
   - apiVersion: v2
     appVersion: 6.9.0
-    created: "2025-12-19T18:54:41.510598+01:00"
+    created: "2025-12-19T19:23:02.4835589+01:00"
     dependencies:
     - condition: memcached.enabled
       name: memcached
@@ -115,4 +136,4 @@ entries:
     urls:
     - wordpress-alpine-0.1.1.tgz
     version: 0.1.1
-generated: "2025-12-19T18:54:41.5057913+01:00"
+generated: "2025-12-19T19:23:02.4783019+01:00"
