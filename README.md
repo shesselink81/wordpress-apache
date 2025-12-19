@@ -2,14 +2,20 @@
 
 Custom wordpress Docker images
 
-Docker Compose example:
+Docker Compose apache example:
 ```console
 git clone https://github.com/shesselink81/wordpress-apache.git
 cd wordpress-apache
 docker compose up -d
 ```
+Docker Compose alpine example:
+```console
+git clone https://github.com/shesselink81/wordpress-apache.git
+cd wordpress-apache/wordpress-alpine
+docker compose up -d
+```
 Helm Chart:
-<https://artifacthub.io/packages/helm/slybase-wordpress/wordpress>
+<https://shesselink81.github.io/wordpress-apache/wordpress-alpine/chart/>
 
 Docker images:
 <https://github.com/shesselink81?tab=packages&repo_name=wordpress-apache>
