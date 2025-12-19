@@ -20,3 +20,17 @@ https://shesselink81.github.io/wordpress-apache/wordpress-alpine/chart/
 helm repo add wp-alpine https://shesselink81.github.io/wordpress-apache/wordpress-alpine/chart
 helm repo update
 helm install my-wordpress wp-alpine/wordpress-alpine
+```
+
+🧠 Architecture
+
+This chart deploys:
+
+- WordPress PHP-FPM (Alpine)
+- Nginx as frontend
+- Init container using WP-CLI (WordPress setup & config)
+- MariaDB (Alpine)
+- Optional Memcached (via dependency)
+- Persistent volumes for:
+- - WordPress files
+- - Database data
