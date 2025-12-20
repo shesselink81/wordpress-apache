@@ -131,10 +131,19 @@ helm install my-wordpress wp-alpine/wordpress-alpine</code></pre>
 persistence:
   wordpress:
     enabled: true
-    size: 5Gi
+    size: 1Gi
+    existingClaim: ""
+    keep: true
   db:
     enabled: true
-    size: 5Gi
+    size: 1Gi
+    existingClaim: ""
+    keep: true
+service:
+  nginx:
+    port: 80
+  db:
+    port: 3306
 ingress:
   enabled: true
   className: "traefik"
@@ -147,3 +156,8 @@ ingress:
     - secretName: wordpress-tls
       hosts:
         - wordpress.local
+memcached:
+  enabled: true
+  replicaCount: 1
+  service:
+    port: 11211

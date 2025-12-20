@@ -66,10 +66,19 @@ env:
 persistence:
   wordpress:
     enabled: true
-    size: 5Gi
+    size: 1Gi
+    existingClaim: ""
+    keep: true
   db:
     enabled: true
-    size: 5Gi
+    size: 1Gi
+    existingClaim: ""
+    keep: true
+service:
+  nginx:
+    port: 80
+  db:
+    port: 3306
 ingress:
   enabled: true
   className: "traefik"
