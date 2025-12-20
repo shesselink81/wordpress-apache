@@ -14,8 +14,8 @@ git clone https://github.com/shesselink81/wordpress-apache.git
 cd wordpress-apache/wordpress-alpine
 docker compose up -d
 ```
-Helm Chart:
-<https://artifacthub.io/packages/helm/gh-shesselink81-wordpress-alpine/wordpress-alpine>
+Helm Chart Alpine:
+<https://artifacthub.io/packages/helm/wp-alpine/wordpress-alpine>
 
 Docker images:
 <https://github.com/shesselink81?tab=packages&repo_name=wordpress-apache>
