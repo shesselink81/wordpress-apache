@@ -74,6 +74,10 @@ spec:
               value: {{ .Values.env.wp.admin_password | quote }}
             - name: WP_ADMIN_EMAIL
               value: admin@{{ .Values.env.wp.domainname }}
+          {{- with .Values.wordpress.resources }}    
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}  
           volumeMounts:
             - mountPath: /var/www/html
               name: wordpress

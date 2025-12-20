@@ -15,7 +15,11 @@ spec:
         - name: nginx
           image: {{ .Values.image.nginx }}
           ports:
-            - containerPort: {{ .Values.service.nginx.port }}
+            - containerPort: {{ .Values.nginx.service.port }}
+          {{- with .Values.nginx.resources }}    
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
           volumeMounts:
             - mountPath: /var/www/html
               name: wordpress

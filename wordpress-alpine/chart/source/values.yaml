@@ -18,6 +18,13 @@ env:
 wordpress:
   init:
     enabled: true
+  resources:
+    requests:
+       memory: "64Mi"
+       cpu: "20m"
+    limits:
+       memory: "128Mi"
+       cpu: "100m"
 
 persistence:
   wordpress:
@@ -45,9 +52,23 @@ mariadb:
     accessModes:
       - ReadWriteOnce
     size: 1Gi
+  resources:
+    requests:
+       memory: "128Mi"
+       cpu: "20m"
+    limits:
+       memory: "256Mi"
+       cpu: "100m"
 
-service:
-  nginx:
+nginx:
+  resources:
+    requests:
+       memory: "32Mi"
+       cpu: "10m"
+    limits:
+       memory: "64Mi"
+       cpu: "50m"
+  service:
     port: 80
 
 ingress:
@@ -68,23 +89,10 @@ memcached:
   createConfig: true
   nameOverride: ""
   fullnameOverride: ""
-  commonLabels: {}
-  commonAnnotations: {}
-  image:
-    registry: ""
-    repository: docker.io/memcached
-    tag: "1.6.39@sha256:4737e17016e4d65ad8007408ec1816096c4ebec04cfa89a5265a3edd3f4ca552"
-    pullPolicy: IfNotPresent
-  replicaCount: 1
-  service:
-    type: ClusterIP
-    port: 11211
-  containerSecurityContext:
-    runAsUser: 11211
-    runAsNonRoot: true
-    allowPrivilegeEscalation: false
-    capabilities:
-      drop:
-        - ALL
-    seccompProfile:
-      type: RuntimeDefault
+  resources:
+    requests:
+       memory: "15Mi"
+       cpu: "5m"
+    limits:
+       memory: "45Mi"
+       cpu: "50m"

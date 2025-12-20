@@ -6,6 +6,6 @@ spec:
   selector:
     app: nginx
   ports:
-    - port: {{ .Values.service.nginx.port }}
-      targetPort: {{ .Values.service.nginx.port }}
+    - port: {{ .Values.nginx.service.port }}
+      targetPort: {{ .Values.nginx.service.port }}
       protocol: TCP

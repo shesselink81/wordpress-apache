@@ -38,7 +38,7 @@ spec:
               service:
                 name: {{ include "wordpress-alpine.fullname" $ }}-nginx
                 port:
-                  number: {{ if $.Values.ingress.useHttpsBackend }}{{ $.Values.service.nginx.port }}{{ else }}{{ $.Values.service.nginx.port }}{{ end }}
+                  number: {{ if $.Values.ingress.useHttpsBackend }}{{ $.Values.nginx.service.port }}{{ else }}{{ $.Values.nginx.service.port }}{{ end }}
           {{- end }}
     {{- end }}
     {{- with .Values.ingress.extraRules }}
