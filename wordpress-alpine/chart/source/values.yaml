@@ -20,11 +20,11 @@ wordpress:
     enabled: true
   resources:
     requests:
-       memory: "64Mi"
-       cpu: "20m"
-    limits:
        memory: "128Mi"
-       cpu: "100m"
+       cpu: "50m"
+    limits:
+       memory: "512Mi"
+       cpu: "300m"
 
 persistence:
   wordpress:
@@ -58,7 +58,7 @@ mariadb:
        cpu: "20m"
     limits:
        memory: "256Mi"
-       cpu: "100m"
+       cpu: "300m"
 
 nginx:
   resources:
@@ -67,7 +67,7 @@ nginx:
        cpu: "10m"
     limits:
        memory: "64Mi"
-       cpu: "50m"
+       cpu: "150m"
   service:
     port: 80
 
