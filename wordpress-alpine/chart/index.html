@@ -117,47 +117,92 @@ helm install my-wordpress wp-alpine/wordpress-alpine</code></pre>
   wp:
     scheme: https
     domainname: wordpress.local
+    url: "${scheme}://${domainname}"
     version: "6.9.0"
     locale: en_US
     title: "My WordPress Site"
     admin_user: admin
     admin_password: admin
     debug: "false"
-    url: "${scheme}://${domainname}"
-  mysql:
-    user: wordpress
-    password: wordpress
-    database: wordpress
+
+wordpress:
+  init:
+    enabled: true
+  resources:
+    requests:
+       memory: "128Mi"
+       cpu: "50m"
+    limits:
+       memory: "512Mi"
+       cpu: "300m"
+
 persistence:
   wordpress:
     enabled: true
     size: 1Gi
     existingClaim: ""
     keep: true
-  db:
+
+mariadb:
+  enabled: true
+  auth:
     enabled: true
+    rootPassword: "rootpassword"
+    database: "wordpress"
+    username: "wordpress"
+    password: "wordpress"
+    existingSecret: ""
+    allowEmptyRootPassword: "false"
+    secretKeys:
+      rootPasswordKey: mariadb-root-password
+      userPasswordKey: mariadb-password
+  persistence:
+    enabled: true
+    storageClass: ""
+    accessModes:
+      - ReadWriteOnce
     size: 1Gi
-    existingClaim: ""
-    keep: true
-service:
-  nginx:
+  resources:
+    requests:
+       memory: "128Mi"
+       cpu: "20m"
+    limits:
+       memory: "256Mi"
+       cpu: "300m"
+
+nginx:
+  resources:
+    requests:
+       memory: "32Mi"
+       cpu: "10m"
+    limits:
+       memory: "64Mi"
+       cpu: "150m"
+  service:
     port: 80
-  db:
-    port: 3306
+
 ingress:
   enabled: true
   className: "traefik"
+  annotations: {}
   hosts:
     - host: wordpress.local
       paths:
         - path: /
           pathType: ImplementationSpecific
-  tls:
-    - secretName: wordpress-tls
-      hosts:
-        - wordpress.local
+  tls: []
+  useHttpsBackend: false
+  extraRules: []
+
 memcached:
   enabled: true
-  replicaCount: 1
-  service:
-    port: 11211
+  createConfig: true
+  nameOverride: ""
+  fullnameOverride: ""
+  resources:
+    requests:
+       memory: "15Mi"
+       cpu: "5m"
+    limits:
+       memory: "45Mi"
+       cpu: "50m"
