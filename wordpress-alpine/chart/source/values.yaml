@@ -5,11 +5,6 @@ image:
   db: mariadb:12.1
 
 env:
-  mysql:
-    user: wordpress
-    password: wordpress
-    database: wordpress
-    fullnameOverride: {}
   wp:
     scheme: https
     domainname: wordpress.local
@@ -36,11 +31,20 @@ persistence:
     size: 1Gi
     existingClaim: ""
     keep: true
-  db:
+
+mariadb:
+  enabled: true
+  auth:
     enabled: true
-    size: 1Gi
-    existingClaim: ""
-    keep: true
+    rootPassword: "rootpassword"
+    database: "wordpress"
+    username: "wordpress"
+    password: "wordpress"
+    existingSecret: ""
+    allowEmptyRootPassword: "false"
+    secretKeys:
+      rootPasswordKey: mariadb-root-password
+      userPasswordKey: mariadb-password
 
 service:
   nginx:

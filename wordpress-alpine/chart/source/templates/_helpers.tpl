@@ -86,10 +86,10 @@ Return PVC name:
 MariaDB fullname
 */}}
 {{- define "wordpress-alpine.mariadb.fullname" -}}
-{{- if .Values.env.mysql.fullnameOverride }}
-{{- .Values.env.mysql.fullnameOverride | trunc 63 | trimSuffix "-" }}
+{{- if .Values.mariadb.fullnameOverride}}
+{{- .Values.mariadb.fullnameOverride | trunc 63 | trimSuffix "-" }}
 {{- else }}
-{{- $name := default "mysql" .Values.env.mysql.nameOverride }}
+{{- $name := default "mariadb" .Values.mariadb.nameOverride }}
 {{- if contains $name .Release.Name }}
 {{- .Release.Name | trunc 63 | trimSuffix "-" }}
 {{- else }}

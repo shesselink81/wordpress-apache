@@ -17,15 +17,15 @@ spec:
           command: ["/bin/bash", "/tmp/init.sh"]
           env:
             - name: WORDPRESS_DB_HOST
-              value: {{ include "wordpress-alpine.fullname" . }}-db
+              value: {{ include "wordpress-alpine.mariadb.fullname" . | default "mariadb" }}
             - name: MEMCACHED_HOST
               value: {{ include "wordpress-alpine.memcached.fullname" . }}
             - name: WORDPRESS_DB_USER
-              value: {{ .Values.env.mysql.user | quote }}
+              value: {{ .Values.mariadb.auth.username | quote }}
             - name: WORDPRESS_DB_PASSWORD
-              value: {{ .Values.env.mysql.password | quote }}
+              value: {{ .Values.mariadb.auth.password | quote }}
             - name: WORDPRESS_DB_NAME
-              value: {{ .Values.env.mysql.database | quote }}
+              value: {{ .Values.mariadb.auth.database | quote }}
             - name: WP_URL
               value: "{{ .Values.env.wp.scheme }}://{{ .Values.env.wp.domainname }}"
             - name: WORDPRESS_VERSION
@@ -51,15 +51,15 @@ spec:
           image: {{ .Values.image.fpm }}
           env:
             - name: WORDPRESS_DB_HOST
-              value: {{ include "wordpress-alpine.fullname" . }}-db
+              value: {{ include "wordpress-alpine.mariadb.fullname" . | default "mariadb" }}
             - name: MEMCACHED_HOST
               value: {{ include "wordpress-alpine.memcached.fullname" . }}
             - name: WORDPRESS_DB_USER
-              value: {{ .Values.env.mysql.user | quote }}
+              value: {{ .Values.mariadb.auth.username | quote }}
             - name: WORDPRESS_DB_PASSWORD
-              value: {{ .Values.env.mysql.password | quote }}
+              value: {{ .Values.mariadb.auth.password | quote }}
             - name: WORDPRESS_DB_NAME
-              value: {{ .Values.env.mysql.database | quote }}
+              value: {{ .Values.mariadb.auth.database | quote }}
             - name: WP_URL
               value: "{{ .Values.env.wp.scheme }}://{{ .Values.env.wp.domainname }}"
             - name: WORDPRESS_VERSION

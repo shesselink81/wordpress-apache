@@ -3,7 +3,57 @@ entries:
   wordpress-alpine:
   - apiVersion: v2
     appVersion: 6.9.0
-    created: "2025-12-20T02:16:09.844208+01:00"
+    created: "2025-12-20T03:49:29.9277141+01:00"
+    dependencies:
+    - condition: memcached.enabled
+      name: memcached
+      repository: oci://registry-1.docker.io/cloudpirates
+      version: 0.8.0
+    - condition: mariadb.enabled
+      name: mariadb
+      repository: oci://registry-1.docker.io/cloudpirates
+      version: 0.10.1
+    description: WordPress FPM + Nginx + Init + MariaDB (alpine)
+    digest: a3cab15931d1a50c4e88fee7b047903a1094abc320f0346d13366ae8a1c7aee9
+    home: https://github.com/shesselink81/wordpress-apache/tree/main/wordpress-alpine/chart
+    icon: https://raw.githubusercontent.com/slydlake/helm-charts/refs/heads/main/charts/wordpress/app.png
+    maintainers:
+    - name: shesselink81
+    name: wordpress-alpine
+    sources:
+    - https://github.com/shesselink81/wordpress-apache/tree/main/wordpress-alpine/chart
+    type: application
+    urls:
+    - wordpress-alpine-0.1.9.tgz
+    version: 0.1.9
+  - apiVersion: v2
+    appVersion: 6.9.0
+    created: "2025-12-20T03:49:29.9229824+01:00"
+    dependencies:
+    - condition: memcached.enabled
+      name: memcached
+      repository: oci://registry-1.docker.io/cloudpirates
+      version: 0.8.0
+    - condition: mariadb.enabled
+      name: mariadb
+      repository: oci://registry-1.docker.io/cloudpirates
+      version: 0.10.1
+    description: WordPress FPM + Nginx + Init + MariaDB (alpine)
+    digest: 71d9a7b5cddd033c50cf152b71f7526ea305ad30ce27fece091b88091b235cee
+    home: https://github.com/shesselink81/wordpress-apache/tree/main/wordpress-alpine/chart
+    icon: https://raw.githubusercontent.com/slydlake/helm-charts/refs/heads/main/charts/wordpress/app.png
+    maintainers:
+    - name: shesselink81
+    name: wordpress-alpine
+    sources:
+    - https://github.com/shesselink81/wordpress-apache/tree/main/wordpress-alpine/chart
+    type: application
+    urls:
+    - wordpress-alpine-0.1.8.tgz
+    version: 0.1.8
+  - apiVersion: v2
+    appVersion: 6.9.0
+    created: "2025-12-20T03:49:29.892611+01:00"
     dependencies:
     - condition: memcached.enabled
       name: memcached
@@ -24,7 +74,7 @@ entries:
     version: 0.1.7
   - apiVersion: v2
     appVersion: 6.9.0
-    created: "2025-12-20T02:16:09.8410854+01:00"
+    created: "2025-12-20T03:49:29.8639069+01:00"
     dependencies:
     - condition: memcached.enabled
       name: memcached
@@ -43,4 +93,4 @@ entries:
     urls:
     - wordpress-alpine-0.1.6.tgz
     version: 0.1.6
-generated: "2025-12-20T02:16:09.8384573+01:00"
+generated: "2025-12-20T03:49:29.8342843+01:00"
