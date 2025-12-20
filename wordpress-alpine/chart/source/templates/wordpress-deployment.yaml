@@ -86,7 +86,7 @@ spec:
       volumes:
         - name: wordpress
           persistentVolumeClaim:
-            claimName: {{ include "wordpress-alpine.fullname" . }}-wp-pvc
+            claimName: {{ include "wordpress-alpine.pvcName" . }}
         - name: init-script
           configMap:
             name: {{ include "wordpress-alpine.fullname" . }}-init-config

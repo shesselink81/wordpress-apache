@@ -62,6 +62,27 @@ Create the name of the service account to use
 {{- end }}
 
 {{/*
+Return PVC name:
+- existingClaim if set
+- otherwise default fullname
+*/}}
+{{- define "wordpress-alpine.pvcName" -}}
+{{- if .Values.persistence.wordpress.existingClaim -}}
+{{- .Values.persistence.existingClaim -}}
+{{- else -}}
+{{- printf "%s-wp" (include "wordpress-alpine.fullname" .) -}}
+{{- end -}}
+{{- end -}}
+
+{{- define "wordpress-alpine.dbpvcName" -}}
+{{- if .Values.persistence.db.existingClaim -}}
+{{- .Values.persistence.db.existingClaim -}}
+{{- else -}}
+{{- printf "%s-db" (include "wordpress-alpine.fullname" .) -}}
+{{- end -}}
+{{- end -}}
+
+{{/*
 MariaDB fullname
 */}}
 {{- define "wordpress-alpine.mariadb.fullname" -}}

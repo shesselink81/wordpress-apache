@@ -29,4 +29,4 @@ spec:
       volumes:
         - name: dbdata
           persistentVolumeClaim:
-            claimName: {{ include "wordpress-alpine.fullname" . }}-db-pvc
+            claimName: {{ include "wordpress-alpine.dbpvcName" . }}

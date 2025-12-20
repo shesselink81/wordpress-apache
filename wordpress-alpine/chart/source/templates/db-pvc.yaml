@@ -1,11 +1,15 @@
+{{- if and .Values.persistence.db.enabled (not .Values.persistence.db.existingClaim) }}
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: {{ include "wordpress-alpine.fullname" . }}-db-pvc
+  name: {{ include "wordpress-alpine.dbpvcName" . }}
+  annotations:
+    {{- if .Values.persistence.db.keep }}
+    helm.sh/resource-policy: keep
+    {{- end }}
 spec:
   accessModes: ["ReadWriteOnce"]
   resources:
     requests:
       storage: {{ .Values.persistence.db.size }}
-    reclaimPolicy: Retain
-    
+{{- end }}

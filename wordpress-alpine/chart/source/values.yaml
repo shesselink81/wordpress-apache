@@ -33,10 +33,14 @@ wordpress:
 persistence:
   wordpress:
     enabled: true
-    size: 5Gi
+    size: 1Gi
+    existingClaim: ""
+    keep: true
   db:
     enabled: true
-    size: 5Gi
+    size: 1Gi
+    existingClaim: ""
+    keep: true
 
 service:
   nginx:
