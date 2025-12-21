@@ -10,14 +10,14 @@ A production-ready **WordPress Helm chart** running on **Alpine Linux**, using:
 - Optional **Ingress (Traefik compatible)**
 
 📦 Helm repo:  
-https://artifacthub.io/packages/helm/wp-alpine/wordpress-alpine
+https://wp.charts.hessel.cloud/
 
 ## 🚀 Quick Start
 
 ### Add the Helm Repository
 
 ```bash
-helm repo add wp-alpine https://shesselink81.github.io/wordpress-apache/wordpress-alpine/chart
+helm repo add wp-alpine https://wp.charts.hessel.cloud/
 helm repo update
 helm install my-wordpress wp-alpine/wordpress-alpine
 ```
