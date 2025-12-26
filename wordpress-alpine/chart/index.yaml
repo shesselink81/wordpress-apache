@@ -3,7 +3,7 @@ entries:
   wordpress-alpine:
   - apiVersion: v2
     appVersion: 6.9.0
-    created: "2025-12-21T01:32:05.2625095+01:00"
+    created: "2025-12-26T02:55:15.7094507+01:00"
     dependencies:
     - condition: memcached.enabled
       name: memcached
@@ -28,7 +28,7 @@ entries:
     version: 1.1.3
   - apiVersion: v2
     appVersion: 6.9.0
-    created: "2025-12-21T01:32:05.2558196+01:00"
+    created: "2025-12-26T02:55:15.6770802+01:00"
     dependencies:
     - condition: memcached.enabled
       name: memcached
@@ -53,7 +53,7 @@ entries:
     version: 1.1.2
   - apiVersion: v2
     appVersion: 6.9.0
-    created: "2025-12-21T01:32:05.2238707+01:00"
+    created: "2025-12-26T02:55:15.6463315+01:00"
     dependencies:
     - condition: memcached.enabled
       name: memcached
@@ -78,7 +78,7 @@ entries:
     version: 1.1.1
   - apiVersion: v2
     appVersion: 6.9.0
-    created: "2025-12-21T01:32:05.1920208+01:00"
+    created: "2025-12-26T02:55:15.6242693+01:00"
     dependencies:
     - condition: memcached.enabled
       name: memcached
@@ -103,7 +103,7 @@ entries:
     version: 1.1.0
   - apiVersion: v2
     appVersion: 6.9.0
-    created: "2025-12-21T01:32:05.1607009+01:00"
+    created: "2025-12-26T02:55:15.60223+01:00"
     dependencies:
     - condition: memcached.enabled
       name: memcached
@@ -126,4 +126,4 @@ entries:
     urls:
     - wordpress-alpine-1.0.0.tgz
     version: 1.0.0
-generated: "2025-12-21T01:32:05.1263283+01:00"
+generated: "2025-12-26T02:55:15.0386311+01:00"
