@@ -26,6 +26,29 @@ wordpress:
        memory: "512Mi"
        cpu: "300m"
 
+ingress:
+  enabled: false
+  className: "traefik"
+  annotations: {}
+  hosts:
+    - host: wordpress.local
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls: []
+  useHttpsBackend: false
+  extraRules: []
+
+httproute:
+  enabled: true
+  gateway:
+    name: traefik-gateway
+    namespace: traefik
+  hostnames:
+    - wordpress.local
+    - www.wordpress.local
+  path: /
+
 persistence:
   wordpress:
     enabled: true
@@ -70,19 +93,6 @@ nginx:
        cpu: "150m"
   service:
     port: 80
-
-ingress:
-  enabled: true
-  className: "traefik"
-  annotations: {}
-  hosts:
-    - host: wordpress.local
-      paths:
-        - path: /
-          pathType: ImplementationSpecific
-  tls: []
-  useHttpsBackend: false
-  extraRules: []
 
 memcached:
   enabled: true
