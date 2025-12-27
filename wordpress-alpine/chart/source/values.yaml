@@ -40,7 +40,7 @@ ingress:
   extraRules: []
 
 httproute:
-  enabled: true
+  enabled: false
   gateway:
     name: traefik-gateway
     namespace: traefik

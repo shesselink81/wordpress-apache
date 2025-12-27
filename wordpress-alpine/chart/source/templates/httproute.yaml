@@ -19,6 +19,6 @@ spec:
             type: PathPrefix
             value: {{ .Values.httproute.path | default "/" }}
       backendRefs:
-        - name: wordpress-fpm
+        - name: {{ include "wordpress-alpine.fullname" . }}-nginx
           port: {{ .Values.nginx.service.port }}
 {{- end }}
