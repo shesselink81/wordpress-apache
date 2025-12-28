@@ -30,6 +30,7 @@ spec:
         - name: wordpress
           persistentVolumeClaim:
             claimName: {{ include "wordpress-alpine.pvcName" . }}
+            readOnly: true
         - name: nginxconf
           configMap:
             name: {{ include "wordpress-alpine.fullname" . }}-nginx-config
