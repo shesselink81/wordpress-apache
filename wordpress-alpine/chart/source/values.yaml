@@ -24,9 +24,10 @@ wordpress:
     limits:
        memory: "512Mi"
        cpu: "300m"
-       existingSecret: "wordpress-secrets"
-       secretKeys:
-         wpPasswordKey: wordpress.password
+  auth:
+    existingSecret: "wordpress-secrets"
+    secretKeys:
+      wpPasswordKey: wordpress.password
 
 ingress:
   enabled: false
