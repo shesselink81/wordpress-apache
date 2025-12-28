@@ -45,7 +45,7 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: {{ .Values.wordpres.auth.existingSecret }}
-                  key: {{ .Values.wordpress.auth.secretKeys.wpPasswordKey }}           
+                  key: {{ .Values.wordpress.auth.secretKeys.wpPasswordKey }}   
             # - name: WP_ADMIN_PASSWORD
             #   value: {{ .Values.env.wp.admin_password | quote }}
             - name: WP_ADMIN_EMAIL
