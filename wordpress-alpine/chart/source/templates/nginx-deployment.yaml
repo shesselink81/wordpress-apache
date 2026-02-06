@@ -28,7 +28,7 @@ spec:
         - name: nginx
           image: {{ .Values.image.nginx }}
           securityContext:
-            runAsUser: 82
+            runAsUser: 0
           ports:
             - containerPort: {{ .Values.nginx.service.port }}
           {{- with .Values.nginx.resources }}    
