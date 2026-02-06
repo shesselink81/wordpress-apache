@@ -1,6 +1,6 @@
 image:
-  fpm: ghcr.io/shesselink81/wordpress-alpine:v6.9.0.9
-  nginx: ghcr.io/shesselink81/nginx-alpine:v6.9.0.9
+  fpm: ghcr.io/shesselink81/wordpress-alpine:v6.9.1.0
+  nginx: ghcr.io/shesselink81/nginx-alpine:v6.9.1.0
   init: wordpress:cli-php8.3
 
 env:
@@ -8,7 +8,7 @@ env:
     scheme: https
     domainname: wordpress.local
     url: "${scheme}://${domainname}"
-    version: "6.9.0"
+    version: "6.9.1"
     locale: en_US
     title: "My WordPress Site"
     admin_user: admin
