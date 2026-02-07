@@ -109,3 +109,13 @@ memcached:
     limits:
        memory: "45Mi"
        cpu: "50m"
+
+secrets:
+  name: "wordpress-secrets"
+  wordpress:
+    password: "admin"
+  mariadb:
+    rootPassword: "rootpassword"
+    userPassword: "userpassword"
+  stringData: {}
+  data: {}
