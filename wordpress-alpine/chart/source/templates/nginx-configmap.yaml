@@ -5,3 +5,5 @@ metadata:
 data:
   default.conf: |-
 {{ (.Files.Get "default.conf") | indent 4 }}
+  nginx.conf: |-
+{{ (.Files.Get "nginx.conf") | indent 4 }}
