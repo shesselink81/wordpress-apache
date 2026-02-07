@@ -111,7 +111,7 @@ memcached:
        cpu: "50m"
 
 secrets:
-  name: "wordpress-secrets"
+  name: ""
   wordpress:
     password: "admin"
   mariadb:
