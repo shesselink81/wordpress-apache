@@ -70,7 +70,7 @@ mariadb:
     existingSecret: "wordpress-secrets"
     allowEmptyRootPassword: "false"
     secretKeys:
-      rootPasswordKey: db.password
+      rootPasswordKey: db.root.password
       userPasswordKey: db.password
   persistence:
     enabled: true
