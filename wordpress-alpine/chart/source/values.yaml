@@ -12,7 +12,6 @@ env:
     locale: en_US
     title: "My WordPress Site"
     admin_user: admin
-    admin_password: "admin"
     debug: "false"
 
 wordpress:
@@ -26,7 +25,7 @@ wordpress:
        memory: "512Mi"
        cpu: "300m"
   auth:
-    existingSecret: ""
+    existingSecret: "wordpress-secrets"
     secretKeys:
       wpPasswordKey: wordpress.password
 
@@ -64,11 +63,11 @@ mariadb:
   enabled: true
   auth:
     enabled: true
-    rootPassword: "root-password"
+    rootPassword: ""
     database: "wp_db"
     username: "db-user"
-    password: "db-password"
-    existingSecret: ""
+    password: ""
+    existingSecret: "wordpress-secrets"
     allowEmptyRootPassword: "false"
     secretKeys:
       rootPasswordKey: db.password

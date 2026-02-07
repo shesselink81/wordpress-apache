@@ -23,11 +23,11 @@ spec:
             - name: WORDPRESS_DB_USER
               value: {{ .Values.mariadb.auth.username | quote }}
             - name: WORDPRESS_DB_PASSWORD
-              value: {{ .Values.mariadb.auth.password | quote }}
-              # valueFrom:
-              #   secretKeyRef:
-              #     name: {{ .Values.mariadb.auth.existingSecret | quote }}
-              #     key: {{ .Values.mariadb.auth.secretKeys.userPasswordKey }}  
+              #value: {{ .Values.mariadb.auth.password | quote }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.mariadb.auth.existingSecret | quote }}
+                  key: {{ .Values.mariadb.auth.secretKeys.userPasswordKey }}  
             - name: WORDPRESS_DB_NAME
               value: {{ .Values.mariadb.auth.database | quote }}
             - name: WP_URL
@@ -41,11 +41,11 @@ spec:
             - name: WP_ADMIN_USER
               value: {{ .Values.env.wp.admin_user | quote }}
             - name: WP_ADMIN_PASSWORD
-              value: {{ .Values.env.wp.admin_password | quote }}
-              # valueFrom:
-              #   secretKeyRef:
-              #     name: {{ .Values.wordpress.auth.existingSecret | quote }}
-              #     key: {{ .Values.wordpress.auth.secretKeys.wpPasswordKey }}
+              #value: {{ .Values.env.wp.admin_password | quote }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.wordpress.auth.existingSecret | quote }}
+                  key: {{ .Values.wordpress.auth.secretKeys.wpPasswordKey }}
             - name: WP_ADMIN_EMAIL
               value: admin@{{ .Values.env.wp.domainname }}
           volumeMounts:
@@ -65,11 +65,11 @@ spec:
             - name: WORDPRESS_DB_USER
               value: {{ .Values.mariadb.auth.username | quote }}
             - name: WORDPRESS_DB_PASSWORD
-              value: {{ .Values.mariadb.auth.password | quote }}
-              # valueFrom:
-              #   secretKeyRef:
-              #     name: {{ .Values.mariadb.auth.existingSecret | quote }}
-              #     key: {{ .Values.mariadb.auth.secretKeys.userPasswordKey }}  
+              #value: {{ .Values.mariadb.auth.password | quote }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.mariadb.auth.existingSecret | quote }}
+                  key: {{ .Values.mariadb.auth.secretKeys.userPasswordKey }}  
             - name: WORDPRESS_DB_NAME
               value: {{ .Values.mariadb.auth.database | quote }}
             - name: WP_URL
@@ -83,11 +83,11 @@ spec:
             - name: WP_ADMIN_USER
               value: {{ .Values.env.wp.admin_user | quote }}
             - name: WP_ADMIN_PASSWORD
-              value: {{ .Values.env.wp.admin_password | quote }}
-              # valueFrom:
-              #   secretKeyRef:
-              #     name: {{ .Values.wordpress.auth.existingSecret | quote }}
-              #     key: {{ .Values.wordpress.auth.secretKeys.wpPasswordKey }}
+              #value: {{ .Values.env.wp.admin_password | quote }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.wordpress.auth.existingSecret | quote }}
+                  key: {{ .Values.wordpress.auth.secretKeys.wpPasswordKey }}
             - name: WP_ADMIN_EMAIL
               value: admin@{{ .Values.env.wp.domainname }}
           {{- with .Values.wordpress.resources }}    
