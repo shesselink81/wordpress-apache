@@ -57,6 +57,9 @@ spec:
       containers:
         - name: fpm
           image: {{ .Values.image.fpm }}
+          ports:
+            - containerPort: 9000
+              protocol: TCP
           env:
             - name: WORDPRESS_DB_HOST
               value: {{ include "wordpress-alpine.mariadb.fullname" . | default "mariadb" }}
