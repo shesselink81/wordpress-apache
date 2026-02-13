@@ -59,6 +59,12 @@
       </a>
     </p>
 
+    <p>📦 Helm Chart:<br>
+      <a href="https://artifacthub.io/packages/helm/wordpress-alpine/wordpress-alpine">
+        https://artifacthub.io/packages/helm/wordpress-alpine/wordpress-alpine
+      </a>
+    </p>
+
     <h2>🚀 Quick Start</h2>
     <h3>Add the Helm Repository</h3>
     <pre><code>helm repo add wp-alpine https://wp.charts.hessel.cloud
@@ -92,11 +98,11 @@ helm install my-wordpress wp-alpine/wordpress-alpine</code></pre>
       <tbody>
         <tr>
           <td>WordPress FPM</td>
-          <td><code>ghcr.io/shesselink81/wordpress-alpine:v6.9.0.9</code></td>
+          <td><code>ghcr.io/shesselink81/wordpress-alpine:v6.9.1.4</code></td>
         </tr>
         <tr>
           <td>Nginx</td>
-          <td><code>ghcr.io/shesselink81/nginx-alpine:v6.9.0.9</code></td>
+          <td><code>ghcr.io/shesselink81/nginx-alpine:v6.9.1.4</code></td>
         </tr>
         <tr>
           <td>Init (WP-CLI)</td>
@@ -110,19 +116,22 @@ helm install my-wordpress wp-alpine/wordpress-alpine</code></pre>
     </table>
 
     <h2>⚙️ Configuration</h2>
-    <p>All configuration is done via <code>values.yaml</code></p>
 
-    <h3>WordPress Settings</h3>
-    <pre><code>env:
+    <h3>WordPress Settings, values.yaml example:</h3>
+    <pre><code>image:
+  fpm: ghcr.io/shesselink81/wordpress-alpine:v6.9.1.4
+  nginx: ghcr.io/shesselink81/nginx-alpine:v6.9.1.4
+  init: wordpress:cli-php8.3
+
+env:
   wp:
     scheme: https
     domainname: wordpress.local
     url: "${scheme}://${domainname}"
-    version: "6.9.0"
+    version: "6.9.1"
     locale: en_US
     title: "My WordPress Site"
     admin_user: admin
-    admin_password: admin
     debug: "false"
 
 wordpress:
@@ -135,6 +144,33 @@ wordpress:
     limits:
        memory: "512Mi"
        cpu: "300m"
+  auth:
+    existingSecret: "wordpress-secrets"
+    secretKeys:
+      wpPasswordKey: wordpress.password
+
+ingress:
+  enabled: false
+  className: "traefik"
+  annotations: {}
+  hosts:
+    - host: wordpress.local
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls: []
+  useHttpsBackend: false
+  extraRules: []
+
+httproute:
+  enabled: false
+  gateway:
+    name: traefik-gateway
+    namespace: traefik
+  hostnames:
+    - wordpress.local
+    - www.wordpress.local
+  path: /
 
 persistence:
   wordpress:
@@ -147,15 +183,15 @@ mariadb:
   enabled: true
   auth:
     enabled: true
-    rootPassword: "rootpassword"
-    database: "wordpress"
-    username: "wordpress"
-    password: "wordpress"
-    existingSecret: ""
+    rootPassword: ""
+    database: "wp_db"
+    username: "db-user"
+    password: ""
+    existingSecret: "wordpress-secrets"
     allowEmptyRootPassword: "false"
     secretKeys:
-      rootPasswordKey: mariadb-root-password
-      userPasswordKey: mariadb-password
+      rootPasswordKey: db.root.password
+      userPasswordKey: db.password
   persistence:
     enabled: true
     storageClass: ""
@@ -181,19 +217,6 @@ nginx:
   service:
     port: 80
 
-ingress:
-  enabled: true
-  className: "traefik"
-  annotations: {}
-  hosts:
-    - host: wordpress.local
-      paths:
-        - path: /
-          pathType: ImplementationSpecific
-  tls: []
-  useHttpsBackend: false
-  extraRules: []
-
 memcached:
   enabled: true
   createConfig: true
@@ -206,3 +229,13 @@ memcached:
     limits:
        memory: "45Mi"
        cpu: "50m"
+
+secrets:
+  name: ""
+  wordpress:
+    password: "admin"
+  mariadb:
+    rootPassword: "rootpassword"
+    userPassword: "userpassword"
+  stringData: {}
+  data: {}
