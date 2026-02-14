@@ -5,11 +5,11 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app: wordpress-fpm
+      {{- include "wordpress-alpine.selectorLabels" . | nindent 4 }}-fpm
   template:
     metadata:
       labels:
-        app: wordpress-fpm
+        {{- include "wordpress-alpine.labels" . | nindent 4 }}
     spec:
       initContainers:
         - name: init

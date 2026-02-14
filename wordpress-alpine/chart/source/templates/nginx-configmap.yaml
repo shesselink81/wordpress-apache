@@ -3,7 +3,65 @@ kind: ConfigMap
 metadata:
   name: {{ include "wordpress-alpine.fullname" . }}-nginx-config
 data:
+data:
   default.conf: |-
-{{ (.Files.Get "default.conf") | indent 4 }}
+    server {
+        listen 8080;
+        server_name _;
+
+        # Force HTTP -> HTTPS
+        #return 301 https://$host$request_uri;
+
+        root /var/www/html;
+        # WordPress specific
+        index index.php;
+
+        location / {
+            try_files $uri $uri/ /index.php?$args;
+        }
+
+        location ~ \.php$ {
+            include fastcgi_params;
+            fastcgi_pass {{ include "wordpress-alpine.fullname" . }}-fpm:9000;
+            fastcgi_param SCRIPT_FILENAME /var/www/html$fastcgi_script_name;
+            fastcgi_param HTTPS on;
+        }
+    }
+
   nginx.conf: |-
-{{ (.Files.Get "nginx.conf") | indent 4 }}
+    worker_processes  1;
+
+    error_log  /var/log/nginx/error.log notice;
+    pid        /tmp/nginx.pid;
+
+
+    events {
+        worker_connections  1024;
+    }
+
+
+    http {
+        include       /etc/nginx/mime.types;
+        default_type  application/octet-stream;
+
+        client_body_temp_path /tmp/client_temp;
+        proxy_temp_path       /tmp/proxy_temp_path;
+        fastcgi_temp_path     /tmp/fastcgi_temp;
+        uwsgi_temp_path       /tmp/uwsgi_temp;
+        scgi_temp_path        /tmp/scgi_temp;
+
+        log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+                          '$status $body_bytes_sent "$http_referer" '
+                          '"$http_user_agent" "$http_x_forwarded_for"';
+
+        access_log  /var/log/nginx/access.log  main;
+
+        sendfile        on;
+        #tcp_nopush     on;
+
+        keepalive_timeout  65;
+
+        gzip  on;
+
+        include /etc/nginx/conf.d/*.conf;
+    }
