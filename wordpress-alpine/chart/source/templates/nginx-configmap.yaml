@@ -3,7 +3,6 @@ kind: ConfigMap
 metadata:
   name: {{ include "wordpress-alpine.fullname" . }}-nginx-config
 data:
-data:
   default.conf: |-
     server {
         listen 8080;
