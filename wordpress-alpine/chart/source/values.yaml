@@ -28,6 +28,8 @@ wordpress:
     existingSecret: "wordpress-secrets"
     secretKeys:
       wpPasswordKey: wordpress.password
+      rootPasswordKey: db.root.password
+      userPasswordKey: db.password
 
 ingress:
   enabled: false
@@ -85,6 +87,12 @@ mariadb:
     limits:
        memory: "256Mi"
        cpu: "300m"
+
+externalDatabase:
+  database: null
+  host: null
+  secretKeys:
+    userPasswordKey: db.password
 
 nginx:
   resources:
