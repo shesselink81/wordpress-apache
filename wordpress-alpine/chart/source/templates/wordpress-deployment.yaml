@@ -19,19 +19,18 @@ spec:
           command: ["/bin/bash", "/tmp/init.sh"]
           env:
             - name: WORDPRESS_DB_HOST
-              value: {{ include "wordpress-alpine.mariadb.fullname" . | default "mariadb" }}
+              value: {{ if .Values.externalDatabase.host }}{{ .Values.externalDatabase.host }}{{ else }}{{ include "wordpress-alpine.mariadb.fullname" . | default "mariadb" }}{{ end }}
             - name: MEMCACHED_HOST
               value: {{ include "wordpress-alpine.memcached.fullname" . }}
             - name: WORDPRESS_DB_USER
-              value: {{ .Values.mariadb.auth.username | quote }}
+              value: {{ .Values.wordpress.auth.username | quote }}
             - name: WORDPRESS_DB_PASSWORD
-              #value: {{ .Values.mariadb.auth.password | quote }}
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Values.mariadb.auth.existingSecret | quote }}
-                  key: {{ .Values.mariadb.auth.secretKeys.userPasswordKey }}  
+                  name: {{ .Values.wordpress.auth.existingSecret | quote }}
+                  key: {{ .Values.wordpress.auth.secretKeys.userPasswordKey }}
             - name: WORDPRESS_DB_NAME
-              value: {{ .Values.mariadb.auth.database | quote }}
+              value: {{ if .Values.externalDatabase.database }}{{ .Values.externalDatabase.database | quote }}{{ else }}{{ .Values.mariadb.auth.database | quote }}{{ end }}
             - name: WP_URL
               value: "{{ .Values.env.wp.scheme }}://{{ .Values.env.wp.domainname }}"
             - name: WORDPRESS_VERSION
@@ -43,7 +42,6 @@ spec:
             - name: WP_ADMIN_USER
               value: {{ .Values.env.wp.admin_user | quote }}
             - name: WP_ADMIN_PASSWORD
-              #value: {{ .Values.env.wp.admin_password | quote }}
               valueFrom:
                 secretKeyRef:
                   name: {{ .Values.wordpress.auth.existingSecret | quote }}
@@ -64,19 +62,18 @@ spec:
               protocol: TCP
           env:
             - name: WORDPRESS_DB_HOST
-              value: {{ include "wordpress-alpine.mariadb.fullname" . | default "mariadb" }}
+              value: {{ if .Values.externalDatabase.host }}{{ .Values.externalDatabase.host }}{{ else }}{{ include "wordpress-alpine.mariadb.fullname" . | default "mariadb" }}{{ end }}
             - name: MEMCACHED_HOST
               value: {{ include "wordpress-alpine.memcached.fullname" . }}
             - name: WORDPRESS_DB_USER
-              value: {{ .Values.mariadb.auth.username | quote }}
+              value: {{ .Values.wordpress.auth.username | quote }}
             - name: WORDPRESS_DB_PASSWORD
-              #value: {{ .Values.mariadb.auth.password | quote }}
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Values.mariadb.auth.existingSecret | quote }}
-                  key: {{ .Values.mariadb.auth.secretKeys.userPasswordKey }}  
+                  name: {{ .Values.wordpress.auth.existingSecret | quote }}
+                  key: {{ .Values.wordpress.auth.secretKeys.userPasswordKey }}
             - name: WORDPRESS_DB_NAME
-              value: {{ .Values.mariadb.auth.database | quote }}
+              value: {{ if .Values.externalDatabase.database }}{{ .Values.externalDatabase.database | quote }}{{ else }}{{ .Values.mariadb.auth.database | quote }}{{ end }}
             - name: WP_URL
               value: "{{ .Values.env.wp.scheme }}://{{ .Values.env.wp.domainname }}"
             - name: WORDPRESS_VERSION
@@ -88,7 +85,6 @@ spec:
             - name: WP_ADMIN_USER
               value: {{ .Values.env.wp.admin_user | quote }}
             - name: WP_ADMIN_PASSWORD
-              #value: {{ .Values.env.wp.admin_password | quote }}
               valueFrom:
                 secretKeyRef:
                   name: {{ .Values.wordpress.auth.existingSecret | quote }}
