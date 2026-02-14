@@ -5,11 +5,13 @@ metadata:
 spec:
   selector:
     matchLabels:
-      {{- include "wordpress-alpine.selectorLabels" . | nindent 4 }}-nginx
+      {{- include "wordpress-alpine.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: nginx
   template:
     metadata:
       labels:
-        {{- include "wordpress-alpine.labels" . | nindent 4 }}
+        {{- include "wordpress-alpine.labels" . | nindent 8 }}
+        app.kubernetes.io/component: nginx
     spec:
       initContainers:
         - name: fix-permissions

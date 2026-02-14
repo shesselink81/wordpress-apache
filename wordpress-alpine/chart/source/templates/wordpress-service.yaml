@@ -4,7 +4,8 @@ metadata:
   name: {{ include "wordpress-alpine.fullname" . }}-fpm
 spec:
   selector:
-    {{- include "wordpress-alpine.selectorLabels" . | nindent 4 }}-fpm
+    {{- include "wordpress-alpine.selectorLabels" . | nindent 4 }}
+    app.kubernetes.io/component: fpm
   ports:
     - port: 9000
       targetPort: 9000

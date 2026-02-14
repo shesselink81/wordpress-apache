@@ -4,7 +4,8 @@ metadata:
   name: {{ include "wordpress-alpine.fullname" . }}-nginx
 spec:
   selector:
-    {{- include "wordpress-alpine.selectorLabels" . | nindent 4 }}-nginx
+    {{- include "wordpress-alpine.selectorLabels" . | nindent 4 }}
+    app.kubernetes.io/component: nginx
   ports:
     - port: {{ .Values.nginx.service.port }}
       targetPort: 8080
