@@ -98,11 +98,11 @@ helm install my-wordpress wp-alpine/wordpress-alpine</code></pre>
       <tbody>
         <tr>
           <td>WordPress FPM</td>
-          <td><code>ghcr.io/shesselink81/wordpress-alpine:v6.9.1.4</code></td>
+          <td><code>ghcr.io/shesselink81/wordpress-alpine:v6.9.4.1</code></td>
         </tr>
         <tr>
           <td>Nginx</td>
-          <td><code>ghcr.io/shesselink81/nginx-alpine:v6.9.1.4</code></td>
+          <td><code>ghcr.io/shesselink81/nginx-alpine:v6.9.4.1</code></td>
         </tr>
         <tr>
           <td>Init (WP-CLI)</td>
@@ -127,7 +127,7 @@ helm install my-wordpress wp-alpine/wordpress-alpine</code></pre>
     scheme: https
     title: My WordPress Site
     url: ${scheme}://${domainname}
-    version: 6.9.1
+    version: 6.9.4
 
 httproute:
   enabled: true
