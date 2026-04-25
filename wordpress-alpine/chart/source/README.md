@@ -43,8 +43,8 @@ This chart deploys:
 | ------------- | ------------------------------------------------ |
 | WordPress FPM | `ghcr.io/shesselink81/wordpress-alpine:v6.9.1.4` |
 | Nginx         | `ghcr.io/shesselink81/nginx-alpine:v6.9.1.4`     |
-| Init (WP-CLI) | `wordpress:cli-php8.3`                           |
-| Database      | `mariadb:12.1.2`                                 |
+| Init (WP-CLI) | `wordpress:cli-php8.4`                           |
+| Database      | `mariadb:12.2.2`                                 |
 
 
 ⚙️ Configuration
@@ -63,6 +63,13 @@ env:
     title: My WordPress Site
     url: ${scheme}://${domainname}
     version: 6.9.1
+
+hostAliases:
+  enabled: false
+  entries:
+    - ip: "10.10.10.10"
+      hostnames:
+        - "wordpress.local"
 
 httproute:
   enabled: true
