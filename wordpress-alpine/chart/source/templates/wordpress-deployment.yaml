@@ -13,6 +13,16 @@ spec:
         {{- include "wordpress-alpine.labels" . | nindent 8 }}
         app.kubernetes.io/component: fpm
     spec:
+      {{- if .Values.hostAliases.enabled }}
+      hostAliases:
+        {{- range .Values.hostAliases.entries }}
+        - ip: {{ .ip | quote }}
+          hostnames:
+            {{- range .hostnames }}
+            - {{ . | quote }}
+            {{- end }}
+        {{- end }}
+      {{- end }}
       initContainers:
         - name: init
           image: {{ .Values.image.init }}

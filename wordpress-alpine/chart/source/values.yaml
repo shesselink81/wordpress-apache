@@ -1,18 +1,25 @@
 image:
   fpm: ghcr.io/shesselink81/wordpress-alpine:v6.9.4.1
   nginx: ghcr.io/shesselink81/nginx-alpine:v6.9.4.1
-  init: wordpress:cli-php8.3
+  init: wordpress:cli-php8.4
 
 env:
   wp:
     scheme: https
     domainname: wordpress.local
     url: "${scheme}://${domainname}"
-    version: "6.9.1"
+    version: "6.9.4"
     locale: en_US
     title: "My WordPress Site"
     admin_user: admin
     debug: "false"
+
+hostAliases:
+  enabled: false
+  entries:
+    - ip: "10.10.10.10"
+      hostnames:
+        - "wordpress.local"
 
 wordpress:
   init:

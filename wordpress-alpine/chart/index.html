@@ -129,6 +129,13 @@ helm install my-wordpress wp-alpine/wordpress-alpine</code></pre>
     url: ${scheme}://${domainname}
     version: 6.9.4
 
+hostAliases:
+  enabled: false
+  entries:
+    - ip: "10.10.10.10"
+      hostnames:
+        - "wp.example.com"
+
 httproute:
   enabled: true
   gateway:
