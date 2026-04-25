@@ -41,8 +41,8 @@ This chart deploys:
 🐳 Container Images
 | Component     | Image                                            |
 | ------------- | ------------------------------------------------ |
-| WordPress FPM | `ghcr.io/shesselink81/wordpress-alpine:v6.9.1.4` |
-| Nginx         | `ghcr.io/shesselink81/nginx-alpine:v6.9.1.4`     |
+| WordPress FPM | `ghcr.io/shesselink81/wordpress-alpine:v6.9.4.1` |
+| Nginx         | `ghcr.io/shesselink81/nginx-alpine:v6.9.4.1`     |
 | Init (WP-CLI) | `wordpress:cli-php8.4`                           |
 | Database      | `mariadb:12.2.2`                                 |
 
@@ -62,7 +62,7 @@ env:
     scheme: https
     title: My WordPress Site
     url: ${scheme}://${domainname}
-    version: 6.9.1
+    version: 6.9.4
 
 hostAliases:
   enabled: false
