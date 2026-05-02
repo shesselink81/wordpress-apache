@@ -134,3 +134,15 @@ secrets:
     userPassword: "userpassword"
   stringData: {}
   data: {}
+
+affinity:
+  podAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+     - labelSelector:
+        matchExpressions:
+         - key: app.kubernetes.io/name
+           operator: In
+           values:
+            - "{{ include wordpress-alpine.fullname . }}-fpm"
+            - "{{ include wordpress-alpine.fullname . }}-nginx"
+       topologyKey: kubernetes.io/hostname

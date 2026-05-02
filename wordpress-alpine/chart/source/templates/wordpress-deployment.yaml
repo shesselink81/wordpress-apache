@@ -23,6 +23,7 @@ spec:
             {{- end }}
         {{- end }}
       {{- end }}
+      affinity: {{ toYaml .Values.affinity | nindent 8 }}
       initContainers:
         - name: init
           image: {{ .Values.image.init }}
