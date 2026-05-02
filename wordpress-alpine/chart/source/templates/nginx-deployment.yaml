@@ -13,7 +13,6 @@ spec:
         {{- include "wordpress-alpine.labels" . | nindent 8 }}
         app.kubernetes.io/component: nginx
     spec:
-      affinity: {{ toYaml .Values.affinity | nindent 8 }}
       initContainers:
         - name: fix-permissions
           image: busybox
