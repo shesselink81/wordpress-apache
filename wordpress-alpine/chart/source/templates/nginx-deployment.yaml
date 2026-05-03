@@ -13,18 +13,18 @@ spec:
         {{- include "wordpress-alpine.labels" . | nindent 8 }}
         app.kubernetes.io/component: nginx
     spec:
-      initContainers:
-        - name: fix-permissions
-          image: busybox
-          command:
-            - sh
-            - -c
-            - chown -R 82:82 /var/www/html
-          securityContext:
-            runAsUser: 0
-          volumeMounts:
-            - name: wordpress
-              mountPath: /var/www/html
+      # initContainers:
+      #   - name: fix-permissions
+      #     image: busybox
+      #     command:
+      #       - sh
+      #       - -c
+      #       - chown -R 82:82 /var/www/html
+      #     securityContext:
+      #       runAsUser: 0
+      #     volumeMounts:
+      #       - name: wordpress
+      #         mountPath: /var/www/html
       containers:
         - name: nginx
           image: {{ .Values.image.nginx }}
