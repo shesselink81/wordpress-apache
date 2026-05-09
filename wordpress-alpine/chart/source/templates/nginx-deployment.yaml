@@ -13,13 +13,13 @@ spec:
         {{- include "wordpress-alpine.labels" . | nindent 8 }}
         app.kubernetes.io/component: nginx
     spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       containers:
         - name: nginx
           image: {{ .Values.image.nginx }}
-          {{- with .Values.imagePullSecrets }}
-          imagePullSecrets:
-            {{- toYaml . | nindent 8 }}
-          {{- end }}
           securityContext:
             runAsUser: 101
             runAsGroup: 101
