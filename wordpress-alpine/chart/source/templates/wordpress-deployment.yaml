@@ -13,6 +13,10 @@ spec:
         {{- include "wordpress-alpine.labels" . | nindent 8 }}
         app.kubernetes.io/component: fpm
     spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       {{- if .Values.hostAliases.enabled }}
       hostAliases:
         {{- range .Values.hostAliases.entries }}

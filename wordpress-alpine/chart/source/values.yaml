@@ -3,6 +3,8 @@ image:
   nginx: ghcr.io/shesselink81/nginx-alpine:v6.9.4.1
   init: wordpress:cli-php8.4
 
+imagePullSecrets: []
+
 env:
   wp:
     scheme: https
