@@ -13,10 +13,6 @@ spec:
         {{- include "wordpress-alpine.labels" . | nindent 8 }}
         app.kubernetes.io/component: fpm
     spec:
-      {{- with .Values.imagePullSecrets }}
-      imagePullSecrets:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
       {{- if .Values.hostAliases.enabled }}
       hostAliases:
         {{- range .Values.hostAliases.entries }}
@@ -71,6 +67,10 @@ spec:
       containers:
         - name: fpm
           image: {{ .Values.image.fpm }}
+          {{- with .Values.imagePullSecrets }}
+          imagePullSecrets:
+            {{- toYaml . | nindent 8 }}
+          {{- end }}
           ports:
             - containerPort: 9000
               protocol: TCP
