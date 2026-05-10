@@ -2,7 +2,7 @@ version: "3.9"
 
 services:
    wordpress-init:
-    image: wordpress:cli-php8.4
+    image: wordpress:cli-php8.5
     depends_on:
       db:
         condition: service_healthy
@@ -25,16 +25,17 @@ services:
 
     volumes:
       - wordpress:/var/www/html:rw
-      - ./init-alpine.sh:/tmp/init.sh:ro
+      - ./init-debian.sh:/tmp/init.sh:ro
       - ./cache-config.json:/tmp/cache-config.json:ro
 
-   memcached:
-    image: memcached:latest
-    restart: always
+  #  memcached:
+  #   image: memcached:latest
+  #   restart: always
+
 
    wordpress:
-    image: ghcr.io/shesselink81/wordpress-alpine:v6.9.4.1
-    build: .
+    image: dhi.io/wordpress:6.9.4-debian13-php8.5-fpm
+    #build: .
     container_name: wp-fpm
     restart: unless-stopped
     depends_on:
@@ -42,8 +43,8 @@ services:
         condition: service_healthy
       wordpress-init:
         condition: service_completed_successfully
-      memcached:
-        condition: service_started
+      # memcached:
+      #   condition: service_started
     environment:
       WORDPRESS_DB_HOST: db
       WORDPRESS_DB_USER: ${MYSQL_USER}
