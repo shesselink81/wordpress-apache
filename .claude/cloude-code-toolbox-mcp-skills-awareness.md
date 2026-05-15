@@ -1,6 +1,6 @@
 # Cloude Code ToolBox — MCP & Skills awareness
 
-_Generated: 2026-05-09T16:04:19.836Z_
+_Generated: 2026-05-15T01:52:17.186Z_
 
 ## How to use this report
 
@@ -25,11 +25,14 @@ _No active workspace servers in mcp.json._
 
 | Server id | Kind | Detail |
 |-----------|------|--------|
-| MCP_DOCKER | stdio | docker mcp gateway run --profile profile |
 | context7 | http | https://mcp.context7.com/mcp |
-| io.github.hashicorp/terraform-mcp-server | stdio | docker run -i --rm run --rm -i -e ${input:e} TFE_ADDRESS -e ${input:e} TFE_TOKEN -e ${input:e} ENABLE_TF_OPERATIONS hashicorp/terraform-mcp-server:0.3.3 -e TFE_ADDRESS -e TFE_TOKEN -e ENABLE_TF_OPERATIONS docker.io/hashicorp/terraform-mcp-server:0.3.3 |
+
+_User servers **off** (Toolbox stash):_
+
+| Server id | Kind | Detail |
+|-----------|------|--------|
+| MCP_DOCKER | stdio | docker mcp gateway run --profile profile |
 | azure/aks-mcp | stdio | docker run -i --rm ghcr.io/azure/aks-mcp:latest --transport stdio |
-| io.github.upstash/context7 | stdio | npx @upstash/context7-mcp@1.0.31 |
 
 ## Skills (local `SKILL.md` folders)
 
@@ -39,8 +42,7 @@ _None found (or no workspace open)._
 
 ### User-scoped
 
-- **context7-mcp** — `C:\Users\shess\.claude\skills\context7-mcp`
-  - This skill should be used when the user asks about libraries, frameworks, API references, or needs code examples. Activates for setup questions, code generation involving libraries, or mentions of specific frameworks lik
+_None found._
 
 ---
 
