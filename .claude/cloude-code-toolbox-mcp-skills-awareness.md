@@ -1,6 +1,6 @@
 # Cloude Code ToolBox — MCP & Skills awareness
 
-_Generated: 2026-05-15T01:52:17.186Z_
+_Generated: 2026-05-16T05:46:04.379Z_
 
 ## How to use this report
 
@@ -31,8 +31,10 @@ _User servers **off** (Toolbox stash):_
 
 | Server id | Kind | Detail |
 |-----------|------|--------|
-| MCP_DOCKER | stdio | docker mcp gateway run --profile profile |
+| io.github.upstash/context7 | stdio | npx @upstash/context7-mcp@1.0.31 |
 | azure/aks-mcp | stdio | docker run -i --rm ghcr.io/azure/aks-mcp:latest --transport stdio |
+| io.github.hashicorp/terraform-mcp-server | stdio | docker run -i --rm run --rm -i -e ${input:e} TFE_ADDRESS -e ${input:e} TFE_TOKEN -e ${input:e} ENABLE_TF_OPERATIONS hashicorp/terraform-mcp-server:0.3.3 -e TFE_ADDRESS -e TFE_TOKEN -e ENABLE_TF_OPERATIONS docker.io/hashicorp/terraform-mcp-server:0.3.3 |
+| MCP_DOCKER | stdio | docker mcp gateway run --profile ai_coding |
 
 ## Skills (local `SKILL.md` folders)
 
