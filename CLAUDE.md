@@ -7,11 +7,12 @@
 
 
 
+
 <!-- cloude-code-toolbox:mcp-skills-awareness-begin -->
 
 ### MCP & Skills awareness (Cloude Code ToolBox)
 
-_Last synced: 2026-05-16T05:46:04.400Z._
+_Last synced: 2026-05-24T22:09:05.898Z._
 
 - **Full report:** `.claude/cloude-code-toolbox-mcp-skills-awareness.md` in this workspace (auto-overwritten on each scan). Use it as ground truth for configured servers and skill folders.
 - **MCP:** For **live tools** in Claude Code, enable the matching server via `/mcp`. Servers are configured in `~/.claude.json` (user) and `.mcp.json` (project).
@@ -30,14 +31,14 @@ _No active workspace servers in mcp.json._
 
 | Server id | Kind | Detail |
 |-----------|------|--------|
+| azure/aks-mcp | stdio | docker run -i --rm -v C:/Users/shess/.azure:/root/.azure ghcr.io/azure/aks-mcp:latest --transport stdio |
 | context7 | http | https://mcp.context7.com/mcp |
+| io.github.upstash/context7 | stdio | npx @upstash/context7-mcp@1.0.31 |
 
 _Off (Toolbox stash):_ 
 
-- **io.github.upstash/context7** (stdio)
-- **azure/aks-mcp** (stdio)
-- **io.github.hashicorp/terraform-mcp-server** (stdio)
 - **MCP_DOCKER** (stdio)
+- **io.github.hashicorp/terraform-mcp-server** (stdio)
 
 #### Project skills
 

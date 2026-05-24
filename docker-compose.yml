@@ -11,11 +11,11 @@ services:
       - db:/var/lib/mysql
 
   memcached:
-    image: memcached:1.6.39
+    image: memcached:latest
     restart: always
 
   wordpress-cli:
-    image: wordpress:cli-php8.4
+    image: wordpress:cli-php8.5
     depends_on:
       db:
         condition: service_started
@@ -34,7 +34,7 @@ services:
       #- ./init.sh:/tmp/init.sh:ro
       #- ./wordpress-alpine/cache-config.json:/tmp/cache-config.json:ro
   wordpress-init:
-    image: wordpress:cli-php8.4
+    image: wordpress:cli-php8.5
     depends_on:
       db:
         condition: service_started
@@ -60,7 +60,7 @@ services:
       - ./wordpress-alpine/cache-config.json:/tmp/cache-config.json:ro
 
   wordpress:
-    #image: ghcr.io/shesselink81/wordpress-apache:v6.8.3.11
+    image: ghcr.io/shesselink81/wordpress-apache:v7.0.0.1
     build:
       context: .
       args:
