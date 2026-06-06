@@ -229,7 +229,8 @@ $valuesYamlText   = Read-FileText 'wordpress-alpine\chart\source\values.yaml'
 $rootReadme       = Read-FileText 'README.md'
 $chartReadme      = Read-FileText 'wordpress-alpine\chart\source\README.md'
 
-$curApacheTag     = if ($rootDockerfile   -match 'FROM wordpress:([^\s\r\n]+)')      { $Matches[1] } else { $null }
+$curApacheTag     = if ($rootDockerfile   -match 'FROM wordpress:([^\s\r\n]+)')          { $Matches[1] } else { $null }
+$curFpmTag        = if ($alpineDockerfile -match 'FROM wordpress:(php[\d.]+-fpm-alpine)') { $Matches[1] } else { $null }
 $curCliTagRoot    = if ($rootCompose      -match 'image: wordpress:(cli-php[\d.]+)') { $Matches[1] } else { $null }
 $curCliTagAlpine  = if ($alpineCompose    -match 'image: wordpress:(cli-php[\d.]+)') { $Matches[1] } else { $null }
 $curCliTagValues  = if ($valuesYamlText   -match 'init: wordpress:(cli-php[\d.]+)')  { $Matches[1] } else { $null }
@@ -322,9 +323,18 @@ if ($latestCliTag -and $currentCliTag -and $latestCliTag -ne $currentCliTag) {
         Update-FileText 'wordpress-alpine\chart\source\README.md' `
             "wordpress:$currentCliTag" "wordpress:$latestCliTag" 'chart README CLI image'
     }
-    # PHP versie in LABEL van alpine Dockerfile bijwerken
+    # PHP versie in alpine Dockerfile bijwerken (FROM tag + LABEL)
     if ($latestCliTag -match 'cli-php(\d+\.\d+)') {
         $newPhp = $Matches[1]
+        # FROM wordpress:phpX.X-fpm-alpine pinnen/bijwerken
+        if ($curFpmTag) {
+            $newFpmTag = "php$newPhp-fpm-alpine"
+            if ($curFpmTag -ne $newFpmTag) {
+                Update-FileText 'wordpress-alpine\Dockerfile' `
+                    "FROM wordpress:$curFpmTag" "FROM wordpress:$newFpmTag" 'alpine Dockerfile FROM tag'
+            }
+        }
+        # LABEL bijwerken
         if ($alpineDockerfile -match 'php ([\d.]+)') {
             $oldPhpLabel = $Matches[1]
             if ($oldPhpLabel -ne $newPhp) {
