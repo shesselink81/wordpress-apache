@@ -233,6 +233,9 @@ $curApacheTag     = if ($rootDockerfile   -match 'FROM wordpress:([^\s\r\n]+)') 
 $curFpmTag        = if ($alpineDockerfile -match 'FROM wordpress:(php[\d.]+-fpm-alpine)') { $Matches[1] } else { $null }
 $curCliTagRoot    = if ($rootCompose      -match 'image: wordpress:(cli-php[\d.]+)') { $Matches[1] } else { $null }
 $curCliTagAlpine  = if ($alpineCompose    -match 'image: wordpress:(cli-php[\d.]+)') { $Matches[1] } else { $null }
+$debianCompose    = Read-FileText 'wordpress-alpine\docker-compose-debian.yml'
+$curCliTagDebian  = if ($debianCompose   -match 'image: wordpress:(cli-php[\d.]+)') { $Matches[1] } else { $null }
+$curMariaDBDebian = if ($debianCompose   -match 'image: mariadb:([\d.]+)')           { $Matches[1] } else { $null }
 $curCliTagValues  = if ($valuesYamlText   -match 'init: wordpress:(cli-php[\d.]+)')  { $Matches[1] } else { $null }
 $curMariaDB       = if ($alpineCompose    -match 'image: mariadb:([\d.]+)')          { $Matches[1] } else { $null }
 $curMariaDBReadme = if ($chartReadme      -match 'mariadb:([\d.]+)')                 { $Matches[1] } else { $null }
@@ -315,6 +318,10 @@ if ($latestCliTag -and $currentCliTag -and $latestCliTag -ne $currentCliTag) {
         Update-FileText 'wordpress-alpine\docker-compose.yml' `
             "image: wordpress:$curCliTagAlpine" "image: wordpress:$latestCliTag" 'wordpress-alpine/docker-compose.yml CLI image'
     }
+    if ($curCliTagDebian) {
+        Update-FileText 'wordpress-alpine\docker-compose-debian.yml' `
+            "image: wordpress:$curCliTagDebian" "image: wordpress:$latestCliTag" 'wordpress-alpine/docker-compose-debian.yml CLI image'
+    }
     if ($curCliTagValues) {
         Update-FileText 'wordpress-alpine\chart\source\values.yaml' `
             "init: wordpress:$curCliTagValues" "init: wordpress:$latestCliTag" 'values.yaml init image'
@@ -361,6 +368,11 @@ if ($curMariaDB) {
     if ($latestMariaDB -and (Compare-SemVer $latestMariaDB $curMariaDB) -gt 0) {
         Update-FileText 'wordpress-alpine\docker-compose.yml' `
             "image: mariadb:$curMariaDB" "image: mariadb:$latestMariaDB" 'docker-compose.yml MariaDB image'
+
+        if ($curMariaDBDebian -and (Compare-SemVer $latestMariaDB $curMariaDBDebian) -gt 0) {
+            Update-FileText 'wordpress-alpine\docker-compose-debian.yml' `
+                "image: mariadb:$curMariaDBDebian" "image: mariadb:$latestMariaDB" 'docker-compose-debian.yml MariaDB image'
+        }
 
         if ($curMariaDBReadme -and $curMariaDBReadme -ne $latestMariaDB) {
             Update-FileText 'wordpress-alpine\chart\source\README.md' `
