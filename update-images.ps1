@@ -240,6 +240,14 @@ $curCliTagValues  = if ($valuesYamlText   -match 'init: wordpress:(cli-php[\d.]+
 $curMariaDB       = if ($alpineCompose    -match 'image: mariadb:([\d.]+)')          { $Matches[1] } else { $null }
 $curMariaDBReadme = if ($chartReadme      -match 'mariadb:([\d.]+)')                 { $Matches[1] } else { $null }
 $curWpReadmeEx    = if ($chartReadme      -match 'version:\s+([\d.]+)')               { $Matches[1] } else { $null }
+$indexHtml        = Read-FileText 'wordpress-alpine\chart\index.html'
+$curWpFpmHtml     = if ($alpineCompose    -match 'image: ghcr\.io/shesselink81/wordpress-alpine:(v[\d.]+)') { $Matches[1] } else { $null }
+$curNginxHtml     = if ($alpineCompose    -match 'image: ghcr\.io/shesselink81/nginx-alpine:(v[\d.]+)')     { $Matches[1] } else { $null }
+$curCliTagHtml    = if ($indexHtml        -match 'wordpress:(cli-php[\d.]+)')                               { $Matches[1] } else { $null }
+$curMariaDBHtml   = if ($indexHtml        -match 'mariadb:([\d.]+)')                                        { $Matches[1] } else { $null }
+$curWpHtmlEx      = if ($indexHtml        -match 'version:\s+([\d.]+)')                                     { $Matches[1] } else { $null }
+$curWpFpmHtmlImg  = if ($indexHtml        -match 'wordpress-alpine:(v[\d.]+)')                              { $Matches[1] } else { $null }
+$curNginxHtmlImg  = if ($indexHtml        -match 'nginx-alpine:(v[\d.]+)')                                  { $Matches[1] } else { $null }
 $curAppVersion    = if ($chartYamlText    -match 'appVersion:\s+"?([\d.]+)"?')       { $Matches[1] } else { $null }
 $curWpVersion     = if ($valuesYamlText   -match 'version:\s+"?([\d.]+)"?')          { $Matches[1] } else { $null }
 $curPeclMemcached = if ($rootDockerfile   -match 'memcached-([\d.]+)')               { $Matches[1] } else { $null }
@@ -271,6 +279,10 @@ if ($latestWp -and $curAppVersion) {
         if ($curWpReadmeEx -and $curWpReadmeEx -ne $latestWp) {
             Update-FileText 'wordpress-alpine\chart\source\README.md' `
                 "version: $curWpReadmeEx" "version: $latestWp" 'chart README voorbeeld wp.version'
+        }
+        if ($curWpHtmlEx -and $curWpHtmlEx -ne $latestWp) {
+            Update-FileText 'wordpress-alpine\chart\index.html' `
+                "version: $curWpHtmlEx" "version: $latestWp" 'index.html voorbeeld wp.version'
         }
     } else {
         Write-Ok "WordPress appVersion $curAppVersion is actueel"
@@ -335,6 +347,10 @@ if ($latestCliTag -and $currentCliTag -and $latestCliTag -ne $currentCliTag) {
         Update-FileText 'wordpress-alpine\chart\source\README.md' `
             "wordpress:$currentCliTag" "wordpress:$latestCliTag" 'chart README CLI image'
     }
+    if ($curCliTagHtml -and $curCliTagHtml -ne $latestCliTag) {
+        Update-FileText 'wordpress-alpine\chart\index.html' `
+            "wordpress:$curCliTagHtml" "wordpress:$latestCliTag" 'index.html CLI image'
+    }
     # PHP versie in alpine Dockerfile bijwerken (FROM tag + LABEL)
     if ($latestCliTag -match 'cli-php(\d+\.\d+)') {
         $newPhp = $Matches[1]
@@ -383,6 +399,10 @@ if ($curMariaDB) {
             Update-FileText 'wordpress-alpine\chart\source\README.md' `
                 "mariadb:$curMariaDBReadme" "mariadb:$latestMariaDB" 'chart README MariaDB versie'
         }
+        if ($curMariaDBHtml -and (Compare-SemVer $latestMariaDB $curMariaDBHtml) -gt 0) {
+            Update-FileText 'wordpress-alpine\chart\index.html' `
+                "mariadb:$curMariaDBHtml" "mariadb:$latestMariaDB" 'index.html MariaDB versie'
+        }
     } else {
         Write-Ok "MariaDB $curMariaDB is actueel"
     }
@@ -411,6 +431,25 @@ if ($curPeclMemcached) {
     }
 } else {
     Write-Skip 'Geen PECL memcached versie gevonden in Dockerfile'
+}
+
+# ----------- 6. index.html ghcr.io tags synchroon met docker-compose ----------
+
+Write-Header 'index.html ghcr.io image tags'
+$anyGhcrUpdate = $false
+
+if ($curWpFpmHtml -and $curWpFpmHtmlImg -and $curWpFpmHtmlImg -ne $curWpFpmHtml) {
+    Update-FileText 'wordpress-alpine\chart\index.html' `
+        "wordpress-alpine:$curWpFpmHtmlImg" "wordpress-alpine:$curWpFpmHtml" 'index.html WordPress FPM image tag'
+    $anyGhcrUpdate = $true
+}
+if ($curNginxHtml -and $curNginxHtmlImg -and $curNginxHtmlImg -ne $curNginxHtml) {
+    Update-FileText 'wordpress-alpine\chart\index.html' `
+        "nginx-alpine:$curNginxHtmlImg" "nginx-alpine:$curNginxHtml" 'index.html Nginx image tag'
+    $anyGhcrUpdate = $true
+}
+if (-not $anyGhcrUpdate) {
+    Write-Ok "ghcr.io tags in index.html zijn synchroon met docker-compose.yml"
 }
 
 # ----------- samenvatting ----------------------------------------------------

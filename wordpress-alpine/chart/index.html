@@ -98,19 +98,19 @@ helm install my-wordpress wp-alpine/wordpress-alpine</code></pre>
       <tbody>
         <tr>
           <td>WordPress FPM</td>
-          <td><code>ghcr.io/shesselink81/wordpress-alpine:v6.9.4.1</code></td>
+          <td><code>ghcr.io/shesselink81/wordpress-alpine:v7.0.0.1</code></td>
         </tr>
         <tr>
           <td>Nginx</td>
-          <td><code>ghcr.io/shesselink81/nginx-alpine:v6.9.4.1</code></td>
+          <td><code>ghcr.io/shesselink81/nginx-alpine:v7.0.0.1</code></td>
         </tr>
         <tr>
           <td>Init (WP-CLI)</td>
-          <td><code>wordpress:cli-php8.4</code></td>
+          <td><code>wordpress:cli-php8.5</code></td>
         </tr>
         <tr>
           <td>Database</td>
-          <td><code>mariadb:12.2.2</code></td>
+          <td><code>mariadb:12.3.2</code></td>
         </tr>
       </tbody>
     </table>
@@ -127,7 +127,7 @@ helm install my-wordpress wp-alpine/wordpress-alpine</code></pre>
     scheme: https
     title: My WordPress Site
     url: ${scheme}://${domainname}
-    version: 6.9.4
+    version: 7.0.0
 
 hostAliases:
   enabled: false
