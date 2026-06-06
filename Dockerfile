@@ -1,6 +1,6 @@
-FROM wordpress:6-php8.4-apache
+FROM wordpress:7-php8.5-apache
 RUN apt-get update && apt-get install -y --no-install-recommends libmemcached-dev zlib1g-dev \
-	&& pecl install memcached-3.2.0 \
+	&& pecl install memcached-3.4.0 \
 	&& docker-php-ext-enable memcached
 ARG WP_DOMAINNAME
 ENV WP_DOMAINNAME=$WP_DOMAINNAME

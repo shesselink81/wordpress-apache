@@ -44,7 +44,7 @@ This chart deploys:
 | WordPress FPM | `ghcr.io/shesselink81/wordpress-alpine:v7.0.0.1` |
 | Nginx         | `ghcr.io/shesselink81/nginx-alpine:v7.0.0.1`     |
 | Init (WP-CLI) | `wordpress:cli-php8.5`                           |
-| Database      | `mariadb:12.2.2`                                 |
+| Database      | `mariadb:12.3.2`                                 |
 
 
 ⚙️ Configuration

@@ -23,8 +23,8 @@ Docker images:
 Version info:
 
 * Wordpress version:  6.9
-* PHP version:        8.3
+* PHP version:        8.5
 
 Installed php extensions:
 
-* memcached: v3.2
+* memcached: v3.4.0
