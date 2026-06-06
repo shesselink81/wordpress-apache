@@ -239,6 +239,7 @@ $curMariaDBDebian = if ($debianCompose   -match 'image: mariadb:([\d.]+)')      
 $curCliTagValues  = if ($valuesYamlText   -match 'init: wordpress:(cli-php[\d.]+)')  { $Matches[1] } else { $null }
 $curMariaDB       = if ($alpineCompose    -match 'image: mariadb:([\d.]+)')          { $Matches[1] } else { $null }
 $curMariaDBReadme = if ($chartReadme      -match 'mariadb:([\d.]+)')                 { $Matches[1] } else { $null }
+$curWpReadmeEx    = if ($chartReadme      -match 'version:\s+([\d.]+)')               { $Matches[1] } else { $null }
 $curAppVersion    = if ($chartYamlText    -match 'appVersion:\s+"?([\d.]+)"?')       { $Matches[1] } else { $null }
 $curWpVersion     = if ($valuesYamlText   -match 'version:\s+"?([\d.]+)"?')          { $Matches[1] } else { $null }
 $curPeclMemcached = if ($rootDockerfile   -match 'memcached-([\d.]+)')               { $Matches[1] } else { $null }
@@ -266,6 +267,10 @@ if ($latestWp -and $curAppVersion) {
         if ($curReadmeWpVer) {
             Update-FileText 'README.md' `
                 "Wordpress version:  $curReadmeWpVer" "Wordpress version:  $latestWpShort" 'README.md WordPress versie'
+        }
+        if ($curWpReadmeEx -and $curWpReadmeEx -ne $latestWp) {
+            Update-FileText 'wordpress-alpine\chart\source\README.md' `
+                "version: $curWpReadmeEx" "version: $latestWp" 'chart README voorbeeld wp.version'
         }
     } else {
         Write-Ok "WordPress appVersion $curAppVersion is actueel"
