@@ -1,5 +1,4 @@
 #!/usr/bin/env pwsh
-#Requires -Version 7.0
 <#
 .SYNOPSIS
     Controleer nieuwe Docker image versies en verwerk ze in projectbestanden.
@@ -116,7 +115,7 @@ function Get-LatestWordPressVersion {
     if (-not $resp) { return $null }
     $stable = $resp.offers | Where-Object { $_.response -eq 'upgrade' -or $_.response -eq 'latest' } |
               Select-Object -First 1
-    return if ($stable) { $stable.version } else { $resp.offers[0].version }
+    if ($stable) { return $stable.version } else { return $resp.offers[0].version }
 }
 
 function Get-LatestMariaDBTag {
@@ -192,7 +191,7 @@ function Update-FileText {
     if (-not (Test-Path $fullPath)) { Write-Warn "Bestand niet gevonden: $RelPath" ; return $false }
 
     $content = [System.IO.File]::ReadAllText($fullPath)
-    if (-not $content.Contains($OldText)) { return $false }
+    if (-not $content.Contains($OldText)) { return }
 
     if (-not $DryRun) {
         [System.IO.File]::WriteAllText($fullPath, $content.Replace($OldText, $NewText), [System.Text.UTF8Encoding]::new($false))
@@ -202,7 +201,6 @@ function Update-FileText {
     Write-Host "  [UPDATE] $Label" -ForegroundColor Yellow
     Write-Host "           Van: $OldText" -ForegroundColor Red
     Write-Host "           Naar: $NewText" -ForegroundColor Green
-    return $true
 }
 
 function Read-FileText {
@@ -402,7 +400,7 @@ if ($script:Changes.Count -eq 0) {
     Write-Host "  $($script:Changes.Count) wijziging(en)$mode :" -ForegroundColor Yellow
     Write-Host ''
 
-    $script:Changes | Group-Object File | ForEach-Object {
+    $script:Changes | Group-Object { $_.File } | ForEach-Object {
         Write-Host "  $($_.Name)" -ForegroundColor White
         $_.Group | ForEach-Object {
             Write-Host "    * $($_.Label)" -ForegroundColor Cyan
