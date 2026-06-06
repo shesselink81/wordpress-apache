@@ -1,0 +1,77 @@
+name: Update Docker Image Versions
+
+on:
+  schedule:
+    # Elke maandag om 07:00 UTC
+    - cron: '0 7 * * 1'
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Dry run (toon wijzigingen zonder toe te passen)'
+        required: false
+        default: 'false'
+        type: boolean
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update:
+    name: Controleer en update image versies
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Voer update script uit
+        shell: pwsh
+        run: |
+          $dryRun = '${{ github.event.inputs.dry_run }}' -eq 'true'
+          if ($dryRun) {
+            ./update-images.ps1 -DryRun
+          } else {
+            ./update-images.ps1 -Force
+          }
+
+      - name: Maak Pull Request aan als er wijzigingen zijn
+        if: github.event.inputs.dry_run != 'true'
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: update/docker-images-${{ github.run_id }}
+          base: main
+          commit-message: |
+            chore: update Docker image versies
+
+            Automatisch bijgewerkt door update-images workflow.
+          title: 'chore: update Docker image versies'
+          body: |
+            ## Docker image versie updates
+
+            Automatisch gegenereerde PR met nieuwere versies van de gebruikte Docker images.
+
+            ### Gecontroleerde images
+            - WordPress Apache base image
+            - WordPress CLI image
+            - MariaDB
+            - PECL memcached extensie
+
+            ### Bijgewerkte bestanden
+            - `Dockerfile`
+            - `docker-compose.yml`
+            - `wordpress-alpine/Dockerfile`
+            - `wordpress-alpine/docker-compose.yml`
+            - `wordpress-alpine/chart/source/Chart.yaml`
+            - `wordpress-alpine/chart/source/values.yaml`
+            - `wordpress-alpine/chart/source/README.md`
+            - `README.md`
+
+            ---
+            _Automatisch aangemaakt door de [update-images workflow](../../actions/workflows/update-images.yml)_
+          labels: |
+            dependencies
+            docker
+          delete-branch: true
+          draft: false
