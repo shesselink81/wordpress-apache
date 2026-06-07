@@ -1,0 +1,72 @@
+name: Update Helm Chart Versions (WordPress)
+
+on:
+  schedule:
+    # Every Monday at 07:00 UTC (1h after the nginx workflow)
+    - cron: '0 7 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  packages: read
+  pull-requests: write
+
+jobs:
+  update-versions:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout wordpress-apache
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Checkout dockerfiles tools
+        uses: actions/checkout@v4
+        with:
+          repository: shesselink81/static-sites
+          path: .dockerfiles-tools
+          sparse-checkout: |
+            update-versions.ps1
+
+      - name: Set up Helm
+        uses: azure/setup-helm@v4
+
+      - name: Run version update script (WordPress mode)
+        shell: pwsh
+        run: |
+          ./.dockerfiles-tools/update-versions.ps1 `
+            -Mode WordPress `
+            -WordpressRepo "${{ github.workspace }}"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Check for changes
+        id: changes
+        run: |
+          git diff --quiet && echo "changed=false" >> "$GITHUB_OUTPUT" || echo "changed=true" >> "$GITHUB_OUTPUT"
+
+      - name: Push branch and open PR
+        if: steps.changes.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          BRANCH="auto-update/wordpress-versions"
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git checkout -B "$BRANCH"
+          git add -A
+          git commit -m "chore: auto-update WordPress Helm chart versions"
+          git push origin "$BRANCH" --force
+
+          # Create PR if it doesn't already exist
+          gh pr list --head "$BRANCH" --state open --json number --jq '.[0].number' | grep -q . \
+            || gh pr create \
+                --base main \
+                --head "$BRANCH" \
+                --title "chore: auto-update WordPress Helm chart versions" \
+                --body "Automated version bump for the wordpress-alpine Helm chart.
+
+Updates image tags from GHCR (wordpress-alpine, nginx-alpine) and syncs Chart.yaml + values.yaml.
+
+Triggered by scheduled workflow. Review the diff and merge when ready."
