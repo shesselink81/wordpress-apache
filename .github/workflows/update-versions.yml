@@ -65,8 +65,4 @@ jobs:
                 --base main \
                 --head "$BRANCH" \
                 --title "chore: auto-update WordPress Helm chart versions" \
-                --body "Automated version bump for the wordpress-alpine Helm chart.
-
-Updates image tags from GHCR (wordpress-alpine, nginx-alpine) and syncs Chart.yaml + values.yaml.
-
-Triggered by scheduled workflow. Review the diff and merge when ready."
+                --body $'Automated version bump for the wordpress-alpine Helm chart.\n\nUpdates image tags from GHCR (wordpress-alpine, nginx-alpine) and syncs Chart.yaml + values.yaml.\n\nTriggered by scheduled workflow. Review the diff and merge when ready.'
