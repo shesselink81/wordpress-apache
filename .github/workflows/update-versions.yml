@@ -9,7 +9,6 @@ on:
 permissions:
   contents: write
   packages: read
-  pull-requests: write
 
 jobs:
   update-versions:
@@ -46,23 +45,29 @@ jobs:
         run: |
           git diff --quiet && echo "changed=false" >> "$GITHUB_OUTPUT" || echo "changed=true" >> "$GITHUB_OUTPUT"
 
-      - name: Push branch and open PR
+      - name: Get new chart version
+        id: version
+        run: |
+          TAG=$(grep '^appVersion:' wordpress-alpine/chart/source/Chart.yaml | sed 's/appVersion: *//;s/"//g;s/ *#.*//')
+          echo "tag=v$TAG" >> "$GITHUB_OUTPUT"
+
+      - name: Commit and push to main
+        if: steps.changes.outputs.changed == 'true'
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "chore: auto-update WordPress Helm chart to ${{ steps.version.outputs.tag }}"
+          git push origin main
+
+      - name: Create GitHub Release
         if: steps.changes.outputs.changed == 'true'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          BRANCH="auto-update/wordpress-versions"
-          git config user.name  "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git checkout -B "$BRANCH"
-          git add -A
-          git commit -m "chore: auto-update WordPress Helm chart versions"
-          git push origin "$BRANCH" --force
-
-          # Create PR if it doesn't already exist
-          gh pr list --head "$BRANCH" --state open --json number --jq '.[0].number' | grep -q . \
-            || gh pr create \
-                --base main \
-                --head "$BRANCH" \
-                --title "chore: auto-update WordPress Helm chart versions" \
-                --body $'Automated version bump for the wordpress-alpine Helm chart.\n\nUpdates image tags from GHCR (wordpress-alpine, nginx-alpine) and syncs Chart.yaml + values.yaml.\n\nTriggered by scheduled workflow. Review the diff and merge when ready.'
+          TAG="${{ steps.version.outputs.tag }}"
+          NOTES=$(printf 'Auto-updated wordpress-alpine Helm chart.\n\nNew WordPress version: %s' "$TAG")
+          gh release create "$TAG" \
+            --title "wordpress-alpine $TAG" \
+            --notes "$NOTES" \
+            --latest
