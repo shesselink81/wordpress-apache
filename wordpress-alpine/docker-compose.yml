@@ -27,6 +27,7 @@ services:
       - wordpress:/var/www/html:rw
       - ./init-alpine.sh:/tmp/init.sh:ro
       - ./cache-config.json:/tmp/cache-config.json:ro
+      #- D:\Users\Sander\nextcloud\Backup\tuinkamer\updraft:/tmp/updraft/:rw
 
    memcached:
     image: memcached:latest

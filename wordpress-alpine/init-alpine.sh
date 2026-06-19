@@ -77,6 +77,10 @@ else
   cp /tmp/cache-config.json "${WP_PATH}/wp-content/w3tc-config/master.php"
   echo "✅ W3 Total Cache configuratie toegepast."
 
+  # php -d memory_limit=512M /usr/local/bin/wp plugin install updraftplus --activate --allow-root --path="${WP_PATH}"
+  # mkdir -p /var/www/html/wp-content/updraft/
+  # cp /tmp/updraft/* /var/www/html/wp-content/updraft/
+
   # Cleanup ongebruikte thema's en plugins
   echo "🧾 Cleanup unused themes"
   wp theme delete $(wp theme list --status=inactive --field=name --path="${WP_PATH}" --allow-root) --path="${WP_PATH}" --allow-root
