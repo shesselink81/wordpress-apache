@@ -3,7 +3,32 @@ entries:
   wordpress-alpine:
   - apiVersion: v2
     appVersion: 7.0.1
-    created: "2026-06-19T05:37:07.579839791Z"
+    created: "2026-06-19T07:45:34.2299316+02:00"
+    dependencies:
+    - condition: memcached.enabled
+      name: memcached
+      repository: oci://registry-1.docker.io/cloudpirates
+      version: 0.13.0
+    - condition: mariadb.enabled
+      name: mariadb
+      repository: oci://registry-1.docker.io/cloudpirates
+      version: 0.16.0
+    description: WordPress FPM + Nginx + Init + MariaDB (alpine)
+    digest: 4044982d09db684c01b9ff2d656f6c3d0950afbd1273eae78734e18f55b72c1b
+    home: https://github.com/shesselink81/wordpress-apache/tree/main/wordpress-alpine/chart
+    icon: https://raw.githubusercontent.com/slydlake/helm-charts/refs/heads/main/charts/wordpress/app.png
+    maintainers:
+    - name: shesselink81
+    name: wordpress-alpine
+    sources:
+    - https://github.com/shesselink81/wordpress-apache/tree/main/wordpress-alpine/chart
+    type: application
+    urls:
+    - wordpress-alpine-1.4.11.tgz
+    version: 1.4.11
+  - apiVersion: v2
+    appVersion: 7.0.1
+    created: "2026-06-19T07:45:34.2233336+02:00"
     dependencies:
     - condition: memcached.enabled
       name: memcached
@@ -28,7 +53,7 @@ entries:
     version: 1.4.10
   - apiVersion: v2
     appVersion: 6.9.4
-    created: "2026-06-19T05:37:07.615461855Z"
+    created: "2026-06-19T07:45:34.3756753+02:00"
     dependencies:
     - condition: memcached.enabled
       name: memcached
@@ -53,7 +78,7 @@ entries:
     version: 1.4.9
   - apiVersion: v2
     appVersion: 6.9.4
-    created: "2026-06-19T05:37:07.610679618Z"
+    created: "2026-06-19T07:45:34.3709996+02:00"
     dependencies:
     - condition: memcached.enabled
       name: memcached
@@ -78,7 +103,7 @@ entries:
     version: 1.4.8
   - apiVersion: v2
     appVersion: 6.9.4
-    created: "2026-06-19T05:37:07.606816904Z"
+    created: "2026-06-19T07:45:34.3505529+02:00"
     dependencies:
     - condition: memcached.enabled
       name: memcached
@@ -103,7 +128,7 @@ entries:
     version: 1.4.7
   - apiVersion: v2
     appVersion: 6.9.4
-    created: "2026-06-19T05:37:07.602005983Z"
+    created: "2026-06-19T07:45:34.3322454+02:00"
     dependencies:
     - condition: memcached.enabled
       name: memcached
@@ -128,7 +153,7 @@ entries:
     version: 1.4.6
   - apiVersion: v2
     appVersion: 6.9.4
-    created: "2026-06-19T05:37:07.598049007Z"
+    created: "2026-06-19T07:45:34.3140591+02:00"
     dependencies:
     - condition: memcached.enabled
       name: memcached
@@ -153,7 +178,7 @@ entries:
     version: 1.4.5
   - apiVersion: v2
     appVersion: 6.9.4
-    created: "2026-06-19T05:37:07.59353777Z"
+    created: "2026-06-19T07:45:34.2933262+02:00"
     dependencies:
     - condition: memcached.enabled
       name: memcached
@@ -178,7 +203,7 @@ entries:
     version: 1.4.4
   - apiVersion: v2
     appVersion: 6.9.4
-    created: "2026-06-19T05:37:07.588459224Z"
+    created: "2026-06-19T07:45:34.2666408+02:00"
     dependencies:
     - condition: memcached.enabled
       name: memcached
@@ -203,7 +228,7 @@ entries:
     version: 1.4.3
   - apiVersion: v2
     appVersion: 6.9.4
-    created: "2026-06-19T05:37:07.584592334Z"
+    created: "2026-06-19T07:45:34.2493639+02:00"
     dependencies:
     - condition: memcached.enabled
       name: memcached
@@ -228,7 +253,7 @@ entries:
     version: 1.4.2
   - apiVersion: v2
     appVersion: 6.9.4
-    created: "2026-06-19T05:37:07.576024469Z"
+    created: "2026-06-19T07:45:34.2062087+02:00"
     dependencies:
     - condition: memcached.enabled
       name: memcached
@@ -253,7 +278,7 @@ entries:
     version: 1.4.1
   - apiVersion: v2
     appVersion: 6.9.1
-    created: "2026-06-19T05:37:07.571340751Z"
+    created: "2026-06-19T07:45:34.1866958+02:00"
     dependencies:
     - condition: memcached.enabled
       name: memcached
@@ -276,4 +301,4 @@ entries:
     urls:
     - wordpress-alpine-1.4.0.tgz
     version: 1.4.0
-generated: "2026-06-19T05:37:07.567441993Z"
+generated: "2026-06-19T07:45:34.1614553+02:00"
