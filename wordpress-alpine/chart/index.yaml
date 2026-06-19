@@ -2,8 +2,33 @@ apiVersion: v1
 entries:
   wordpress-alpine:
   - apiVersion: v2
+    appVersion: 7.0.1
+    created: "2026-06-19T05:37:07.579839791Z"
+    dependencies:
+    - condition: memcached.enabled
+      name: memcached
+      repository: oci://registry-1.docker.io/cloudpirates
+      version: 0.13.0
+    - condition: mariadb.enabled
+      name: mariadb
+      repository: oci://registry-1.docker.io/cloudpirates
+      version: 0.16.0
+    description: WordPress FPM + Nginx + Init + MariaDB (alpine)
+    digest: d55a8ae34afa2a91d32316ecc94c9524bf4882f5cf03ea70b6ab218427c306c3
+    home: https://github.com/shesselink81/wordpress-apache/tree/main/wordpress-alpine/chart
+    icon: https://raw.githubusercontent.com/slydlake/helm-charts/refs/heads/main/charts/wordpress/app.png
+    maintainers:
+    - name: shesselink81
+    name: wordpress-alpine
+    sources:
+    - https://github.com/shesselink81/wordpress-apache/tree/main/wordpress-alpine/chart
+    type: application
+    urls:
+    - wordpress-alpine-1.4.10.tgz
+    version: 1.4.10
+  - apiVersion: v2
     appVersion: 6.9.4
-    created: "2026-06-19T07:32:16.9041527+02:00"
+    created: "2026-06-19T05:37:07.615461855Z"
     dependencies:
     - condition: memcached.enabled
       name: memcached
@@ -28,7 +53,7 @@ entries:
     version: 1.4.9
   - apiVersion: v2
     appVersion: 6.9.4
-    created: "2026-06-19T07:32:16.899385+02:00"
+    created: "2026-06-19T05:37:07.610679618Z"
     dependencies:
     - condition: memcached.enabled
       name: memcached
@@ -53,7 +78,7 @@ entries:
     version: 1.4.8
   - apiVersion: v2
     appVersion: 6.9.4
-    created: "2026-06-19T07:32:16.8764145+02:00"
+    created: "2026-06-19T05:37:07.606816904Z"
     dependencies:
     - condition: memcached.enabled
       name: memcached
@@ -78,7 +103,7 @@ entries:
     version: 1.4.7
   - apiVersion: v2
     appVersion: 6.9.4
-    created: "2026-06-19T07:32:16.8549499+02:00"
+    created: "2026-06-19T05:37:07.602005983Z"
     dependencies:
     - condition: memcached.enabled
       name: memcached
@@ -103,7 +128,7 @@ entries:
     version: 1.4.6
   - apiVersion: v2
     appVersion: 6.9.4
-    created: "2026-06-19T07:32:16.8370092+02:00"
+    created: "2026-06-19T05:37:07.598049007Z"
     dependencies:
     - condition: memcached.enabled
       name: memcached
@@ -128,7 +153,7 @@ entries:
     version: 1.4.5
   - apiVersion: v2
     appVersion: 6.9.4
-    created: "2026-06-19T07:32:16.8163804+02:00"
+    created: "2026-06-19T05:37:07.59353777Z"
     dependencies:
     - condition: memcached.enabled
       name: memcached
@@ -153,7 +178,7 @@ entries:
     version: 1.4.4
   - apiVersion: v2
     appVersion: 6.9.4
-    created: "2026-06-19T07:32:16.7965654+02:00"
+    created: "2026-06-19T05:37:07.588459224Z"
     dependencies:
     - condition: memcached.enabled
       name: memcached
@@ -178,7 +203,7 @@ entries:
     version: 1.4.3
   - apiVersion: v2
     appVersion: 6.9.4
-    created: "2026-06-19T07:32:16.7767247+02:00"
+    created: "2026-06-19T05:37:07.584592334Z"
     dependencies:
     - condition: memcached.enabled
       name: memcached
@@ -203,7 +228,7 @@ entries:
     version: 1.4.2
   - apiVersion: v2
     appVersion: 6.9.4
-    created: "2026-06-19T07:32:16.7558505+02:00"
+    created: "2026-06-19T05:37:07.576024469Z"
     dependencies:
     - condition: memcached.enabled
       name: memcached
@@ -228,7 +253,7 @@ entries:
     version: 1.4.1
   - apiVersion: v2
     appVersion: 6.9.1
-    created: "2026-06-19T07:32:16.738158+02:00"
+    created: "2026-06-19T05:37:07.571340751Z"
     dependencies:
     - condition: memcached.enabled
       name: memcached
@@ -251,4 +276,4 @@ entries:
     urls:
     - wordpress-alpine-1.4.0.tgz
     version: 1.4.0
-generated: "2026-06-19T07:32:16.7170592+02:00"
+generated: "2026-06-19T05:37:07.567441993Z"
