@@ -1,6 +1,6 @@
 image:
-  fpm: ghcr.io/shesselink81/wordpress-alpine:v7.0.1
-  nginx: ghcr.io/shesselink81/nginx-alpine:v7.0.1
+  fpm: ghcr.io/shesselink81/wordpress-alpine:v7.0.2
+  nginx: ghcr.io/shesselink81/nginx-alpine:v7.0.2
   init: wordpress:cli-php8.4
 
 imagePullSecrets: []
@@ -10,7 +10,7 @@ env:
     scheme: https
     domainname: wordpress.local
     url: "${scheme}://${domainname}"
-    version: "7.0.1"
+    version: "7.0.2"
     locale: en_US
     title: "My WordPress Site"
     admin_user: admin
@@ -66,12 +66,13 @@ httproute:
 persistence:
   wordpress:
     enabled: true
-    size: 1Gi
+    size: 5Gi
     existingClaim: ""
     keep: true
 
 mariadb:
   enabled: true
+  initdbScriptsConfigMap: "{{ include 'wordpress-alpine.fullname' . }}-init-config"
   auth:
     enabled: true
     rootPassword: ""
@@ -92,10 +93,10 @@ mariadb:
   resources:
     requests:
        memory: "128Mi"
-       cpu: "20m"
+       cpu: "100m"
     limits:
-       memory: "256Mi"
-       cpu: "300m"
+       memory: "350Mi"
+       cpu: "500m"
 
 externalDatabase:
   database: null
@@ -109,8 +110,8 @@ nginx:
        memory: "32Mi"
        cpu: "10m"
     limits:
-       memory: "64Mi"
-       cpu: "150m"
+       memory: "96Mi"
+       cpu: "200m"
   service:
     port: 80
 
@@ -124,8 +125,8 @@ memcached:
        memory: "15Mi"
        cpu: "5m"
     limits:
-       memory: "45Mi"
-       cpu: "50m"
+       memory: "90Mi"
+       cpu: "100m"
 
 secrets:
   name: ""

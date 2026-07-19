@@ -8,4 +8,4 @@ RUN apk update && apk add --no-cache autoconf automake build-base pkgconfig libm
 	&& unset APACHE_CONFDIR \
 	&& unset APACHE_ENVVARS
 LABEL org.opencontainers.image.title="wordpress-alpine" \
-      org.opencontainers.image.description="Custom wordpress 7.0.0 image with php 8.5, nginx,  memcached"
+      org.opencontainers.image.description="Custom wordpress 7.0.2 image with php 8.5, nginx,  memcached"
