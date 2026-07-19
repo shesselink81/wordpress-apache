@@ -2,7 +2,7 @@ version: "3.9"
 
 services:
    wordpress-init:
-    image: wordpress:cli-php8.5
+    image: wordpress:cli-2.12-php8.4
     depends_on:
       db:
         condition: service_healthy
@@ -34,7 +34,7 @@ services:
     restart: always
 
    wordpress:
-    image: ghcr.io/shesselink81/wordpress-alpine:v7.0.2
+    image: ghcr.io/shesselink81/wordpress-alpine:v7.0.1
     build: .
     container_name: wp-fpm
     restart: unless-stopped
@@ -74,7 +74,7 @@ services:
       - db_data:/var/lib/mysql
 
    nginx:
-    image: ghcr.io/shesselink81/nginx-alpine:v7.0.2
+    image: ghcr.io/shesselink81/nginx-alpine:v7.0.1
     build:
       context: ./nginx/
     container_name: wp-nginx

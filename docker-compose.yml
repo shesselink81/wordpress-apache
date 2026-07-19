@@ -15,7 +15,7 @@ services:
     restart: always
 
   wordpress-init:
-    image: wordpress:cli-php8.5
+    image: wordpress:cli-2.12-php8.4
     depends_on:
       db:
         condition: service_started
