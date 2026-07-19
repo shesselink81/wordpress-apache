@@ -106,7 +106,7 @@ helm install my-wordpress wp-alpine/wordpress-alpine</code></pre>
         </tr>
         <tr>
           <td>Init (WP-CLI)</td>
-          <td><code>wordpress:cli-php8.5</code></td>
+          <td><code>wordpress:cli-php8.4</code></td>
         </tr>
         <tr>
           <td>Database</td>
@@ -127,7 +127,7 @@ helm install my-wordpress wp-alpine/wordpress-alpine</code></pre>
     scheme: https
     title: My WordPress Site
     url: ${scheme}://${domainname}
-    version: 7.0
+    version: 7.0.2
 
 hostAliases:
   enabled: false

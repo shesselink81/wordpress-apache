@@ -3,7 +3,7 @@ name: Release on Tag Nginx Alpine
 on:
   push:
     tags:
-      - 'v*'   # Trigger op tags zoals v1.0.0, v2.3.1 etc.
+      - '7.*'   # Trigger op tags zoals v1.0.0, v2.3.1 etc.
 
 env:
   # Use docker.io for Docker Hub if empty
