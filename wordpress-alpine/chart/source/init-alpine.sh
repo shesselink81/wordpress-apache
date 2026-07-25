@@ -74,6 +74,16 @@ else
 
   echo "✅ Memcached caching configured."
 
+  php -d memory_limit=512M /usr/local/bin/wp option update permalink_structure /%postname%/ --allow-root --path="${WP_PATH}"
+  php -d memory_limit=512M /usr/local/bin/wp total-cache import /tmp/cache-config.json --allow-root --path="${WP_PATH}"
+  php -d memory_limit=512M /usr/local/bin/wp total-cache option set objectcache.engine memcached --allow-root --path="${WP_PATH}"
+  php -d memory_limit=512M /usr/local/bin/wp total-cache option set dbcache.engine memcached --allow-root --path="${WP_PATH}"
+  php -d memory_limit=512M /usr/local/bin/wp total-cache option set dbcache.memcached.servers "${MEMCACHED_HOST}:11211" --allow-root --path="${WP_PATH}"
+  php -d memory_limit=512M /usr/local/bin/wp total-cache option set objectcache.memcached.servers "${MEMCACHED_HOST}:11211" --allow-root --path="${WP_PATH}"
+  #php -d memory_limit=512M /usr/local/bin/wp total-cache import /tmp/cache-config.json --allow-root --path="${WP_PATH}"
+
+  echo "✅ W3 Total Cache configuratie toegepast."
+
   # Cleanup unused themes and plugins
   echo "🧾 Cleaning up unused themes"
   wp theme delete $(wp theme list --status=inactive --field=name --path="${WP_PATH}" --allow-root) --path="${WP_PATH}" --allow-root

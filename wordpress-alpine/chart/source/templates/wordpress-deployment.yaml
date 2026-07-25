@@ -72,6 +72,9 @@ spec:
             - name: init-script
               mountPath: /tmp/init.sh
               subPath: init.sh
+            - name: cache-config
+              mountPath: /tmp/cache-config.json
+              subPath: cache-config.json
       containers:
         - name: fpm
           image: {{ .Values.image.fpm }}
@@ -132,3 +135,6 @@ spec:
         - name: php-config
           configMap:
             name: {{ include "wordpress-alpine.fullname" . }}-php-config
+        - name: cache-config
+          configMap:
+            name: {{ include "wordpress-alpine.fullname" . }}-cache-config

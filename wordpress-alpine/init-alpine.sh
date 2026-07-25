@@ -52,7 +52,7 @@ else
 
   echo "✅ WordPress installatie voltooid!"
   # Memcached ondersteuning inschakelen
-  if ping -c 1 memcached &>/dev/null; then
+  if ping -c 1 "${MEMCACHED_HOST}" &>/dev/null; then
     echo "💾 Memcached server gevonden, plugin installeren..."
     if ! php -d memory_limit=512M /usr/local/bin/wp plugin is-installed w3-total-cache --path="${WP_PATH}" --allow-root; then
       php -d memory_limit=512M /usr/local/bin/wp plugin install w3-total-cache --activate --allow-root --path="${WP_PATH}"
@@ -66,7 +66,7 @@ else
     fi
 
     if ! grep -q "memcached_servers" "${WP_PATH}/wp-config.php"; then
-      echo "\$memcached_servers = array( 'default' => array('memcached:11211') );" >> "${WP_PATH}/wp-config.php"
+      echo "\$memcached_servers = array( 'default' => array('${MEMCACHED_HOST}:11211') );" >> "${WP_PATH}/wp-config.php"
     fi
 
     echo "✅ Memcached caching geconfigureerd."
@@ -74,7 +74,14 @@ else
     echo "⚠️  Geen memcached service bereikbaar — overslaan caching setup."
   fi
 
-  cp /tmp/cache-config.json "${WP_PATH}/wp-content/w3tc-config/master.php"
+  php -d memory_limit=512M /usr/local/bin/wp option update permalink_structure /%postname%/ --allow-root --path="${WP_PATH}"
+  php -d memory_limit=512M /usr/local/bin/wp total-cache import /tmp/cache-config.json --allow-root --path="${WP_PATH}"
+  php -d memory_limit=512M /usr/local/bin/wp total-cache option set objectcache.engine memcached --allow-root --path="${WP_PATH}"
+  php -d memory_limit=512M /usr/local/bin/wp total-cache option set dbcache.engine memcached --allow-root --path="${WP_PATH}"
+  php -d memory_limit=512M /usr/local/bin/wp total-cache option set dbcache.memcached.servers "${MEMCACHED_HOST}:11211" --allow-root --path="${WP_PATH}"
+  php -d memory_limit=512M /usr/local/bin/wp total-cache option set objectcache.memcached.servers "${MEMCACHED_HOST}:11211" --allow-root --path="${WP_PATH}"
+  #php -d memory_limit=512M /usr/local/bin/wp total-cache import /tmp/cache-config.json --allow-root --path="${WP_PATH}"
+
   echo "✅ W3 Total Cache configuratie toegepast."
 
   # php -d memory_limit=512M /usr/local/bin/wp plugin install updraftplus --activate --allow-root --path="${WP_PATH}"

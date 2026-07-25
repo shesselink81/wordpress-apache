@@ -2,7 +2,14 @@ version: "3.9"
 
 services:
    wordpress-init:
-    image: wordpress:cli-2.12-php8.4
+    image: ghcr.io/shesselink81/wordpress-alpine:7.0.2
+    build:
+      context: .
+      dockerfile: Dockerfile
+      no_cache: false
+      args:
+        WORDPRESS_VERSION: 7.0.2
+        WP_LOCALE: en_US
     depends_on:
       db:
         condition: service_healthy
@@ -22,6 +29,7 @@ services:
       WP_INIT: "true"
       WP_URL: "${WP_SCHEME}://${WP_DOMAINNAME}"
       WORDPRESS_VERSION: ${WORDPRESS_VERSION}
+      MEMCACHED_HOST: ${MEMCACHED_HOST}
 
     volumes:
       - wordpress:/var/www/html:rw
@@ -34,10 +42,12 @@ services:
     restart: always
 
    wordpress:
-    image: ghcr.io/shesselink81/wordpress-alpine:7.0.1
-    build: .
+    image: ghcr.io/shesselink81/wordpress-alpine:7.0.2
     container_name: wp-fpm
     restart: unless-stopped
+    user: 82:82
+    extra_hosts:
+      - "wordpress.local:host-gateway"
     depends_on:
       db:
         condition: service_healthy
@@ -50,11 +60,13 @@ services:
       WORDPRESS_DB_USER: ${MYSQL_USER}
       WORDPRESS_DB_PASSWORD: ${MYSQL_PASSWORD}
       WORDPRESS_DB_NAME: ${MYSQL_DATABASE}
+      MEMCACHED_HOST: ${MEMCACHED_HOST}
 
     volumes:
       - wordpress:/var/www/html:rw
       - ./php-fpm.conf:/usr/local/etc/php-fpm.d/zz-custom.conf:ro
       - ./php.ini:/usr/local/etc/php/conf.d/zz-custom.ini:ro
+      - ./cache-config.json:/tmp/cache-config.json:ro
 
    db:
     image: mariadb:12.3.2
@@ -74,7 +86,7 @@ services:
       - db_data:/var/lib/mysql
 
    nginx:
-    image: ghcr.io/shesselink81/nginx-alpine:7.0.1
+    image: ghcr.io/shesselink81/nginx-alpine:7.0.2
     build:
       context: ./nginx/
     container_name: wp-nginx
