@@ -107,7 +107,7 @@ fi
 
 # File permissies herstellen
 echo "🧾 Herstellen van permissies..."
-chown -R 82:82 "${WP_PATH}"
+#chown -R 82:82 "${WP_PATH}"
 find "${WP_PATH}" -type d -exec chmod 755 {} \;
 find "${WP_PATH}" -type f -exec chmod 644 {} \;
 
