@@ -2,14 +2,7 @@ version: "3.9"
 
 services:
    wordpress-init:
-    image: ghcr.io/shesselink81/wordpress-alpine:7.0.2
-    build:
-      context: .
-      dockerfile: Dockerfile
-      no_cache: false
-      args:
-        WORDPRESS_VERSION: 7.0.2
-        WP_LOCALE: en_US
+    image: wordpress:cli-php8.4
     depends_on:
       db:
         condition: service_healthy
@@ -42,7 +35,14 @@ services:
     restart: always
 
    wordpress:
-    image: ghcr.io/shesselink81/wordpress-alpine:7.0.2
+    image: ghcr.io/shesselink81/wordpress-alpine:7.0.2.3
+    build:
+      context: .
+      dockerfile: Dockerfile
+      no_cache: false
+      args:
+        WORDPRESS_VERSION: 7.0.2
+        WP_LOCALE: en_US
     container_name: wp-fpm
     restart: unless-stopped
     user: 82:82
@@ -86,7 +86,7 @@ services:
       - db_data:/var/lib/mysql
 
    nginx:
-    image: ghcr.io/shesselink81/nginx-alpine:7.0.2
+    image: ghcr.io/shesselink81/nginx-alpine:7.0.2.3
     build:
       context: ./nginx/
     container_name: wp-nginx
