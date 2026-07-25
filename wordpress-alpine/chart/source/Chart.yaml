@@ -4,11 +4,11 @@ dependencies:
 - condition: memcached.enabled
   name: memcached
   repository: oci://registry-1.docker.io/cloudpirates
-  version: 0.13.0
+  version: 0.14.2
 - condition: mariadb.enabled
   name: mariadb
   repository: oci://registry-1.docker.io/cloudpirates
-  version: 0.16.0
+  version: 0.16.6
 description: WordPress FPM + Nginx + Init + MariaDB (alpine)
 home: https://github.com/shesselink81/wordpress-apache/tree/main/wordpress-alpine/chart
 icon: https://raw.githubusercontent.com/slydlake/helm-charts/refs/heads/main/charts/wordpress/app.png

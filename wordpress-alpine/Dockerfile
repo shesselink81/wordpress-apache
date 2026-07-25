@@ -6,6 +6,8 @@ RUN apk update && apk add --no-cache mariadb-client autoconf automake build-base
 	&& yes '' | pecl install -f memcached \
 	&& docker-php-ext-enable memcached \
 	&& apk del autoconf automake build-base pkgconfig \
+	&& apk upgrade --no-cache --available \
+	&& apk cache clean \
 	&& rm -rf /var/cache/apk/* \
 	&& rm -rf /etc/apache2 \
 	&& unset APACHE_CONFDIR \
