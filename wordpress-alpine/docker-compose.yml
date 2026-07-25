@@ -7,7 +7,7 @@ services:
       db:
         condition: service_healthy
     restart: "no"
-    user: root
+    #user: root
     command: ["/bin/bash", "/tmp/init.sh"]
     environment:
       WORDPRESS_DB_HOST: db
@@ -28,7 +28,7 @@ services:
       - wordpress:/var/www/html:rw
       - ./init-alpine.sh:/tmp/init.sh:ro
       - ./cache-config.json:/tmp/cache-config.json:ro
-      #- D:\Users\Sander\nextcloud\Backup\tuinkamer\updraft:/tmp/updraft/:rw
+      - D:\Users\Sander\nextcloud\Backup\playlists\updraft:/tmp/updraft/:rw
 
    memcached:
     image: memcached:latest
@@ -66,7 +66,7 @@ services:
       - wordpress:/var/www/html:rw
       - ./php-fpm.conf:/usr/local/etc/php-fpm.d/zz-custom.conf:ro
       - ./php.ini:/usr/local/etc/php/conf.d/zz-custom.ini:ro
-      - ./cache-config.json:/tmp/cache-config.json:ro
+      #- ./cache-config.json:/tmp/cache-config.json:ro
 
    db:
     image: mariadb:12.3.2

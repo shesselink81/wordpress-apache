@@ -80,29 +80,38 @@ else
   php -d memory_limit=512M /usr/local/bin/wp total-cache option set dbcache.engine memcached --allow-root --path="${WP_PATH}"
   php -d memory_limit=512M /usr/local/bin/wp total-cache option set dbcache.memcached.servers "${MEMCACHED_HOST}:11211" --allow-root --path="${WP_PATH}"
   php -d memory_limit=512M /usr/local/bin/wp total-cache option set objectcache.memcached.servers "${MEMCACHED_HOST}:11211" --allow-root --path="${WP_PATH}"
-  #php -d memory_limit=512M /usr/local/bin/wp total-cache import /tmp/cache-config.json --allow-root --path="${WP_PATH}"
+  php -d memory_limit=512M /usr/local/bin/wp total-cache option set minify.engine memcached --allow-root --path="${WP_PATH}"
+  php -d memory_limit=512M /usr/local/bin/wp total-cache option set minify.memcached.servers "${MEMCACHED_HOST}:11211" --allow-root --path="${WP_PATH}"
+  php -d memory_limit=512M /usr/local/bin/wp total-cache option set minify.enabled true --allow-root --path="${WP_PATH}"
+  
 
   echo "✅ W3 Total Cache configuratie toegepast."
 
-  # php -d memory_limit=512M /usr/local/bin/wp plugin install updraftplus --activate --allow-root --path="${WP_PATH}"
-  # mkdir -p /var/www/html/wp-content/updraft/
-  # cp /tmp/updraft/* /var/www/html/wp-content/updraft/
-
-  # Cleanup ongebruikte thema's en plugins
-  echo "🧾 Cleanup unused themes"
+  # Cleanup unused themes and plugins
+  echo "🧾 Cleaning up unused themes"
   wp theme delete $(wp theme list --status=inactive --field=name --path="${WP_PATH}" --allow-root) --path="${WP_PATH}" --allow-root
-  echo "✅ Verwijderen van ongebruikte thema's voltooid."
+  echo "✅ Removal of unused themes completed."
   
-  echo "🧾 Enable theme autoupdate"
+  echo "🧾 Enabling theme auto-updates"
   wp theme auto-updates enable --all --disabled-only --path="${WP_PATH}" --allow-root
 
-  echo "🧾 Cleanup plugins and enable autoupdate"
+  echo "🧾 Cleaning up plugins and enabling auto-updates"
+  php -d memory_limit=512M /usr/local/bin/wp plugin install updraftplus --activate --allow-root --path="${WP_PATH}"
   php -d memory_limit=512M /usr/local/bin/wp plugin auto-updates enable --all --disabled-only --path="${WP_PATH}" --allow-root
-  if php -d memory_limit=512M /usr/local/bin/wp plugin is-installed hello --path="${WP_PATH}" --allow-root; then
-      php -d memory_limit=512M /usr/local/bin/wp plugin delete hello --allow-root --path="${WP_PATH}"
+
+  if [ -d "/tmp/updraft/" ]; then
+    echo "⬇️  Kopieren van WordPress backup..."
+    mkdir /var/www/html/wp-content/updraft/
+    cp /tmp/updraft/*.zip /var/www/html/wp-content/updraft/
+    cp /tmp/updraft/*.gz /var/www/html/wp-content/updraft/
   fi
+
+  if php -d memory_limit=512M /usr/local/bin/wp plugin is-installed hello --path="${WP_PATH}" --allow-root; then
+    php -d memory_limit=512M /usr/local/bin/wp plugin delete hello --allow-root --path="${WP_PATH}"
+  fi
+
   if php -d memory_limit=512M /usr/local/bin/wp plugin is-installed akismet --path="${WP_PATH}" --allow-root; then
-      php -d memory_limit=512M /usr/local/bin/wp plugin delete akismet --allow-root --path="${WP_PATH}"
+    php -d memory_limit=512M /usr/local/bin/wp plugin delete akismet --allow-root --path="${WP_PATH}"
   fi
 
 fi
