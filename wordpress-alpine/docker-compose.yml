@@ -2,7 +2,7 @@ version: "3.9"
 
 services:
    wordpress-init:
-    image: wordpress:cli-php8.4
+    image: wordpress:cli-php8.5
     depends_on:
       db:
         condition: service_healthy
