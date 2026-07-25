@@ -35,6 +35,7 @@ wordpress:
        cpu: "300m"
   nodeSelector: {}
   auth:
+    username: db-user
     existingSecret: "wordpress-secrets"
     secretKeys:
       wpPasswordKey: wordpress.password
@@ -73,7 +74,7 @@ persistence:
 
 mariadb:
   enabled: true
-  initdbScriptsConfigMap: "{{ include 'wordpress-alpine.fullname' . }}-init-config"
+  initdbScriptsConfigMap: ""
   auth:
     enabled: true
     rootPassword: ""
