@@ -6,7 +6,13 @@ on:
   push:
     branches: ["main"]
     paths:
-      - "wordpress-alpine/chart/source/index.yaml"
+      - "wordpress-alpine/chart/index.yaml"
+
+  # Runs automatically once the chart packaging workflow succeeds on main
+  workflow_run:
+    workflows: ["Package WordPress Helm Chart"]
+    types: [completed]
+    branches: ["main"]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -26,6 +32,8 @@ concurrency:
 jobs:
   # Single deploy job since we're just deploying
   deploy:
+    # When triggered by workflow_run, only proceed if that run succeeded
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
