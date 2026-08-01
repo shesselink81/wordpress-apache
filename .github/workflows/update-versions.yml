@@ -40,10 +40,17 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Remove tooling checkout
+        run: rm -rf .dockerfiles-tools
+
       - name: Check for changes
         id: changes
         run: |
-          git diff --quiet && echo "changed=false" >> "$GITHUB_OUTPUT" || echo "changed=true" >> "$GITHUB_OUTPUT"
+          if [ -n "$(git status --porcelain -- wordpress-alpine)" ]; then
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          fi
 
       - name: Get new chart version
         id: version
@@ -56,7 +63,7 @@ jobs:
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add -A
+          git add wordpress-alpine
           git commit -m "chore: auto-update WordPress Helm chart to ${{ steps.version.outputs.tag }}"
           git push origin main
 
