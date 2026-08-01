@@ -20,9 +20,7 @@ https://artifacthub.io/packages/helm/wordpress-alpine/wordpress-alpine
 ### Add the Helm Repository
 
 ```bash
-helm repo add wp-alpine https://wp.charts.hessel.cloud/
-helm repo update
-helm install my-wordpress wp-alpine/wordpress-alpine
+helm install my-wordpress oci://ghcr.io/shesselink81/charts/wordpress-alpine
 ```
 
 🧠 Architecture
