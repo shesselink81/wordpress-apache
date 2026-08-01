@@ -108,7 +108,6 @@ externalDatabase:
     userPasswordKey: db.password
 
 nginx:
-  nodeSelector: {}
   resources:
     requests:
        memory: "32Mi"

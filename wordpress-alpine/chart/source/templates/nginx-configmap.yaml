@@ -21,7 +21,7 @@ data:
 
         location ~ \.php$ {
             include fastcgi_params;
-            fastcgi_pass {{ include "wordpress-alpine.fullname" . }}-fpm:9000;
+            fastcgi_pass 127.0.0.1:9000;
             fastcgi_param SCRIPT_FILENAME /var/www/html$fastcgi_script_name;
             fastcgi_param HTTPS on;
         }

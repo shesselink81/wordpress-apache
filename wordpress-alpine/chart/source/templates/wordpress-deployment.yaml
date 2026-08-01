@@ -1,17 +1,17 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "wordpress-alpine.fullname" . }}-fpm
+  name: {{ include "wordpress-alpine.fullname" . }}
 spec:
   selector:
     matchLabels:
       {{- include "wordpress-alpine.selectorLabels" . | nindent 6 }}
-      app.kubernetes.io/component: fpm
+      app.kubernetes.io/component: web
   template:
     metadata:
       labels:
         {{- include "wordpress-alpine.labels" . | nindent 8 }}
-        app.kubernetes.io/component: fpm
+        app.kubernetes.io/component: web
     spec:
       {{- if .Values.hostAliases.enabled }}
       hostAliases:
@@ -112,10 +112,10 @@ spec:
                   key: {{ .Values.wordpress.auth.secretKeys.wpPasswordKey }}
             - name: WP_ADMIN_EMAIL
               value: admin@{{ .Values.env.wp.domainname }}
-          {{- with .Values.wordpress.resources }}    
+          {{- with .Values.wordpress.resources }}
           resources:
             {{- toYaml . | nindent 12 }}
-          {{- end }}  
+          {{- end }}
           volumeMounts:
             - mountPath: /var/www/html
               name: wordpress
@@ -125,6 +125,26 @@ spec:
             - mountPath: /usr/local/etc/php/conf.d/php-fpm.conf
               name: php-config
               subPath: php-fpm.conf
+        - name: nginx
+          image: {{ .Values.image.nginx }}
+          securityContext:
+            runAsUser: 101
+            runAsGroup: 101
+          ports:
+            - containerPort: {{ .Values.nginx.service.port }}
+          {{- with .Values.nginx.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          volumeMounts:
+            - mountPath: /var/www/html
+              name: wordpress
+            - mountPath: /etc/nginx/conf.d/default.conf
+              name: nginxconf
+              subPath: default.conf
+            - mountPath: /etc/nginx/nginx.conf
+              name: nginxconf
+              subPath: nginx.conf
       volumes:
         - name: wordpress
           persistentVolumeClaim:
@@ -138,3 +158,6 @@ spec:
         - name: cache-config
           configMap:
             name: {{ include "wordpress-alpine.fullname" . }}-cache-config
+        - name: nginxconf
+          configMap:
+            name: {{ include "wordpress-alpine.fullname" . }}-nginx-config
