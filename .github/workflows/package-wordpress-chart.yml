@@ -1,0 +1,74 @@
+name: Package WordPress Helm Chart
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - "wordpress-alpine/chart/source/**"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: package-wordpress-chart
+  cancel-in-progress: false
+
+jobs:
+  package:
+    # Skip pushes made by this workflow's own commit, otherwise packaging
+    # the chart (which touches files under the trigger path) would
+    # re-trigger itself indefinitely.
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Helm
+        uses: azure/setup-helm@v4
+
+      - name: Build chart dependencies
+        run: helm dependency build wordpress-alpine/chart/source
+
+      - name: Bump chart version if already packaged
+        id: bump
+        run: |
+          CHART_FILE="wordpress-alpine/chart/source/Chart.yaml"
+          VERSION=$(grep '^version:' "$CHART_FILE" | awk '{print $2}')
+          if [ -f "wordpress-alpine/chart/wordpress-alpine-${VERSION}.tgz" ]; then
+            MAJOR=$(echo "$VERSION" | cut -d. -f1)
+            MINOR=$(echo "$VERSION" | cut -d. -f2)
+            PATCH=$(echo "$VERSION" | cut -d. -f3)
+            NEW_VERSION="${MAJOR}.${MINOR}.$((PATCH + 1))"
+            sed -i "s/^version: .*/version: ${NEW_VERSION}/" "$CHART_FILE"
+            echo "Chart source changed but version was not bumped: $VERSION -> $NEW_VERSION"
+          else
+            echo "Chart version $VERSION is not packaged yet, packaging as-is."
+          fi
+
+      - name: Package chart
+        run: helm package wordpress-alpine/chart/source -d wordpress-alpine/chart
+
+      - name: Update repo index
+        run: helm repo index wordpress-alpine/chart --merge wordpress-alpine/chart/index.yaml
+
+      - name: Check for changes
+        id: changes
+        run: |
+          if [ -n "$(git status --porcelain -- wordpress-alpine/chart)" ]; then
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Commit and push
+        if: steps.changes.outputs.changed == 'true'
+        run: |
+          VERSION=$(grep '^version:' wordpress-alpine/chart/source/Chart.yaml | awk '{print $2}')
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add wordpress-alpine/chart
+          git commit -m "chore: package wordpress-alpine chart ${VERSION}"
+          git push origin main
