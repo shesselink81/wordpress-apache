@@ -15,7 +15,7 @@ cd wordpress-apache/wordpress-alpine
 docker compose up -d
 ```
 Helm Chart Alpine:
-<https://wp.charts.hessel.cloud/>
+<https://wp.charts.hessel.cloud/> (classic repo) or `oci://ghcr.io/shesselink81/charts/wordpress-alpine` (OCI)
 
 Docker images:
 <https://github.com/shesselink81?tab=packages&repo_name=wordpress-apache>

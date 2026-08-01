@@ -9,6 +9,7 @@ on:
 
 permissions:
   contents: write
+  packages: write
 
 concurrency:
   group: package-wordpress-chart
@@ -53,6 +54,14 @@ jobs:
 
       - name: Update repo index
         run: helm repo index wordpress-alpine/chart --merge wordpress-alpine/chart/index.yaml
+
+      - name: Log in to GHCR
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | helm registry login ghcr.io -u ${{ github.actor }} --password-stdin
+
+      - name: Push chart to GHCR (OCI)
+        run: |
+          VERSION=$(grep '^version:' wordpress-alpine/chart/source/Chart.yaml | awk '{print $2}')
+          helm push "wordpress-alpine/chart/wordpress-alpine-${VERSION}.tgz" oci://ghcr.io/shesselink81/charts
 
       - name: Check for changes
         id: changes
