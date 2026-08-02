@@ -1,6 +1,6 @@
 # Cloude Code ToolBox — MCP & Skills awareness
 
-_Generated: 2026-08-01T18:36:05.724Z_
+_Generated: 2026-08-02T10:36:30.065Z_
 
 ## How to use this report
 
@@ -25,6 +25,8 @@ _No active workspace servers in mcp.json._
 
 | Server id | Kind | Detail |
 |-----------|------|--------|
+| wordpress-detuinkamer | stdio | npx -y @automattic/mcp-wordpress-remote |
+| kubernetes | stdio | npx -y kubernetes-mcp-server@latest |
 | azure/aks-mcp | stdio | docker run -i --rm -v C:/Users/shess/.azure:/root/.azure ghcr.io/azure/aks-mcp:latest --transport stdio |
 | context7 | http | https://mcp.context7.com/mcp |
 | io.github.upstash/context7 | stdio | npx @upstash/context7-mcp@1.0.31 |

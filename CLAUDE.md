@@ -29,11 +29,12 @@
 
 
 
+
 <!-- cloude-code-toolbox:mcp-skills-awareness-begin -->
 
 ### MCP & Skills awareness (Cloude Code ToolBox)
 
-_Last synced: 2026-08-01T18:36:05.757Z._
+_Last synced: 2026-08-02T10:36:30.101Z._
 
 - **Full report:** `.claude/cloude-code-toolbox-mcp-skills-awareness.md` in this workspace (auto-overwritten on each scan). Use it as ground truth for configured servers and skill folders.
 - **MCP:** For **live tools** in Claude Code, enable the matching server via `/mcp`. Servers are configured in `~/.claude.json` (user) and `.mcp.json` (project).
@@ -52,6 +53,8 @@ _No active workspace servers in mcp.json._
 
 | Server id | Kind | Detail |
 |-----------|------|--------|
+| wordpress-detuinkamer | stdio | npx -y @automattic/mcp-wordpress-remote |
+| kubernetes | stdio | npx -y kubernetes-mcp-server@latest |
 | azure/aks-mcp | stdio | docker run -i --rm -v C:/Users/shess/.azure:/root/.azure ghcr.io/azure/aks-mcp:latest --transport stdio |
 | context7 | http | https://mcp.context7.com/mcp |
 | io.github.upstash/context7 | stdio | npx @upstash/context7-mcp@1.0.31 |
