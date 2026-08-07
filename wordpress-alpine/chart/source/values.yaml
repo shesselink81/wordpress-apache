@@ -1,6 +1,6 @@
 image:
-  fpm: ghcr.io/shesselink81/wordpress-alpine:7.0.2.3
-  nginx: ghcr.io/shesselink81/nginx-alpine:7.0.2.3
+  fpm: ghcr.io/shesselink81/wordpress-alpine:7.0.3.1
+  nginx: ghcr.io/shesselink81/nginx-alpine:7.0.3.1
   init: wordpress:cli-php8.5
 
 imagePullSecrets: []
@@ -10,7 +10,7 @@ env:
     scheme: https
     domainname: wordpress.local
     url: "${scheme}://${domainname}"
-    version: "7.0.2"
+    version: "7.0.3"
     locale: en_US
     title: "My WordPress Site"
     admin_user: admin
