@@ -60,7 +60,7 @@ env:
     scheme: https
     title: My WordPress Site
     url: ${scheme}://${domainname}
-    version: 7.0.2
+    version: 7.0.4
 
 hostAliases:
   enabled: false

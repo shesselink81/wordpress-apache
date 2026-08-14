@@ -10,7 +10,7 @@ env:
     scheme: https
     domainname: wordpress.local
     url: "${scheme}://${domainname}"
-    version: "7.0.3"
+    version: "7.0.4"
     locale: en_US
     title: "My WordPress Site"
     admin_user: admin
