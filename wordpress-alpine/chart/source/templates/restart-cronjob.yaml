@@ -1,0 +1,68 @@
+{{- if .Values.wordpress.restartCronJob.enabled }}
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: {{ include "wordpress-alpine.fullname" . }}-restart
+  labels:
+    {{- include "wordpress-alpine.labels" . | nindent 4 }}
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: {{ include "wordpress-alpine.fullname" . }}-restart
+  labels:
+    {{- include "wordpress-alpine.labels" . | nindent 4 }}
+rules:
+  - apiGroups: ["apps"]
+    resources: ["deployments"]
+    resourceNames: ["{{ include "wordpress-alpine.fullname" . }}"]
+    verbs: ["get", "patch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: {{ include "wordpress-alpine.fullname" . }}-restart
+  labels:
+    {{- include "wordpress-alpine.labels" . | nindent 4 }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: {{ include "wordpress-alpine.fullname" . }}-restart
+subjects:
+  - kind: ServiceAccount
+    name: {{ include "wordpress-alpine.fullname" . }}-restart
+    namespace: {{ .Release.Namespace }}
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{ include "wordpress-alpine.fullname" . }}-restart
+  labels:
+    {{- include "wordpress-alpine.labels" . | nindent 4 }}
+spec:
+  schedule: {{ .Values.wordpress.restartCronJob.schedule | quote }}
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      backoffLimit: 2
+      template:
+        metadata:
+          labels:
+            {{- include "wordpress-alpine.selectorLabels" . | nindent 12 }}
+            app.kubernetes.io/component: restart
+        spec:
+          serviceAccountName: {{ include "wordpress-alpine.fullname" . }}-restart
+          restartPolicy: Never
+          containers:
+            - name: rollout-restart
+              image: {{ .Values.wordpress.restartCronJob.image | quote }}
+              command:
+                - kubectl
+                - rollout
+                - restart
+                - deployment/{{ include "wordpress-alpine.fullname" . }}
+              resources:
+                {{- toYaml .Values.wordpress.restartCronJob.resources | nindent 16 }}
+{{- end }}

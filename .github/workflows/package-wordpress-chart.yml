@@ -50,7 +50,7 @@ jobs:
           fi
 
       - name: Package chart
-        run: helm package wordpress-alpine/chart/source -d wordpress-alpine/chart
+        run: helm package wordpress-alpine/chart/source -d wordpress-alpine/chart -u
 
       - name: Update repo index
         run: helm repo index wordpress-alpine/chart --merge wordpress-alpine/chart/index.yaml

@@ -42,6 +42,19 @@ wordpress:
       wpPasswordKey: wordpress.password
       rootPasswordKey: db.root.password
       userPasswordKey: db.password
+  restartCronJob:
+    enabled: true
+    # Every 3 days at 03:00 — triggers a rollout restart so the init
+    # container reruns and picks up the latest WordPress core version.
+    schedule: "0 3 */3 * *"
+    image: "registry.k8s.io/kubectl:latest"
+    resources:
+      requests:
+        memory: "32Mi"
+        cpu: "10m"
+      limits:
+        memory: "64Mi"
+        cpu: "100m"
 
 ingress:
   enabled: false
