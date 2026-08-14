@@ -35,13 +35,14 @@ services:
       WP_INIT: "true"
       WP_URL: "${WP_SCHEME}://${WP_DOMAINNAME}"
       WORDPRESS_VERSION: ${WORDPRESS_VERSION}
+      WP_CORE_AUTO_UPDATE: ${WP_CORE_AUTO_UPDATE}
     volumes:
       - wordpress:/var/www/html:rw
       - ./init.sh:/tmp/init.sh:ro
       - ./wordpress-alpine/cache-config.json:/tmp/cache-config.json:ro
 
   wordpress:
-    image: ghcr.io/shesselink81/wordpress-apache:v7.0.0.1
+    image: ghcr.io/shesselink81/wordpress-apache:v7.0.4.2
     build:
       context: .
       args:

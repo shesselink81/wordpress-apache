@@ -23,6 +23,7 @@ services:
       WP_URL: "${WP_SCHEME}://${WP_DOMAINNAME}"
       WORDPRESS_VERSION: ${WORDPRESS_VERSION}
       MEMCACHED_HOST: ${MEMCACHED_HOST}
+      WP_CORE_AUTO_UPDATE: ${WP_CORE_AUTO_UPDATE}
 
     volumes:
       - wordpress:/var/www/html:rw

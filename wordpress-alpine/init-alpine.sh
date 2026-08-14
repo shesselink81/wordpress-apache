@@ -116,6 +116,18 @@ else
 
 fi
 
+# Update WordPress core to the latest version
+if [ -f "${WP_PATH}/wp-config.php" ]; then
+  echo "🔄 Updating WordPress core to the latest version..."
+  php -d memory_limit=512M /usr/local/bin/wp core update --path="${WP_PATH}" --allow-root
+fi
+
+# Configure WordPress core auto-update behavior
+if [ -f "${WP_PATH}/wp-config.php" ]; then
+  echo "🧾 Setting WP_AUTO_UPDATE_CORE to ${WP_CORE_AUTO_UPDATE}"
+  wp config set WP_AUTO_UPDATE_CORE "${WP_CORE_AUTO_UPDATE}" --raw --path="${WP_PATH}" --allow-root
+fi
+
 # File permissies herstellen
 echo "🧾 Herstellen van permissies..."
 chown -R 82:82 "${WP_PATH}"
