@@ -1,6 +1,6 @@
 image:
-  fpm: ghcr.io/shesselink81/wordpress-alpine:7.0.4.1
-  nginx: ghcr.io/shesselink81/nginx-alpine:7.0.4.1
+  fpm: ghcr.io/shesselink81/wordpress-alpine:7.0.4.2
+  nginx: ghcr.io/shesselink81/nginx-alpine:7.0.4.2
   init: wordpress:cli-php8.5
 
 imagePullSecrets: []
