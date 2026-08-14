@@ -47,7 +47,7 @@ wordpress:
     # Every 3 days at 03:00 — triggers a rollout restart so the init
     # container reruns and picks up the latest WordPress core version.
     schedule: "0 3 */3 * *"
-    image: "registry.k8s.io/kubectl:latest"
+    image: "registry.k8s.io/kubectl:v1.36.2"
     resources:
       requests:
         memory: "32Mi"
