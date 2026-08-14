@@ -66,6 +66,8 @@ spec:
                   key: {{ .Values.wordpress.auth.secretKeys.wpPasswordKey }}
             - name: WP_ADMIN_EMAIL
               value: admin@{{ .Values.env.wp.domainname }}
+            - name: WP_CORE_AUTO_UPDATE
+              value: {{ .Values.env.wp.coreAutoUpdate | quote }}
           volumeMounts:
             - name: wordpress
               mountPath: /var/www/html

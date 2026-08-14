@@ -105,4 +105,10 @@ else
   fi
 fi
 
+# Configure WordPress core auto-update behavior
+if [ -f "${WP_PATH}/wp-config.php" ]; then
+  echo "🧾 Setting WP_AUTO_UPDATE_CORE to ${WP_CORE_AUTO_UPDATE}"
+  wp config set WP_AUTO_UPDATE_CORE "${WP_CORE_AUTO_UPDATE}" --raw --path="${WP_PATH}" --allow-root
+fi
+
 echo "🎉 Init script voltooid!"

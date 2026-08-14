@@ -15,6 +15,7 @@ env:
     title: "My WordPress Site"
     admin_user: admin
     debug: "false"
+    coreAutoUpdate: "false"
 
 hostAliases:
   enabled: false
