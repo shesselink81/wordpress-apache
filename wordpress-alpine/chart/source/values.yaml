@@ -71,6 +71,7 @@ ingress:
 
 httproute:
   enabled: false
+  annotations: {}
   gateway:
     name: traefik-gateway
     namespace: traefik

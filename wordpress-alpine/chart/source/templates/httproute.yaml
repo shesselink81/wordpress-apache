@@ -5,6 +5,10 @@ metadata:
   name: {{ include "wordpress-alpine.fullname" . }}
   labels:
     {{- include "wordpress-alpine.labels" . | nindent 4 }}
+  {{- with .Values.httproute.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 spec:
   parentRefs:
     - name: {{ .Values.httproute.gateway.name }}
