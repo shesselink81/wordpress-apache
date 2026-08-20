@@ -35,11 +35,12 @@
 
 
 
+
 <!-- cloude-code-toolbox:mcp-skills-awareness-begin -->
 
 ### MCP & Skills awareness (Cloude Code ToolBox)
 
-_Last synced: 2026-08-19T15:10:02.875Z._
+_Last synced: 2026-08-20T15:38:34.577Z._
 
 - **Full report:** `.claude/cloude-code-toolbox-mcp-skills-awareness.md` in this workspace (auto-overwritten on each scan). Use it as ground truth for configured servers and skill folders.
 - **MCP:** For **live tools** in Claude Code, enable the matching server via `/mcp`. Servers are configured in `~/.claude.json` (user) and `.mcp.json` (project).
@@ -60,7 +61,7 @@ _No active workspace servers in mcp.json._
 |-----------|------|--------|
 | kubernetes | stdio | npx -y kubernetes-mcp-server@latest |
 | context7 | http | https://mcp.context7.com/mcp |
-| io.github.upstash/context7 | stdio | npx @upstash/context7-mcp@1.0.31 |
+| github | http | https://api.githubcopilot.com/mcp |
 
 _Off (Toolbox stash):_ 
 

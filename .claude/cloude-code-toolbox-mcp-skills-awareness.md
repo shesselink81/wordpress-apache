@@ -1,6 +1,6 @@
 # Cloude Code ToolBox — MCP & Skills awareness
 
-_Generated: 2026-08-19T15:10:02.750Z_
+_Generated: 2026-08-20T15:38:34.517Z_
 
 ## How to use this report
 
@@ -27,7 +27,7 @@ _No active workspace servers in mcp.json._
 |-----------|------|--------|
 | kubernetes | stdio | npx -y kubernetes-mcp-server@latest |
 | context7 | http | https://mcp.context7.com/mcp |
-| io.github.upstash/context7 | stdio | npx @upstash/context7-mcp@1.0.31 |
+| github | http | https://api.githubcopilot.com/mcp |
 
 _User servers **off** (Toolbox stash):_
 
