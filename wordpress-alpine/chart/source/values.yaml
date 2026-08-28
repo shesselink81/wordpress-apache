@@ -1,6 +1,6 @@
 image:
-  fpm: ghcr.io/shesselink81/wordpress-alpine:7.0.4.2
-  nginx: ghcr.io/shesselink81/nginx-alpine:7.0.4.2
+  fpm: ghcr.io/shesselink81/wordpress-alpine:7.1.0.0
+  nginx: ghcr.io/shesselink81/nginx-alpine:7.1.0.0
   init: wordpress:cli-php8.5
 
 imagePullSecrets: []
@@ -10,7 +10,7 @@ env:
     scheme: https
     domainname: wordpress.local
     url: "${scheme}://${domainname}"
-    version: "7.0.4"
+    version: "7.1"
     locale: en_US
     title: "My WordPress Site"
     admin_user: admin
@@ -132,6 +132,11 @@ nginx:
        cpu: "200m"
   service:
     port: 80
+  # Trusted upstream proxy addresses (e.g. the ingress controller's CIDR)
+  # for the ngx_http_realip_module. When non-empty, nginx trusts the
+  # X-Forwarded-For header from these sources to derive $remote_addr.
+  # Leave empty when nginx is reachable directly (no proxy in front).
+  trustedProxies: []
 
 memcached:
   enabled: true

@@ -42,7 +42,7 @@ services:
       dockerfile: Dockerfile
       no_cache: false
       args:
-        WORDPRESS_VERSION: 7.0.4
+        WORDPRESS_VERSION: 7.1
         WP_LOCALE: en_US
     container_name: wp-fpm
     restart: unless-stopped
@@ -87,7 +87,7 @@ services:
       - db_data:/var/lib/mysql
 
    nginx:
-    image: ghcr.io/shesselink81/nginx-alpine:7.0.3.1
+    image: ghcr.io/shesselink81/nginx-alpine:latest
     build:
       context: ./nginx/
     container_name: wp-nginx
@@ -105,7 +105,7 @@ services:
     volumes:
       - wordpress:/var/www/html:rw
       - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:rw
-  
+
 volumes:
   wordpress:
   db_data:

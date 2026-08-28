@@ -1,4 +1,5 @@
-FROM dhi.io/nginx:1
+#FROM dhi.io/nginx:1
+FROM nginx:1-alpine
 COPY nginx.conf /etc/nginx/nginx.conf
 COPY selfsigned.crt /etc/nginx/ssl/selfsigned.crt
 COPY selfsigned.key /etc/nginx/ssl/selfsigned.key
