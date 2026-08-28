@@ -2,3 +2,4 @@ build.sh
 .env-git
 .git-sync.sh
 .dockerfiles-tools/
+.env
