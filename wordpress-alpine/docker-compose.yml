@@ -42,7 +42,7 @@ services:
       dockerfile: Dockerfile
       no_cache: false
       args:
-        WORDPRESS_VERSION: 7.1
+        WORDPRESS_VERSION: 7.1.2
         WP_LOCALE: en_US
     container_name: wp-fpm
     restart: unless-stopped
