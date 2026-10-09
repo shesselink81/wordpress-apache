@@ -5,6 +5,8 @@ on:
     tags:
       - '7.*'   # Trigger op tags zoals v1.0.0, v2.3.1 etc.
 
+
+
 env:
   # Use docker.io for Docker Hub if empty
   REGISTRY: ghcr.io
@@ -15,7 +17,11 @@ jobs:
   build:
     name: Build Release
     runs-on: ubuntu-latest
-
+    permissions:
+      packages: write
+      contents: read
+      attestations: write
+      id-token: write
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
