@@ -42,7 +42,7 @@ This chart deploys:
 | WordPress FPM | `ghcr.io/shesselink81/wordpress-alpine:7.1.2.0` |
 | Nginx         | `ghcr.io/shesselink81/nginx-alpine:7.1.2.0`     |
 | Init (WP-CLI) | `wordpress:cli-php8.5`                           |
-| Database      | `mariadb:12.3.2`                                 |
+| Database      | `mariadb:12.3.3`                                 |
 
 
 ⚙️ Configuration
@@ -60,7 +60,7 @@ env:
     scheme: https
     title: My WordPress Site
     url: ${scheme}://${domainname}
-    version: 7.1.2
+    version: 7.1.3
 
 hostAliases:
   enabled: false
