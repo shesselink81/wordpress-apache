@@ -70,7 +70,7 @@ services:
       #- ./cache-config.json:/tmp/cache-config.json:ro
 
    db:
-    image: mariadb:12.3.2
+    image: mariadb:12.3.3
     container_name: wp-db
     restart: unless-stopped
     healthcheck:
