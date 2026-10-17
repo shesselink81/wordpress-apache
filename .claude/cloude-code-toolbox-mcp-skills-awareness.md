@@ -1,6 +1,6 @@
 # Cloude Code ToolBox — MCP & Skills awareness
 
-_Generated: 2026-10-09T20:32:29.259Z_
+_Generated: 2026-10-16T15:39:08.343Z_
 
 ## How to use this report
 
@@ -28,6 +28,7 @@ _No active workspace servers in mcp.json._
 | context7 | http | https://mcp.context7.com/mcp |
 | github | http | https://api.githubcopilot.com/mcp |
 | MCP_DOCKER | stdio | docker mcp gateway run --profile ai_coding |
+| kubernetes-mcp-server | stdio | cmd /c npx -y kubernetes-mcp-server@latest --config D:/Users/Sander/repos/unifi-ai/config/kubernetes-mcp-server.toml |
 
 ## Skills (local `SKILL.md` folders)
 
