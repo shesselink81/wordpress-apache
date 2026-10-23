@@ -39,11 +39,13 @@ This chart deploys:
 🐳 Container Images
 | Component     | Image                                            |
 | ------------- | ------------------------------------------------ |
-| WordPress FPM | `ghcr.io/shesselink81/wordpress-alpine:7.1.2.0` |
-| Nginx         | `ghcr.io/shesselink81/nginx-alpine:7.1.2.0`     |
+| WordPress FPM | `ghcr.io/shesselink81/wordpress-alpine:7.1.3.0` |
+| Nginx         | `ghcr.io/shesselink81/nginx-alpine:7.1.3.0`     |
 | Init (WP-CLI) | `wordpress:cli-php8.5`                           |
 | Database      | `mariadb:12.3.3`                                 |
 
+# PHP version
+8.4.27  Patched version PHP2shell CVE's
 
 ⚙️ Configuration
 
