@@ -2,8 +2,33 @@ apiVersion: v1
 entries:
   wordpress-alpine:
   - apiVersion: v2
+    appVersion: 7.1.4
+    created: "2026-11-08T05:39:46.851034787Z"
+    dependencies:
+    - condition: memcached.enabled
+      name: memcached
+      repository: oci://registry-1.docker.io/cloudpirates
+      version: 0.14.13
+    - condition: mariadb.enabled
+      name: mariadb
+      repository: oci://registry-1.docker.io/cloudpirates
+      version: 0.16.17
+    description: WordPress FPM + Nginx + Init + MariaDB (alpine)
+    digest: 0a6e0c05688c49fa31c16a98d77019c8f445650916b802bc467330760623fe74
+    home: https://github.com/shesselink81/wordpress-apache/tree/main/wordpress-alpine/chart
+    icon: https://raw.githubusercontent.com/slydlake/helm-charts/refs/heads/main/charts/wordpress/app.png
+    maintainers:
+    - name: shesselink81
+    name: wordpress-alpine
+    sources:
+    - https://github.com/shesselink81/wordpress-apache/tree/main/wordpress-alpine/chart
+    type: application
+    urls:
+    - wordpress-alpine-1.5.23.tgz
+    version: 1.5.23
+  - apiVersion: v2
     appVersion: 7.1.3
-    created: "2026-10-24T05:02:09.865189457Z"
+    created: "2026-11-08T05:39:46.845342289Z"
     dependencies:
     - condition: memcached.enabled
       name: memcached
@@ -28,7 +53,7 @@ entries:
     version: 1.5.22
   - apiVersion: v2
     appVersion: 7.1.3
-    created: "2026-10-24T05:02:09.860953541Z"
+    created: "2026-11-08T05:39:46.841281764Z"
     dependencies:
     - condition: memcached.enabled
       name: memcached
@@ -53,7 +78,7 @@ entries:
     version: 1.5.21
   - apiVersion: v2
     appVersion: 7.1.3
-    created: "2026-10-24T05:02:09.85533764Z"
+    created: "2026-11-08T05:39:46.835992551Z"
     dependencies:
     - condition: memcached.enabled
       name: memcached
@@ -78,7 +103,7 @@ entries:
     version: 1.5.20
   - apiVersion: v2
     appVersion: 7.1.2
-    created: "2026-10-24T05:02:09.846030908Z"
+    created: "2026-11-08T05:39:46.826713972Z"
     dependencies:
     - condition: memcached.enabled
       name: memcached
@@ -103,7 +128,7 @@ entries:
     version: 1.5.19
   - apiVersion: v2
     appVersion: 7.1.0
-    created: "2026-10-24T05:02:09.840366854Z"
+    created: "2026-11-08T05:39:46.821740494Z"
     dependencies:
     - condition: memcached.enabled
       name: memcached
@@ -128,7 +153,7 @@ entries:
     version: 1.5.18
   - apiVersion: v2
     appVersion: 7.0.4
-    created: "2026-10-24T05:02:09.836270259Z"
+    created: "2026-11-08T05:39:46.817856529Z"
     dependencies:
     - condition: memcached.enabled
       name: memcached
@@ -153,7 +178,7 @@ entries:
     version: 1.5.17
   - apiVersion: v2
     appVersion: 7.0.4
-    created: "2026-10-24T05:02:09.830908538Z"
+    created: "2026-11-08T05:39:46.812999529Z"
     dependencies:
     - condition: memcached.enabled
       name: memcached
@@ -178,7 +203,7 @@ entries:
     version: 1.5.16
   - apiVersion: v2
     appVersion: 7.0.4
-    created: "2026-10-24T05:02:09.826977035Z"
+    created: "2026-11-08T05:39:46.808877403Z"
     dependencies:
     - condition: memcached.enabled
       name: memcached
@@ -203,7 +228,7 @@ entries:
     version: 1.5.15
   - apiVersion: v2
     appVersion: 7.0.4
-    created: "2026-10-24T05:02:09.821933467Z"
+    created: "2026-11-08T05:39:46.804342835Z"
     dependencies:
     - condition: memcached.enabled
       name: memcached
@@ -228,7 +253,7 @@ entries:
     version: 1.5.14
   - apiVersion: v2
     appVersion: 7.0.4
-    created: "2026-10-24T05:02:09.81794169Z"
+    created: "2026-11-08T05:39:46.799952505Z"
     dependencies:
     - condition: memcached.enabled
       name: memcached
@@ -253,7 +278,7 @@ entries:
     version: 1.5.13
   - apiVersion: v2
     appVersion: 7.0.4
-    created: "2026-10-24T05:02:09.812636045Z"
+    created: "2026-11-08T05:39:46.79501362Z"
     dependencies:
     - condition: memcached.enabled
       name: memcached
@@ -278,7 +303,7 @@ entries:
     version: 1.5.12
   - apiVersion: v2
     appVersion: 7.0.4
-    created: "2026-10-24T05:02:09.808610524Z"
+    created: "2026-11-08T05:39:46.791204796Z"
     dependencies:
     - condition: memcached.enabled
       name: memcached
@@ -303,7 +328,7 @@ entries:
     version: 1.5.11
   - apiVersion: v2
     appVersion: 7.0.3
-    created: "2026-10-24T05:02:09.803096863Z"
+    created: "2026-11-08T05:39:46.786307864Z"
     dependencies:
     - condition: memcached.enabled
       name: memcached
@@ -328,7 +353,7 @@ entries:
     version: 1.5.10
   - apiVersion: v2
     appVersion: 7.0.3
-    created: "2026-10-24T05:02:09.898935379Z"
+    created: "2026-11-08T05:39:46.884700797Z"
     dependencies:
     - condition: memcached.enabled
       name: memcached
@@ -353,7 +378,7 @@ entries:
     version: 1.5.9
   - apiVersion: v2
     appVersion: 7.0.3
-    created: "2026-10-24T05:02:09.892944985Z"
+    created: "2026-11-08T05:39:46.877288982Z"
     dependencies:
     - condition: memcached.enabled
       name: memcached
@@ -378,7 +403,7 @@ entries:
     version: 1.5.8
   - apiVersion: v2
     appVersion: 7.0.3
-    created: "2026-10-24T05:02:09.889051543Z"
+    created: "2026-11-08T05:39:46.872445836Z"
     dependencies:
     - condition: memcached.enabled
       name: memcached
@@ -403,7 +428,7 @@ entries:
     version: 1.5.7
   - apiVersion: v2
     appVersion: 7.0.3
-    created: "2026-10-24T05:02:09.883961709Z"
+    created: "2026-11-08T05:39:46.868519592Z"
     dependencies:
     - condition: memcached.enabled
       name: memcached
@@ -428,7 +453,7 @@ entries:
     version: 1.5.6
   - apiVersion: v2
     appVersion: 7.0.2
-    created: "2026-10-24T05:02:09.879956306Z"
+    created: "2026-11-08T05:39:46.863685637Z"
     dependencies:
     - condition: memcached.enabled
       name: memcached
@@ -453,7 +478,7 @@ entries:
     version: 1.5.5
   - apiVersion: v2
     appVersion: 7.0.2
-    created: "2026-10-24T05:02:09.874643528Z"
+    created: "2026-11-08T05:39:46.859818524Z"
     dependencies:
     - condition: memcached.enabled
       name: memcached
@@ -478,7 +503,7 @@ entries:
     version: 1.5.4
   - apiVersion: v2
     appVersion: 7.0.2
-    created: "2026-10-24T05:02:09.870680054Z"
+    created: "2026-11-08T05:39:46.85497147Z"
     dependencies:
     - condition: memcached.enabled
       name: memcached
@@ -503,7 +528,7 @@ entries:
     version: 1.5.3
   - apiVersion: v2
     appVersion: 7.0.2
-    created: "2026-10-24T05:02:09.84994041Z"
+    created: "2026-11-08T05:39:46.831964157Z"
     dependencies:
     - condition: memcached.enabled
       name: memcached
@@ -528,7 +553,7 @@ entries:
     version: 1.5.2
   - apiVersion: v2
     appVersion: 7.0.2
-    created: "2026-10-24T05:02:09.799060682Z"
+    created: "2026-11-08T05:39:46.782526601Z"
     dependencies:
     - condition: memcached.enabled
       name: memcached
@@ -553,7 +578,7 @@ entries:
     version: 1.5.1
   - apiVersion: v2
     appVersion: 7.0.2
-    created: "2026-10-24T05:02:09.79374773Z"
+    created: "2026-11-08T05:39:46.777507909Z"
     dependencies:
     - condition: memcached.enabled
       name: memcached
@@ -578,7 +603,7 @@ entries:
     version: 1.5.0
   - apiVersion: v2
     appVersion: 7.0.2
-    created: "2026-10-24T05:02:09.788713793Z"
+    created: "2026-11-08T05:39:46.773635005Z"
     dependencies:
     - condition: memcached.enabled
       name: memcached
@@ -603,7 +628,7 @@ entries:
     version: 1.4.22
   - apiVersion: v2
     appVersion: 7.0.2
-    created: "2026-10-24T05:02:09.784689475Z"
+    created: "2026-11-08T05:39:46.768618917Z"
     dependencies:
     - condition: memcached.enabled
       name: memcached
@@ -628,7 +653,7 @@ entries:
     version: 1.4.21
   - apiVersion: v2
     appVersion: 7.0.2
-    created: "2026-10-24T05:02:09.779370735Z"
+    created: "2026-11-08T05:39:46.764779475Z"
     dependencies:
     - condition: memcached.enabled
       name: memcached
@@ -653,7 +678,7 @@ entries:
     version: 1.4.20
   - apiVersion: v2
     appVersion: 7.0.2
-    created: "2026-10-24T05:02:09.775358921Z"
+    created: "2026-11-08T05:39:46.759545744Z"
     dependencies:
     - condition: memcached.enabled
       name: memcached
@@ -678,7 +703,7 @@ entries:
     version: 1.4.19
   - apiVersion: v2
     appVersion: 7.0.2
-    created: "2026-10-24T05:02:09.770708605Z"
+    created: "2026-11-08T05:39:46.755640971Z"
     dependencies:
     - condition: memcached.enabled
       name: memcached
@@ -703,7 +728,7 @@ entries:
     version: 1.4.18
   - apiVersion: v2
     appVersion: 7.0.2
-    created: "2026-10-24T05:02:09.766123492Z"
+    created: "2026-11-08T05:39:46.750319775Z"
     dependencies:
     - condition: memcached.enabled
       name: memcached
@@ -728,7 +753,7 @@ entries:
     version: 1.4.17
   - apiVersion: v2
     appVersion: 7.0.2
-    created: "2026-10-24T05:02:09.761091329Z"
+    created: "2026-11-08T05:39:46.746228043Z"
     dependencies:
     - condition: memcached.enabled
       name: memcached
@@ -753,7 +778,7 @@ entries:
     version: 1.4.16
   - apiVersion: v2
     appVersion: 7.0.2
-    created: "2026-10-24T05:02:09.757074003Z"
+    created: "2026-11-08T05:39:46.740955057Z"
     dependencies:
     - condition: memcached.enabled
       name: memcached
@@ -778,7 +803,7 @@ entries:
     version: 1.4.15
   - apiVersion: v2
     appVersion: 7.0.2
-    created: "2026-10-24T05:02:09.752524668Z"
+    created: "2026-11-08T05:39:46.735375648Z"
     dependencies:
     - condition: memcached.enabled
       name: memcached
@@ -803,7 +828,7 @@ entries:
     version: 1.4.14
   - apiVersion: v2
     appVersion: 7.0.1
-    created: "2026-10-24T05:02:09.748205325Z"
+    created: "2026-11-08T05:39:46.731417785Z"
     dependencies:
     - condition: memcached.enabled
       name: memcached
@@ -826,4 +851,4 @@ entries:
     urls:
     - wordpress-alpine-1.4.12.tgz
     version: 1.4.12
-generated: "2026-10-24T05:02:09.743875361Z"
+generated: "2026-11-08T05:39:46.7261973Z"
